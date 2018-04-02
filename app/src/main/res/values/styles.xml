@@ -1,0 +1,25 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style
+        name="AppTheme"
+        parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorPrimaryLight</item>
+        <item name="android:actionOverflowButtonStyle">@style/MyOverFlow</item>
+        <item name="android:itemBackground">@color/colorPrimary</item>
+
+
+    </style>
+
+    <style name="MyOverFlow" parent="@android:style/Widget.Material.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_settings_white_24px</item>
+    </style>
+
+
+
+
+</resources>
