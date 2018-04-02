@@ -24,13 +24,6 @@ public class Fragment_Explore extends Fragment{
 
         View rootView = inflater.inflate(R.layout.fragment_explore, container, false);
 
-        Button button = rootView.findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "Hello", Toast.LENGTH_LONG).show();
-            }
-        });
         return rootView;
 
     }
