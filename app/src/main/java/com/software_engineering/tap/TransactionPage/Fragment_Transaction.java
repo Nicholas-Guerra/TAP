@@ -14,6 +14,7 @@ public class Fragment_Transaction extends Fragment {
 
     public Fragment_Transaction() {
         // Required empty public constructor
+        String bob;
     }
 
 
