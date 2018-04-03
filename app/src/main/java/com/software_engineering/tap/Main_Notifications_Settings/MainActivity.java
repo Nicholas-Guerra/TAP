@@ -30,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private Toolbar topToolbar;
     private DrawerLayout mDrawerLayout;
-    private TextView mTitle;
+    private TextView toolbarTitle;
     private ArrayList<String> pages;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,37 +41,38 @@ public class MainActivity extends AppCompatActivity {
         pages = new ArrayList<>((Arrays.asList("Account", "TAP", "Explore")));
 
         topToolbar = findViewById(R.id.top_toolbar);
-
-        mTitle = (TextView) topToolbar.findViewById(R.id.toolbar_title);
+        toolbarTitle = topToolbar.findViewById(R.id.toolbar_title);
         bottomNavigation = findViewById(R.id.bottom_navigation);
         viewPager = findViewById(R.id.viewpager);
-
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
+
+        setupTopNavigation();
+        setupViewPager();
+        setupBottomNavigation();
+
+    }
+
+    private void setupTopNavigation(){
         setSupportActionBar(topToolbar);
-        setupViewPager(viewPager, bottomNavigation);
-        setupBottomNavigation(bottomNavigation);
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_notification);
-
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-
-
     }
 
-    private void setupBottomNavigation(BottomNavigationViewEx navigation){
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.setCurrentItem(1);
-        navigation.setLargeTextSize(14);
-        navigation.setIconTintList(1, null);
-        navigation.getIconAt(1).setBackground(getResources().getDrawable(R.drawable.selector_tap));
-        navigation.setIconSizeAt(1, 42, 42);
+
+    private void setupBottomNavigation(){
+        bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        bottomNavigation.setCurrentItem(1);
+        bottomNavigation.setLargeTextSize(14);
+        bottomNavigation.setIconTintList(1, null);
+        bottomNavigation.getIconAt(1).setBackground(getResources().getDrawable(R.drawable.selector_tap));
+        bottomNavigation.setIconSizeAt(1, 42, 42);
     }
 
-    private void setupViewPager(ViewPager viewPager, final BottomNavigationView navigation) {
+    private void setupViewPager() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         adapter.addFragment(new Fragment_Account());
@@ -89,11 +91,11 @@ public class MainActivity extends AppCompatActivity {
                 if (prevMenuItem != null) {
                     prevMenuItem.setChecked(false);
                 } else {
-                    navigation.getMenu().getItem(0).setChecked(false);
+                    bottomNavigation.getMenu().getItem(0).setChecked(false);
                 }
-                navigation.getMenu().getItem(position).setChecked(true);
-                prevMenuItem = navigation.getMenu().getItem(position);
-                mTitle.setText(pages.get(position));
+                bottomNavigation.getMenu().getItem(position).setChecked(true);
+                prevMenuItem = bottomNavigation.getMenu().getItem(position);
+                toolbarTitle.setText(pages.get(position));
 
             }
 

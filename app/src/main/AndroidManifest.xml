@@ -12,13 +12,13 @@
         <activity
             android:name=".Main_Notifications_Settings.MainActivity"
             android:label="@string/app_name">
+        </activity>
+        <activity android:name=".Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
