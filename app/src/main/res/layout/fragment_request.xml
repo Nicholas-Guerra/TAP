@@ -1,50 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <TableRow
-        android:id="@+id/request_pay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:divider="?android:attr/dividerVertical"
-        android:showDividers="middle"
-        android:clipToPadding="false">
-
-        <TextView
-            android:layout_height="45dp"
-            android:text="Request"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorTapOrange"
-            android:elevation="5dp" />
-
-        <TextView
-            android:layout_height="45dp"
-            android:text="Pay"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="26sp"
-            android:textStyle="bold" />
-
-    </TableRow>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.75dp"
-        android:background="@android:drawable/divider_horizontal_dark"
-        android:layout_below="@id/request_pay" />
 
     <RelativeLayout
         android:id="@+id/relative_amounts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/request_pay"
-        android:layout_centerInParent="true">
+        android:layout_centerHorizontal="true">
 
         <TextView
             android:id="@+id/tapCoin"
@@ -298,8 +264,4 @@
             android:layout_weight="1" />
 
     </TableRow>
-
-
-
-
 </RelativeLayout>
