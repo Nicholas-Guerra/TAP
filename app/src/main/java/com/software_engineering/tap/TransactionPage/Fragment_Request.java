@@ -3,6 +3,7 @@ package com.software_engineering.tap.TransactionPage;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,12 @@ import com.software_engineering.tap.R;
 public class Fragment_Request extends Fragment implements View.OnClickListener{
 
     View rootView;
-    TextView TAPtext;
-    Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btnDEL, btnCLR;
+    FragmentManager fragmentManager;
+    TextView TAPtext, conversionText;
+    Button tap, send, btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btnDEL, btnCLR;
     int total = 0;
+    double conversionRate;
+    String conversionSymbol;
 
 
     public Fragment_Request() {
@@ -27,7 +31,16 @@ public class Fragment_Request extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_request, container, false);
+        fragmentManager = getFragmentManager();
+
         TAPtext = rootView.findViewById(R.id.tapCoin);
+        conversionText = rootView.findViewById(R.id.conversion);
+
+        tap = rootView.findViewById(R.id.tap);
+        send = rootView.findViewById(R.id.send);
+
+        tap.setOnClickListener(this);
+        send.setOnClickListener(this);
 
         btn0 = rootView.findViewById(R.id.btn_0);
         btn1 = rootView.findViewById(R.id.btn_1);
@@ -55,17 +68,28 @@ public class Fragment_Request extends Fragment implements View.OnClickListener{
         btnDEL.setOnClickListener(this);
         btnCLR.setOnClickListener(this);
 
+        conversionRate = 1.1;
+        conversionSymbol = "$";
+
         return rootView;
     }
 
     @Override
     public void onClick(View v){
-        if(v == btnDEL){
+        if(v == tap){
+            if(total!=0) {
+                DialogFragment_NFC_Request.newInstance((double) total / 100.0).show(getFragmentManager().beginTransaction(), "nfc_request");
+                total = 0;
+            } else
+                Toast.makeText(getActivity(), "Nothing entered!" , Toast.LENGTH_SHORT).show();
+        } else if(v == send){
+
+        } else if(v == btnDEL){
             total /= 10;
         } else if(v == btnCLR){
             total = 0;
         } else if(String.format("%.2f",(double)total/100.0).length() >= 7) {
-            Toast.makeText(getContext(), "Too long!" , Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Too long!" , Toast.LENGTH_SHORT).show();
         }else if(v == btn0){
             total *= 10;
         }  else if(v == btn1){
@@ -99,6 +123,7 @@ public class Fragment_Request extends Fragment implements View.OnClickListener{
 
 
         TAPtext.setText(String.format("%.2f",(double)total/100.0));
+        conversionText.setText(conversionSymbol + String.format("%.2f",(double)total / 100.0 * conversionRate));
     }
 
 }
