@@ -20,7 +20,7 @@
             android:paddingHorizontal="5dp"
             android:paddingTop="10dp"
             android:textSize="50sp"
-            android:text="58.32"
+            android:text="0.00"
             android:fontFamily="sans-serif-smallcaps"
             android:textStyle="bold"/>
 
@@ -69,7 +69,7 @@
                     android:background="@drawable/buttonshape"
                     android:text="1"
                     android:textColor="#000000"
-                    android:textSize="30sp" />
+                    android:textSize="25sp" />
 
 
                 <Button
@@ -80,7 +80,7 @@
                     android:background="@drawable/buttonshape"
                     android:text="2"
                     android:textColor="#000000"
-                    android:textSize="30sp" />
+                    android:textSize="25sp" />
 
 
                 <Button
@@ -91,7 +91,7 @@
                     android:background="@drawable/buttonshape"
                     android:text="3"
                     android:textColor="#000000"
-                    android:textSize="30sp" />
+                    android:textSize="25sp" />
 
 
             </TableRow>
@@ -110,7 +110,7 @@
                     android:background="@drawable/buttonshape"
                     android:text="4"
                     android:textColor="#000000"
-                    android:textSize="30sp"  />
+                    android:textSize="25sp"  />
 
 
                 <Button
@@ -121,7 +121,7 @@
                     android:background="@drawable/buttonshape"
                     android:text="5"
                     android:textColor="#000000"
-                    android:textSize="30sp"/>
+                    android:textSize="25sp"/>
 
                 <Button
                     android:id="@+id/btn_6"
@@ -131,7 +131,7 @@
                     android:background="@drawable/buttonshape"
                     android:text="6"
                     android:textColor="#000000"
-                    android:textSize="30sp" />
+                    android:textSize="25sp" />
 
 
             </TableRow>
@@ -150,7 +150,7 @@
                     android:background="@drawable/buttonshape"
                     android:text="7"
                     android:textColor="#000000"
-                    android:textSize="30sp"/>
+                    android:textSize="25sp"/>
 
 
                 <Button
@@ -161,7 +161,7 @@
                     android:background="@drawable/buttonshape"
                     android:text="8"
                     android:textColor="#000000"
-                    android:textSize="30sp"  />
+                    android:textSize="25sp"  />
 
 
                 <Button
@@ -172,7 +172,7 @@
                     android:background="@drawable/buttonshape"
                     android:text="9"
                     android:textColor="#000000"
-                    android:textSize="30sp"  />
+                    android:textSize="25sp"  />
 
 
             </TableRow>
@@ -182,16 +182,16 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp">
 
-
                 <Button
-                    android:id="@+id/btn_decimal"
+                    android:id="@+id/btn_back"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_marginHorizontal="15dp"
                     android:background="@drawable/buttonshape"
-                    android:text="."
+                    android:text="DEL"
                     android:textColor="#000000"
-                    android:textSize="30sp"  />
+                    android:textSize="25sp" />
+
 
                 <Button
                     android:id="@+id/btn_0"
@@ -201,19 +201,17 @@
                     android:background="@drawable/buttonshape"
                     android:text="0"
                     android:textColor="#000000"
-                    android:textSize="30sp" />
-
+                    android:textSize="25sp" />
 
                 <Button
-                    android:id="@+id/btn_back"
+                    android:id="@+id/btn_clear"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_marginHorizontal="15dp"
                     android:background="@drawable/buttonshape"
-                    android:text="&lt;"
+                    android:text="CLR"
                     android:textColor="#000000"
-                    android:textSize="30sp" />
-
+                    android:textSize="25sp" />
 
             </TableRow>
 
