@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -91,7 +92,10 @@ public class sendToServer extends AsyncTask<Void, Void, JSONObject> {
 
             SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(null, wrappedTrustManagers, null);
-            SSLSocket socket = (SSLSocket) sslContext.getSocketFactory().createSocket("192.168.2.217", 9099);
+
+            InetAddress addr = InetAddress.getByName("jaredrattray.com");
+            SSLSocket socket = (SSLSocket) sslContext.getSocketFactory().createSocket(addr, 9099);
+            //SSLSocket socket = (SSLSocket) sslContext.getSocketFactory().createSocket("99.58.42.144", 9099);
 
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true); // printWriter from socket
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
