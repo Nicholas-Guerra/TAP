@@ -1,17 +1,29 @@
 package com.software_engineering.tap.TransactionPage;
 
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
 import com.software_engineering.tap.R;
 
-public class Fragment_Pay extends Fragment {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class Fragment_Pay extends Fragment implements View.OnClickListener{
 
     View rootView;
+    TextView notifactions;
+    Button btn_nfc, connect;
 
 
     public Fragment_Pay() {
@@ -22,6 +34,52 @@ public class Fragment_Pay extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_pay, container, false);
 
+        notifactions = rootView.findViewById(R.id.notification_num);
+        notifactions.setOnClickListener(this);
+
+        btn_nfc = rootView.findViewById(R.id.btn_nfc);
+        btn_nfc.setOnClickListener(this);
+
+        connect = rootView.findViewById(R.id.connection);
+        connect.setOnClickListener(this);
+
+
         return rootView;
     }
+
+    @SuppressLint("StaticFieldLeak")
+    @Override
+    public void onClick(View v){
+        if(v == notifactions){
+            MainActivity.openDrawer();
+        } else if(v == btn_nfc){
+
+        } else if(v == connect){
+            try {
+
+
+                JSONObject send = new JSONObject();
+                send.put("Request", "Transaction");
+                send.put("Sender", "Bob");
+                send.put("Receiver", "Sue");
+
+                new sendToServer(getActivity(), false,null, send) {
+                    @Override
+                    public void onPostExecute(JSONObject receivedJSON) {
+                        super.onPostExecute(receivedJSON);
+
+                        Toast.makeText(getContext(), receivedJSON.toString(), Toast.LENGTH_LONG).show();
+
+                    }
+                }.execute();
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+
 }

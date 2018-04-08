@@ -2,6 +2,7 @@ package com.software_engineering.tap.TransactionPage;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ public class Fragment_Request extends Fragment implements View.OnClickListener{
     int total = 0;
     double conversionRate;
     String conversionSymbol;
+    Toast toast;
 
 
     public Fragment_Request() {
@@ -79,9 +81,26 @@ public class Fragment_Request extends Fragment implements View.OnClickListener{
         if(v == tap){
             if(total!=0) {
                 DialogFragment_NFC_Request.newInstance((double) total / 100.0).show(getFragmentManager().beginTransaction(), "nfc_request");
-                total = 0;
-            } else
-                Toast.makeText(getActivity(), "Nothing entered!" , Toast.LENGTH_SHORT).show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        total = 0;
+                        TAPtext.setText(String.format("%.2f",(double)total/100.0));
+                        conversionText.setText(conversionSymbol + String.format("%.2f",(double)total / 100.0 * conversionRate));
+                    }
+                }, 500);
+            } else {
+                toast = Toast.makeText(getActivity(), "Nothing entered!", Toast.LENGTH_SHORT);
+                toast.show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        toast.cancel();
+                    }
+                }, 500);
+            }
         } else if(v == send){
 
         } else if(v == btnDEL){
@@ -89,7 +108,16 @@ public class Fragment_Request extends Fragment implements View.OnClickListener{
         } else if(v == btnCLR){
             total = 0;
         } else if(String.format("%.2f",(double)total/100.0).length() >= 7) {
-            Toast.makeText(getActivity(), "Too long!" , Toast.LENGTH_SHORT).show();
+            toast = Toast.makeText(getActivity(), "Too long!" , Toast.LENGTH_SHORT);
+            toast.show();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    toast.cancel();
+                }
+            }, 500);
+
         }else if(v == btn0){
             total *= 10;
         }  else if(v == btn1){

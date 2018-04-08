@@ -20,7 +20,7 @@ import com.software_engineering.tap.R;
 public class DialogFragment_NFC_Request extends DialogFragment {
 
     View rootView;
-    TextView textView;
+    TextView title;
     ImageView close;
     ProgressBar timer;
     double amount;
@@ -53,9 +53,9 @@ public class DialogFragment_NFC_Request extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.dialog_fragment_nfc_request, container, false);
-        textView = rootView.findViewById(R.id.text);
+        title = rootView.findViewById(R.id.title);
         amount = getArguments().getDouble("Amount");
-        textView.setText("Ready to tap\n" + String.valueOf(amount) + " TPC");
+        title.setText(String.valueOf(amount) + " TPC");
         timer =  rootView.findViewById(R.id.progressBar);
 
         new CountDownTimer(10000, 100) {
