@@ -1,4 +1,7 @@
 package com.software_engineering.tap.Login;
 
-public class Fragment_User_Request {
+import android.support.v4.app.Fragment;
+import android.view.View;
+
+public class Fragment_User_Request extends Fragment implements View.OnClickListener{
 }
