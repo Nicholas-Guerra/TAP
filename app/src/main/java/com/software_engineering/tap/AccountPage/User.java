@@ -34,13 +34,25 @@ public class User
     @ColumnInfo(name = "last_update")
     Long date;
 
-    public User (String userName, String firstName, String lastName, String email) {
+    @ColumnInfo(name = "password_Hashed")
+    String passwordHash;
+
+    @ColumnInfo(name = "balance")
+    double balance;
+
+    @ColumnInfo(name = "phone_number")
+    int phoneNum;
+
+    public User (String userName, String firstName, String lastName, String email, double balance, String password, int phoneNum) {
         this.UID = UUID.randomUUID().toString();
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.date = System.currentTimeMillis();
+        this.balance = balance;
+        this.passwordHash = password;
+        this.phoneNum = phoneNum;
     }
 
 
