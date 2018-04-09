@@ -10,14 +10,14 @@ import java.util.UUID;
 /**
  * Created by grant_000 on 4/9/2018.
  */
-@Entity(tableName = "Transactions")
+@Entity(tableName = "transactions")
 public class Transaction {
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "transactionID")
     String TID;
 
-    @ColumnInfo(name = "to/from")
+    @ColumnInfo(name = "toFrom")
     String toFromName;
 
     @ColumnInfo(name = "amount")
