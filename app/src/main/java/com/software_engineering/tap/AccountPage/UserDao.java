@@ -1,33 +1,24 @@
 package com.software_engineering.tap.AccountPage;
+
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
-
-import java.util.List;
 
 /**
  * Created by grant_000 on 4/4/2018.
  */
 @Dao
 public interface UserDao {
-    @Query("SELECT * FROM user")
-    List<User> getAll();
 
-    @Query("SELECT * FROM  user WHERE uid IN (:userIds)")
-    List<User> loadAllByIds(int[] userIds);
+    @Query("SELECT * FROM USERS LIMIT 1" )
+    User getUser();
 
-    @Query("SELECT * FROM user WHERE first_name LIKE :first AND "
-            + "last_name LIKE :last LIMIT 1")
-    User findByName(String first, String last);
-
-    @Query("SELECT * FROM user WHERE email IN :email LIMIT 1" )
-    User findByEmail(String email);
-
-
+    @Query("UPDATE users SET userName = :username, first_name = :first_name, last_name = :last_name, user_email = :user_email, last_update = :last_update")
+    void updateUser(String username, String first_name, String last_name, String user_email, Long last_update);
 
     @Insert
-    void insertAll(User... users);
+    void insert(User user);
 
     @Delete
     void delete(User user);
