@@ -8,12 +8,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.software_engineering.tap.R;
 
 public class Fragment_Account extends Fragment {
 
-    AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+    AppDatabase db = Room.databaseBuilder(getActivity().getApplicationContext(),
             AppDatabase.class, "database-name").build();
 
     public Fragment_Account() {
