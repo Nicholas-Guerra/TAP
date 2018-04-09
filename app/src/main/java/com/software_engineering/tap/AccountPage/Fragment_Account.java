@@ -8,7 +8,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
 import com.software_engineering.tap.R;
+
+import java.util.Date;
 
 public class Fragment_Account extends Fragment {
 
@@ -26,9 +32,11 @@ public class Fragment_Account extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_account, container, false);
 
-        AppDatabase db = Room.databaseBuilder(getActivity().getApplicationContext(),
-                AppDatabase.class, "database-name").build();
+        //TextView nameText = rootView.findViewById(R.id.name);
 
+        //User user = MainActivity.getDb().userDao().getUser();
+
+        //nameText.setText(user.firstName);
 
         return rootView;
     }

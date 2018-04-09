@@ -1,6 +1,7 @@
 package com.software_engineering.tap.Main_Notifications_Settings;
 
 import android.Manifest;
+import android.arch.persistence.room.Room;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.software_engineering.tap.AccountPage.AppDatabase;
 import com.software_engineering.tap.AccountPage.Fragment_Account;
 import com.software_engineering.tap.ExplorePage.Fragment_Explore;
 import com.software_engineering.tap.R;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private static DrawerLayout mDrawerLayout;
     private TextView toolbarTitle;
     private ArrayList<String> pages;
+    private static AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +63,7 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
 
-        //Insert
-
-        //Query
-
-        Toast.makeText(this, "Success", Toast.LENGTH_LONG).show();
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database-name").build();
     }
 
     private void setupTopNavigation(){
@@ -172,6 +171,8 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-
+    public static AppDatabase getDb() {
+        return db;
+    }
 
 }

@@ -34,10 +34,11 @@ public class User
     @ColumnInfo(name = "last_update")
     Long date;
 
-    public User (String userName, String firstName, String email) {
-        this.UID = UUID.randomUUID().toString();;
+    public User (String userName, String firstName, String lastName, String email) {
+        this.UID = UUID.randomUUID().toString();
         this.userName = userName;
         this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.date = System.currentTimeMillis();
     }
