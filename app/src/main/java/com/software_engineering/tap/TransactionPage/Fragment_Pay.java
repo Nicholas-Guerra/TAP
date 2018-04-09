@@ -3,12 +3,14 @@ package com.software_engineering.tap.TransactionPage;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
     TextView notifications;
     ImageView btn_nfc;
     Button connect;
+    ProgressBar timer;
 
 
     public Fragment_Pay() {
@@ -43,6 +46,8 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
         connect = rootView.findViewById(R.id.connection);
         connect.setOnClickListener(this);
 
+        timer = rootView.findViewById(R.id.progressBar);
+
 
         return rootView;
     }
@@ -53,6 +58,21 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
         if(v == notifications){
             MainActivity.openDrawer();
         } else if(v == btn_nfc){
+            btn_nfc.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.tap));
+                timer.setProgress(1);
+
+            new CountDownTimer(10000, 100) {
+
+                public void onTick(long millisUntilFinished) {
+                    timer.setProgress((int) ((10000 - millisUntilFinished)/100));
+                }
+                public void onFinish() {
+                    btn_nfc.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.tap_dark));
+                    timer.setProgress(100);
+                    timer.setProgress(0);
+                }
+            }.start();
+
 
         } else if(v == connect){
             try {
