@@ -4,4 +4,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp">
+
+
+        <TextView
+            android:id="@+id/notification_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:text="0 new"
+            android:textStyle="bold"
+            android:textColor="@color/colorClick"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/notification_num"
+            android:text=" transaction requests"
+            android:textColor="@color/colorSecondaryLight"
+            android:textStyle="bold"
+            android:textSize="25sp"/>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:background="@color/colorClick"
+            android:layout_alignLeft="@+id/notification_num"
+            android:layout_alignRight="@+id/notification_num"
+            android:layout_below="@+id/notification_num"/>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/btn_nfc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/tap"
+        android:layout_centerInParent="true" />
+
+
+
+    <Button
+        android:id="@+id/connection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Test Server Connection"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+
+
 </RelativeLayout>

@@ -1,8 +1,13 @@
 package com.software_engineering.tap.Main_Notifications_Settings;
 
+import android.Manifest;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.software_engineering.tap.AccountPage.Fragment_Account;
@@ -29,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationViewEx bottomNavigation;
     private ViewPager viewPager;
     private Toolbar topToolbar;
-    private DrawerLayout mDrawerLayout;
+    private static DrawerLayout mDrawerLayout;
     private TextView toolbarTitle;
     private ArrayList<String> pages;
 
@@ -51,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         setupViewPager();
         setupBottomNavigation();
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
     }
 
     private void setupTopNavigation(){
@@ -127,6 +134,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public static void openDrawer(){
+        mDrawerLayout.openDrawer(GravityCompat.START);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -153,5 +164,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
+
+
 
 }
