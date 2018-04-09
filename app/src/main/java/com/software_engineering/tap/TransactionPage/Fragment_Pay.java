@@ -60,6 +60,7 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
         } else if(v == btn_nfc){
             btn_nfc.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.tap));
                 timer.setProgress(1);
+                btn_nfc.setOnClickListener(null);
 
             new CountDownTimer(10000, 100) {
 
@@ -70,6 +71,7 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
                     btn_nfc.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.tap_dark));
                     timer.setProgress(100);
                     timer.setProgress(0);
+                    btn_nfc.setOnClickListener(Fragment_Pay.this);
                 }
             }.start();
 
