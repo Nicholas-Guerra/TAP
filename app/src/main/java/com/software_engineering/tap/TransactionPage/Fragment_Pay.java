@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
 import com.software_engineering.tap.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -90,7 +91,6 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
                     public void onPostExecute(JSONObject receivedJSON) {
                         super.onPostExecute(receivedJSON);
 
-                        Toast.makeText(getContext(), receivedJSON.toString(), Toast.LENGTH_LONG).show();
 
                     }
                 }.execute();

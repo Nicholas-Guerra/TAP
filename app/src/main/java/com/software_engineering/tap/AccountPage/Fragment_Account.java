@@ -4,10 +4,12 @@ package com.software_engineering.tap.AccountPage;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,8 +18,9 @@ import com.software_engineering.tap.R;
 
 import java.util.Date;
 
-public class Fragment_Account extends Fragment {
+public class Fragment_Account extends Fragment implements View.OnClickListener {
 
+    ImageView refresh;
 
 
     public Fragment_Account() {
@@ -32,6 +35,9 @@ public class Fragment_Account extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_account, container, false);
 
+        refresh = rootView.findViewById(R.id.refresh);
+        refresh.setOnClickListener(this);
+
         //TextView nameText = rootView.findViewById(R.id.name);
 
         //User user = MainActivity.getDb().userDao().getUser();
@@ -39,6 +45,17 @@ public class Fragment_Account extends Fragment {
         //nameText.setText(user.firstName);
 
         return rootView;
+    }
+
+    @Override
+    public void onClick(View v){
+        if(v == refresh){
+
+
+
+        }
+
+
     }
 
 }
