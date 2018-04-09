@@ -23,7 +23,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="47dp"
         android:layout_marginTop="137dp"
-        android:text="User: " />
+        android:text="User Name: " />
 
     <TextView
         android:id="@+id/password_text"
@@ -71,7 +71,7 @@
         android:layout_marginBottom="199dp"
         android:text="Kiosk" />
 
-    <Button
+    <TextView
         android:id="@+id/user_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,7 +79,9 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="102dp"
         android:layout_marginStart="35dp"
-        android:text="New User" />
+        android:textColor="@color/colorClick"
+        android:text="New User?"
+        android:textSize="20dp"/>
 
     <Switch
         android:id="@+id/finger_password"

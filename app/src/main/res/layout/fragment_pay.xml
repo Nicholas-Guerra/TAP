@@ -52,7 +52,7 @@
         android:layout_below="@id/btn_nfc"
         android:text="Click To Begin NFC"
         android:textColor="@color/colorSecondaryLight"
-        android:textScaleX="bold"
+        android:textStyle="bold"
         android:textSize="12sp"/>
 
     <ProgressBar

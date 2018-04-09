@@ -1,4 +1,5 @@
 package com.software_engineering.tap.AccountPage;
+
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -11,17 +12,17 @@ import java.util.List;
  */
 @Dao
 public interface UserDao {
-    @Query("SELECT * FROM user")
+    @Query("SELECT * FROM USERS")
     List<User> getAll();
 
-    @Query("SELECT * FROM  user WHERE uid IN (:userIds)")
+    @Query("SELECT * FROM  USERS WHERE userid IN (:userIds)")
     List<User> loadAllByIds(int[] userIds);
 
-    @Query("SELECT * FROM user WHERE first_name LIKE :first AND "
+    @Query("SELECT * FROM USERS WHERE first_name LIKE :first AND "
             + "last_name LIKE :last LIMIT 1")
     User findByName(String first, String last);
 
-    @Query("SELECT * FROM user WHERE email IN :email LIMIT 1" )
+    @Query("SELECT * FROM USERS WHERE user_email IN :email LIMIT 1" )
     User findByEmail(String email);
 
 

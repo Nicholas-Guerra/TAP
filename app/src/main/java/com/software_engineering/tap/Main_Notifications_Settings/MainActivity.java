@@ -58,6 +58,13 @@ public class MainActivity extends AppCompatActivity {
         setupBottomNavigation();
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+
+
+        //Insert
+
+        //Query
+
+        Toast.makeText(this, "Success", Toast.LENGTH_LONG).show();
     }
 
     private void setupTopNavigation(){
