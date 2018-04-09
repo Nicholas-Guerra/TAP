@@ -1,6 +1,7 @@
 package com.software_engineering.tap.Login;
 
 import android.Manifest;
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -13,12 +14,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.software_engineering.tap.AccountPage.AppDatabase;
 import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
 import com.software_engineering.tap.R;
 
 public class LoginActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 100;
+    private static AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +48,15 @@ public class LoginActivity extends AppCompatActivity {
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database-name").build();
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
             if (!(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.INTERNET))) {
                 ActivityCompat.requestPermissions(LoginActivity.this, new String[]{ Manifest.permission.INTERNET}, REQUEST_CODE);
             }
         }
+
+
     }
 
     @Override
@@ -72,5 +79,9 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    public static AppDatabase getDb(){
+        return db;
     }
 }

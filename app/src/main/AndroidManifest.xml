@@ -3,6 +3,9 @@
     package="com.software_engineering.tap">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-feature android:name="android.hardware.nfc" />
+
 
     <application
         android:allowBackup="false"
