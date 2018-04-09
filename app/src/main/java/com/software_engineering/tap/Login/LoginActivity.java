@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
@@ -32,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Button button1 = findViewById(R.id.user_button);
+        TextView button1 = findViewById(R.id.user_button);
         button1.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View view){

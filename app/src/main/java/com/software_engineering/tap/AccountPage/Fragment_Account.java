@@ -12,8 +12,7 @@ import com.software_engineering.tap.R;
 
 public class Fragment_Account extends Fragment {
 
-    AppDatabase db = Room.databaseBuilder(getActivity().getApplicationContext(),
-            AppDatabase.class, "database-name").build();
+
 
     public Fragment_Account() {
         // Required empty public constructor
@@ -23,7 +22,15 @@ public class Fragment_Account extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false);
+
+
+        View rootView = inflater.inflate(R.layout.fragment_account, container, false);
+
+        AppDatabase db = Room.databaseBuilder(getActivity().getApplicationContext(),
+                AppDatabase.class, "database-name").build();
+
+
+        return rootView;
     }
 
 }
