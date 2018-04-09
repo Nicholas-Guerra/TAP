@@ -63,6 +63,8 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
                 timer.setProgress(1);
                 btn_nfc.setOnClickListener(null);
 
+                new receiveNFC(getActivity()).execute();
+
             new CountDownTimer(10000, 100) {
 
                 public void onTick(long millisUntilFinished) {
