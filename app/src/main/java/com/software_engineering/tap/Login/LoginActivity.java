@@ -32,6 +32,16 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        Button button1 = findViewById(R.id.user_button);
+        button1.setOnClickListener(new View.OnClickListener(){
+
+            public void onClick(View view){
+
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
+            }
+        });
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {

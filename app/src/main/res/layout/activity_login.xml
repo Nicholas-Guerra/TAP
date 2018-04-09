@@ -10,7 +10,94 @@
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:layout_centerInParent="true"/>
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/user_button"
+        android:layout_marginEnd="26dp"
+        android:text="Login" />
+
+    <TextView
+        android:id="@+id/user_text"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="137dp"
+        android:text="User: " />
+
+    <TextView
+        android:id="@+id/password_text"
+        android:layout_width="89dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="53dp"
+        android:layout_marginTop="204dp"
+        android:text="Password: " />
+
+    <EditText
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_alignEnd="@+id/login_button"
+        android:layout_alignTop="@+id/user_text"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_alignEnd="@+id/login_button"
+        android:layout_alignTop="@+id/password_text"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <CheckBox
+        android:id="@+id/user_cust"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/user_text"
+        android:layout_marginBottom="246dp"
+        android:text="Cust." />
+
+    <CheckBox
+        android:id="@+id/user_kiosk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/user_text"
+        android:layout_marginBottom="199dp"
+        android:text="Kiosk" />
+
+    <Button
+        android:id="@+id/user_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="102dp"
+        android:layout_marginStart="35dp"
+        android:text="New User" />
+
+    <Switch
+        android:id="@+id/finger_password"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="26dp"
+        android:text="Fingerprint" />
+
+    <TextView
+        android:id="@+id/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
+        android:text="TAP"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
 </RelativeLayout>
