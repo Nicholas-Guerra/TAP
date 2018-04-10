@@ -19,7 +19,7 @@ public interface TransactionDao {
     Transaction getAll();
 
     @Query("UPDATE transactions SET toFrom = :toFrom, status = :status, amount = :amount, transactionDate = :transactionDate WHERE transactionID = :transactionID")
-    void updateTransaction(String toFrom, String status, double amount, String transactionDate, String transactionID);
+    void updateTransaction(String toFrom, String status, double amount, long transactionDate, String transactionID);
 
     @Insert
     void insert(Transaction transaction);

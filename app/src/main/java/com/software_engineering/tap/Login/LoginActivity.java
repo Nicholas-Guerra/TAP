@@ -50,9 +50,11 @@ public class LoginActivity extends AppCompatActivity {
 
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database-name").build();
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
-            if (!(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.INTERNET))) {
-                ActivityCompat.requestPermissions(LoginActivity.this, new String[]{ Manifest.permission.INTERNET}, REQUEST_CODE);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED ) {
+            if (!(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.INTERNET)) ||
+                    !(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.USE_FINGERPRINT))){
+                ActivityCompat.requestPermissions(LoginActivity.this, new String[]{ Manifest.permission.INTERNET, Manifest.permission.USE_FINGERPRINT}, REQUEST_CODE);
             }
         }
 

@@ -59,7 +59,7 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v){
         if(v == refresh){
-            JSONObject obj = new JSONObject();
+            final JSONObject obj = new JSONObject();
             User user = MainActivity.getDb().userDao().getUser();
             try {
                 obj.put("Request", "TransactionUpdate");
@@ -73,9 +73,10 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
                         try {
                             JSONArray array = receivedJSON.getJSONArray("array");
                             for(int x = 0; x <= array.length(); x++){
-                                JSONObject something = array.getJSONObject(x);
+                                JSONObject object = array.getJSONObject(x);
 
-                                MainActivity.getDb().transactionDao().updateTransaction();
+                                MainActivity.getDb().transactionDao().updateTransaction(object.getString("to_from"), object.getString("status"), object.getDouble("amount"), object.getLong("time"), object.getString("transactionID") );
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
