@@ -1,6 +1,7 @@
 package com.software_engineering.tap.AccountPage;
 
 
+import android.annotation.SuppressLint;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.os.Bundle;
@@ -15,8 +16,14 @@ import android.widget.Toast;
 
 import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
 import com.software_engineering.tap.R;
+import com.software_engineering.tap.TransactionPage.sendToServer;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Fragment_Account extends Fragment implements View.OnClickListener {
 
@@ -47,10 +54,39 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
         return rootView;
     }
 
+
+    @SuppressLint("StaticFieldLeak")
     @Override
     public void onClick(View v){
         if(v == refresh){
+            JSONObject obj = new JSONObject();
+            User user = MainActivity.getDb().userDao().getUser();
+            try {
+                obj.put("Request", "TransactionUpdate");
+                obj.put("UID", user.UID);
 
+                new sendToServer(getActivity(), true,"Connecting", obj) {
+                    @Override
+                    public void onPostExecute(JSONObject receivedJSON) {
+                        super.onPostExecute(receivedJSON);
+
+                        try {
+                            JSONArray array = receivedJSON.getJSONArray("array");
+                            for(int x = 0; x <= array.length(); x++){
+                                JSONObject something = array.getJSONObject(x);
+
+                                MainActivity.getDb().transactionDao().updateTransaction();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }.execute();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
 
         }

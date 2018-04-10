@@ -4,6 +4,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.Update;
 
 
 /**
@@ -17,11 +18,15 @@ public interface TransactionDao {
     @Query("SELECT * FROM TRANSACTIONS")
     Transaction getAll();
 
-    @Query("UPDATE transactions SET toFrom = :toFrom, status = :status, amount = :amount, transactionDate = :transactionDate")
-    void updateTransaction(String toFrom, String status, double amount, String transactionDate);
+    @Query("UPDATE transactions SET toFrom = :toFrom, status = :status, amount = :amount, transactionDate = :transactionDate WHERE transactionID = :transactionID")
+    void updateTransaction(String toFrom, String status, double amount, String transactionDate, String transactionID);
 
     @Insert
     void insert(Transaction transaction);
+
+
+
+
 
 
 }
