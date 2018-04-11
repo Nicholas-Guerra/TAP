@@ -1,58 +1,64 @@
 package com.software_engineering.tap.AccountPage;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.ColumnInfo;
 import android.support.annotation.NonNull;
 
-import java.util.UUID;
+
 
 /**
  * Created by grant_000 on 4/4/2018.
  */
 
 @Entity(tableName = "users")
-public class User
-{
+public class User {
+
     @PrimaryKey
     @NonNull
-    @ColumnInfo(name = "userid")
-    String UID;
-
     @ColumnInfo(name = "username")
-    String userName;
+    public String userName;
 
     @ColumnInfo (name = "first_name")
-    String firstName;
+    public String firstName;
 
     @ColumnInfo(name = "last_name")
-    String lastName;
+    public String lastName;
 
     @ColumnInfo(name = "user_email")
-    String email;
+    public String email;
 
     @ColumnInfo(name = "last_update")
-    Long date;
-
-    @ColumnInfo(name = "password_Hashed")
-    String passwordHash;
+    public Long date;
 
     @ColumnInfo(name = "balance")
-    double balance;
+    public double balance;
+
+    @ColumnInfo(name = "password_Hashed")
+    public String passwordHash;
 
     @ColumnInfo(name = "phone_number")
-    int phoneNum;
+    public String phoneNum;
 
-    public User (String userName, String firstName, String lastName, String email, double balance, String password, int phoneNum) {
-        this.UID = UUID.randomUUID().toString();
+    @ColumnInfo(name = "useFingerprint")
+    public boolean useFingerprint;
+
+    @ColumnInfo(name = "pin")
+    public int pin;
+
+
+    public User ( String userName, String firstName, String lastName, String email, String passwordHash, double balance, String phoneNum, boolean useFingerprint, int pin) {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.date = System.currentTimeMillis();
         this.balance = balance;
-        this.passwordHash = password;
+        this.passwordHash = passwordHash;
         this.phoneNum = phoneNum;
+        this.useFingerprint = useFingerprint;
+        this.pin = pin;
     }
 
 

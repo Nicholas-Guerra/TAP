@@ -2,23 +2,31 @@ package com.software_engineering.tap.TransactionPage;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.Dialog;
 import android.app.KeyguardManager;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.software_engineering.tap.AccountPage.Transaction;
+import com.software_engineering.tap.AccountPage.User;
+import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
 import com.software_engineering.tap.R;
 
 import java.io.IOException;
@@ -40,66 +48,115 @@ import static android.content.Context.FINGERPRINT_SERVICE;
 import static android.content.Context.KEYGUARD_SERVICE;
 
 
-public class DialogFragment_Fingerprint_Authentication extends DialogFragment {
+public class DialogFragment_Authentication extends DialogFragment implements View.OnClickListener{
 
     private KeyStore keyStore;
     // Variable used for storing the key in the Android Keystore container
     private static final String KEY_NAME = "androidHive";
     private Cipher cipher;
+    private ImageView close;
+    private boolean success = false;
+    private View rootView;
+    private TextView usePinText;
+
+    private Context context;
 
 
-    public DialogFragment_Fingerprint_Authentication(){
+    public DialogFragment_Authentication(){
     }
 
 
     @TargetApi(Build.VERSION_CODES.M)
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.dialog_fragment_nfc_request, container, false);
+        rootView = inflater.inflate(R.layout.dialog_fragment_authentication, container, false);
 
-        KeyguardManager keyguardManager = (KeyguardManager) getActivity().getSystemService(KEYGUARD_SERVICE);
-        FingerprintManager fingerprintManager = (FingerprintManager) getActivity().getSystemService(FINGERPRINT_SERVICE);
+        close = rootView.findViewById(R.id.close_button);
+        close.setOnClickListener(this);
+
+        usePinText = rootView.findViewById(R.id.use_pin);
+        usePinText.setOnClickListener(this);
+
+
+
+        context = getContext();
+
+        final KeyguardManager keyguardManager = (KeyguardManager) getActivity().getSystemService(KEYGUARD_SERVICE);
+        final FingerprintManager fingerprintManager = (FingerprintManager) getActivity().getSystemService(FINGERPRINT_SERVICE);
 
         if(!fingerprintManager.isHardwareDetected()){
-            /**
-             * An error message will be displayed if the device does not contain the fingerprint hardware.
-             * However if you plan to implement a default authentication method,
-             * you can redirect the user to a default authentication activity from here.
-             * Example:
-             * Intent intent = new Intent(this, DefaultAuthenticationActivity.class);
-             * startActivity(intent);
-             */
-            Toast.makeText(getContext(), "Your Device does not have a Fingerprint Sensor", Toast.LENGTH_LONG);
-
-        }else {
-            // Checks whether fingerprint permission is set on manifest
-            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getContext(), "Fingerprint authentication permission not enabled", Toast.LENGTH_LONG);
-
-            }else{
-                // Check whether at least one fingerprint is registered
-                if (!fingerprintManager.hasEnrolledFingerprints()) {
-                    Toast.makeText(getContext(), "Register at least one fingerprint in Settings", Toast.LENGTH_LONG);
-                }else{
-                    // Checks whether lock screen security is enabled or not
-                    if (!keyguardManager.isKeyguardSecure()) {
-                        Toast.makeText(getContext(), "Lock screen security not enabled in Settings", Toast.LENGTH_LONG);
-                    }else{
-                        generateKey();
-
-                        if (cipherInit()) {
-                            FingerprintManager.CryptoObject cryptoObject = new FingerprintManager.CryptoObject(cipher);
-                            //FingerprintHandler helper = new FingerprintHandler(this);
-                            //helper.startAuth(fingerprintManager, cryptoObject);
+            Log.e("Error", "Your Device does not have a Fingerprint Sensor");
+            usePinLayout();
+        }else if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
+            Log.e("Error", "Fingerprint authentication permission not enabled");
+            usePinLayout();
+        }else if (!fingerprintManager.hasEnrolledFingerprints()) {
+            Log.e("Error", "Register at least one fingerprint in Settings");
+            usePinLayout();
+        }else if (!keyguardManager.isKeyguardSecure()) {
+            Log.e("Error", "Lock screen security not enabled in Settings");
+            usePinLayout();
+        }else{
+            generateKey();
+            if (cipherInit()) {
+                try {
+                    final boolean[] fingerprint = new boolean[1];
+                    Thread thread = new Thread(new Runnable() {
+                        public void run() {
+                            MainActivity.getDb().userDao().insert(new User("Billy**Bob", "Bill", "Bob", "bob@gmail.com", "b4183g498r1723ukbfhwqejf", 12.15, "2149776172""));
+                            fingerprint[0] = MainActivity.getDb().userDao().getUser().useFingerprint;
                         }
+                    });
+                    thread.join();
+                    if (fingerprint[0]) {
+                        FingerprintManager.CryptoObject cryptoObject = new FingerprintManager.CryptoObject(cipher);
+                        FingerprintHandler helper = new FingerprintHandler(context, DialogFragment_Authentication.this);
+                        helper.startAuth(fingerprintManager, cryptoObject);
+                    } else{
+                        usePinLayout();
                     }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+
+
             }
         }
 
 
 
         return rootView;
+    }
+
+    public void setSuccess(boolean success){
+        this.success = success;
+    }
+
+    public boolean getSuccess(){
+        return this.success;
+    }
+
+    private void usePinLayout(){
+        RelativeLayout fingerprintLayout = rootView.findViewById(R.id.fingerprint_layout);
+        fingerprintLayout.setVisibility(View.GONE);
+        RelativeLayout pinLayout = rootView.findViewById(R.id.pin_layout);
+        pinLayout.setVisibility(View.VISIBLE);
+
+        EditText input = rootView.findViewById(R.id.pin_edit_text);
+
+        input.requestFocus();
+        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+    }
+
+
+    @Override
+    public void onClick(View v){
+        if(v == close){
+            dismiss();
+        } else if(v == usePinText){
+            usePinLayout();
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.M)
