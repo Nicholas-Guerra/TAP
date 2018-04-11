@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="222dp"
+        android:layout_marginBottom="200dp"
         android:text="Login" />
 
     <TextView
@@ -39,8 +39,7 @@
         android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="130dp"
+        android:layout_alignBottom="@+id/user_text"
         android:layout_toEndOf="@+id/user_text"
         android:ems="10"
         android:inputType="textPersonName" />
@@ -49,9 +48,8 @@
         android:id="@+id/editText3"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="196dp"
-        android:layout_toEndOf="@+id/user_text"
+        android:layout_alignBottom="@+id/password_text"
+        android:layout_toEndOf="@+id/password_text"
         android:ems="10"
         android:inputType="textPassword" />
 
@@ -61,19 +59,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="153dp"
+        android:layout_marginBottom="97dp"
         android:text="New User?"
         android:textColor="@color/colorClick"
         android:textSize="20dp" />
-
-    <Switch
-        android:id="@+id/finger_password"
-        android:layout_width="135dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="66dp"
-        android:text="Fingerprint" />
 
     <TextView
         android:id="@+id/app_name"
