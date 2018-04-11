@@ -2,6 +2,7 @@ package com.software_engineering.tap.TransactionPage;
 
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -17,7 +18,6 @@ import android.widget.Toast;
 import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
 import com.software_engineering.tap.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -59,6 +59,26 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
         if(v == notifications){
             MainActivity.openDrawer();
         } else if(v == btn_nfc){
+
+            final DialogFragment_Authentication dialog = new DialogFragment_Authentication();
+            dialog.show(getFragmentManager(), "authentication");
+            getFragmentManager().executePendingTransactions();
+            dialog.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    if(dialog.getSuccess()){
+                        Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
+                        //Authentication successful
+
+
+                    } else{
+                        Toast.makeText(getContext(), "Canceled", Toast.LENGTH_SHORT).show();
+                        //Authentication canceled
+
+                    }
+                }
+            });
+
             btn_nfc.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.tap));
                 timer.setProgress(1);
                 btn_nfc.setOnClickListener(null);

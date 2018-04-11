@@ -2,6 +2,7 @@ package com.software_engineering.tap.AccountPage;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
@@ -15,19 +16,19 @@ public class Transaction {
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "transactionID")
-    String transactionID;
+    public String transactionID;
 
     @ColumnInfo(name = "toFrom")
-    String toFromName;
+    public String toFromName;
 
     @ColumnInfo(name = "amount")
-    double amount;
+    public double amount;
 
     @ColumnInfo(name = "status")
-    String status;
+    public String status;
 
     @ColumnInfo(name = "transactionDate")
-    long date;
+    public long date;
 
     public Transaction (String toFromName, double amount, String status, long date) {
         this.transactionID = UUID.randomUUID().toString();
@@ -37,4 +38,15 @@ public class Transaction {
         this.amount = amount;
         this.status = status;
     }
+
+    @Ignore
+    public Transaction (String toFromName, double amount, String status, long date, String transactionID) {
+        this.transactionID = transactionID;
+        this.toFromName = toFromName;
+        this.status = status;
+        this.date = System.currentTimeMillis();
+        this.amount = amount;
+        this.status = status;
+    }
+
 }

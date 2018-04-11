@@ -63,7 +63,7 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
             User user = MainActivity.getDb().userDao().getUser();
             try {
                 obj.put("Request", "TransactionUpdate");
-                obj.put("UID", user.UID);
+                obj.put("userName", user.userName);
 
                 new sendToServer(getActivity(), true,"Connecting", obj) {
                     @Override
@@ -74,8 +74,9 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
                             JSONArray array = receivedJSON.getJSONArray("array");
                             for(int x = 0; x <= array.length(); x++){
                                 JSONObject object = array.getJSONObject(x);
+                                Transaction transaction = new Transaction(object.getString("to_from"),  object.getDouble("amount"), object.getString("status"),object.getLong("time"), object.getString("transactionID"));
 
-                                MainActivity.getDb().transactionDao().updateTransaction(object.getString("to_from"), object.getString("status"), object.getDouble("amount"), object.getLong("time"), object.getString("transactionID") );
+                                MainActivity.getDb().transactionDao().updateTransaction(transaction);
 
                             }
                         } catch (JSONException e) {
