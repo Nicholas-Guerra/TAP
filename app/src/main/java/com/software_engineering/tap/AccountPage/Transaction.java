@@ -15,7 +15,7 @@ public class Transaction {
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "transactionID")
-    String TID;
+    String transactionID;
 
     @ColumnInfo(name = "toFrom")
     String toFromName;
@@ -30,7 +30,7 @@ public class Transaction {
     long date;
 
     public Transaction (String toFromName, double amount, String status, long date) {
-        this.TID = UUID.randomUUID().toString();
+        this.transactionID = UUID.randomUUID().toString();
         this.toFromName = toFromName;
         this.status = status;
         this.date = System.currentTimeMillis();

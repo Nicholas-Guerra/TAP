@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
 import com.software_engineering.tap.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -62,6 +63,8 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
                 timer.setProgress(1);
                 btn_nfc.setOnClickListener(null);
 
+                new receiveNFC(getActivity()).execute();
+
             new CountDownTimer(10000, 100) {
 
                 public void onTick(long millisUntilFinished) {
@@ -90,7 +93,6 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
                     public void onPostExecute(JSONObject receivedJSON) {
                         super.onPostExecute(receivedJSON);
 
-                        Toast.makeText(getContext(), receivedJSON.toString(), Toast.LENGTH_LONG).show();
 
                     }
                 }.execute();
