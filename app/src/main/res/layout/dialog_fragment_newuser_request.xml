@@ -1,16 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="25dp">
 
-    <TextView
-        android:id="@+id/textView"
+    <EditText
+        android:id="@+id/New_FirstEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/New_FirstText"
+        app:layout_constraintStart_toEndOf="@+id/New_UserText" />
+
+    <TextView
+        android:id="@+id/New_FirstText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="First Name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toTopOf="@+id/New_LastEdit"
+        app:layout_constraintEnd_toStartOf="@+id/New_FirstEdit"
+        app:layout_constraintStart_toStartOf="@+id/New_LastName" />
+
+    <CheckBox
+        android:id="@+id/user_kiosk2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/user_text"
+        android:text="Kiosk"
+        app:layout_constraintStart_toStartOf="@+id/user_cust"
+        app:layout_constraintTop_toBottomOf="@+id/user_cust" />
+
+    <CheckBox
+        android:id="@+id/user_cust"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/user_text"
+        android:layout_marginBottom="68dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="58dp"
+        android:text="Cust."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/New_PinText" />
+
+    <TextView
+        android:id="@+id/Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="New User"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        tools:layout_editor_absoluteX="163dp"
-        tools:layout_editor_absoluteY="54dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/New_UserText"
+        android:layout_width="93dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:layout_marginStart="28dp"
+        android:ems="10"
+        android:text="Username"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toBottomOf="@+id/New_UserEdit"
+        app:layout_constraintEnd_toStartOf="@+id/Title"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/New_UserEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/New_UserText"
+        app:layout_constraintTop_toBottomOf="@+id/Title" />
+
+    <TextView
+        android:id="@+id/New_PhoneText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="13dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Phone Number"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toTopOf="@+id/New_EditEmail"
+        app:layout_constraintEnd_toStartOf="@+id/New_PhoneEdit"
+        app:layout_constraintStart_toStartOf="@+id/user_cust" />
+
+    <TextView
+        android:id="@+id/New_LastName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="11dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Last Name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toTopOf="@+id/New_PhoneEdit"
+        app:layout_constraintEnd_toStartOf="@+id/New_LastEdit"
+        app:layout_constraintStart_toStartOf="@+id/New_PhoneText" />
+
+    <EditText
+        android:id="@+id/New_PhoneEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/New_PhoneText"
+        app:layout_constraintStart_toStartOf="@+id/New_LastEdit" />
+
+    <TextView
+        android:id="@+id/New_EmailText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Email"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toTopOf="@+id/New_PassEdit"
+        app:layout_constraintEnd_toStartOf="@+id/New_EditEmail"
+        app:layout_constraintStart_toStartOf="@+id/New_PassText" />
+
+    <EditText
+        android:id="@+id/New_EditEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toBottomOf="@+id/New_EmailText"
+        app:layout_constraintStart_toEndOf="@+id/New_PhoneText" />
+
+    <TextView
+        android:id="@+id/New_PassText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="196dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Password"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/New_PassEdit"
+        app:layout_constraintStart_toStartOf="@+id/New_PinText" />
+
+    <EditText
+        android:id="@+id/New_PassEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="@+id/New_PassText"
+        app:layout_constraintStart_toStartOf="@+id/New_EditEmail" />
+
+    <TextView
+        android:id="@+id/New_PinText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="38dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="PIN"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toStartOf="@+id/buttons"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/New_PassText" />
+
+    <EditText
+        android:id="@+id/New_PinEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberPassword"
+        app:layout_constraintBottom_toBottomOf="@+id/New_PinText"
+        app:layout_constraintStart_toEndOf="@+id/New_PassText" />
+
+    <EditText
+        android:id="@+id/New_LastEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/New_LastName"
+        app:layout_constraintStart_toStartOf="@+id/New_FirstEdit" />
+
+    <RadioButton
+        android:id="@+id/Fingerprint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="44dp"
+        android:layout_marginEnd="16dp"
+        android:text="Fingerprint"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/Submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:text="Submit"
+        app:layout_constraintBaseline_toBaselineOf="@+id/Fingerprint"
+        app:layout_constraintEnd_toStartOf="@+id/Fingerprint" />
+
 </android.support.constraint.ConstraintLayout>
