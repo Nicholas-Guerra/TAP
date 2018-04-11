@@ -10,9 +10,9 @@
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/user_kiosk"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="-199dp"
+        android:layout_marginBottom="222dp"
         android:text="Login" />
 
     <TextView
@@ -55,31 +55,13 @@
         android:ems="10"
         android:inputType="textPassword" />
 
-    <CheckBox
-        android:id="@+id/user_cust"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/user_text"
-        android:layout_marginBottom="246dp"
-        android:text="Cust." />
-
-    <CheckBox
-        android:id="@+id/user_kiosk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/user_text"
-        android:layout_marginBottom="199dp"
-        android:text="Kiosk" />
-
     <TextView
         android:id="@+id/user_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="91dp"
+        android:layout_marginBottom="153dp"
         android:text="New User?"
         android:textColor="@color/colorClick"
         android:textSize="20dp" />
@@ -90,7 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="26dp"
+        android:layout_marginBottom="66dp"
         android:text="Fingerprint" />
 
     <TextView
