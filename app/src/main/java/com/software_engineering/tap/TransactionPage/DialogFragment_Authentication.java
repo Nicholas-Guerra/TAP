@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.KeyguardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
@@ -14,18 +15,17 @@ import android.security.keystore.KeyProperties;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.software_engineering.tap.AccountPage.Transaction;
-import com.software_engineering.tap.AccountPage.User;
 import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
 import com.software_engineering.tap.R;
 
@@ -46,6 +46,8 @@ import javax.crypto.SecretKey;
 
 import static android.content.Context.FINGERPRINT_SERVICE;
 import static android.content.Context.KEYGUARD_SERVICE;
+import static android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN;
+import static android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE;
 
 
 public class DialogFragment_Authentication extends DialogFragment implements View.OnClickListener{
@@ -58,6 +60,7 @@ public class DialogFragment_Authentication extends DialogFragment implements Vie
     private boolean success = false;
     private View rootView;
     private TextView usePinText;
+    private EditText input;
 
     private Context context;
 
@@ -78,9 +81,9 @@ public class DialogFragment_Authentication extends DialogFragment implements Vie
         usePinText = rootView.findViewById(R.id.use_pin);
         usePinText.setOnClickListener(this);
 
-
-
         context = getContext();
+
+        setCancelable(false);
 
         final KeyguardManager keyguardManager = (KeyguardManager) getActivity().getSystemService(KEYGUARD_SERVICE);
         final FingerprintManager fingerprintManager = (FingerprintManager) getActivity().getSystemService(FINGERPRINT_SERVICE);
@@ -104,10 +107,10 @@ public class DialogFragment_Authentication extends DialogFragment implements Vie
                     final boolean[] fingerprint = new boolean[1];
                     Thread thread = new Thread(new Runnable() {
                         public void run() {
-                            MainActivity.getDb().userDao().insert(new User("Billy**Bob", "Bill", "Bob", "bob@gmail.com", "b4183g498r1723ukbfhwqejf", 12.15, "2149776172""));
                             fingerprint[0] = MainActivity.getDb().userDao().getUser().useFingerprint;
                         }
                     });
+                    thread.start();
                     thread.join();
                     if (fingerprint[0]) {
                         FingerprintManager.CryptoObject cryptoObject = new FingerprintManager.CryptoObject(cipher);
@@ -138,15 +141,53 @@ public class DialogFragment_Authentication extends DialogFragment implements Vie
     }
 
     private void usePinLayout(){
+
         RelativeLayout fingerprintLayout = rootView.findViewById(R.id.fingerprint_layout);
         fingerprintLayout.setVisibility(View.GONE);
         RelativeLayout pinLayout = rootView.findViewById(R.id.pin_layout);
         pinLayout.setVisibility(View.VISIBLE);
 
-        EditText input = rootView.findViewById(R.id.pin_edit_text);
+        input = rootView.findViewById(R.id.pin_edit_text);
 
-        input.requestFocus();
-        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_GO) {
+                    try {
+                        final boolean[] pin = new boolean[1];
+                        Thread thread = new Thread(new Runnable() {
+                            public void run() {
+                                if(MainActivity.getDb().userDao().getUser().pin == Integer.parseInt(input.getText().toString())){
+                                    pin[0] = true;
+                                } else{
+                                    pin[0] = false;
+                                }
+
+                            }
+                        });
+
+                        thread.start();
+                        thread.join();
+
+                        if (pin[0]) {
+                            success = true;
+                            dismiss();
+                        } else{
+                            input.setError("Incorrect pin");
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
     }
 
 
