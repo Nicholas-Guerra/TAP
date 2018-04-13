@@ -2,6 +2,7 @@ package com.software_engineering.tap.TransactionPage;
 
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -78,6 +80,8 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
                     }
                 }
             });
+
+
 
             btn_nfc.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.tap));
                 timer.setProgress(1);
