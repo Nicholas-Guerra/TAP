@@ -1,10 +1,12 @@
 package com.software_engineering.tap.Main_Notifications_Settings;
 
 
-import
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.software_engineering.tap.AccountPage.AppDatabase;
 import com.software_engineering.tap.R;
 import com.software_engineering.tap.TransactionPage.DialogFragment_Authentication;
 
@@ -21,15 +24,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class RecyclerViewAdpater_Notifications  extends RecyclerView.Adapter<RecyclerViewAdpater_Notifications.RecyclerViewHolder>{
+public class RecyclerViewAdpater_Notifications  extends RecyclerView.Adapter<RecyclerViewAdpater_Notifications.RecyclerViewHolder> {
 
 
     private List<Transaction_Notification> transactionNotificationList;
     private DateFormat df = new SimpleDateFormat("EEE MM/dd/yy hh:mm aaa");
-    private Activity activity;
-    public RecyclerViewAdpater_Notifications(Activity activity, List<Transaction_Notification> transaction_notificationList) {
+    private Context context;
+
+    public RecyclerViewAdpater_Notifications(Context context, List<Transaction_Notification> transaction_notificationList) {
         transactionNotificationList = transaction_notificationList;
-        this.activity = activity;
+        this.context = context;
     }
 
     @Override
@@ -47,47 +51,68 @@ public class RecyclerViewAdpater_Notifications  extends RecyclerView.Adapter<Rec
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
                 builder.setTitle("Confirm");
                 builder.setMessage("Send " + holder.toName.getText() + " " + holder.amount.getText() + " TPC?");
-
                 builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
                         final DialogFragment_Authentication dialogFragment_authentication = new DialogFragment_Authentication();
-                        dialogFragment_authentication.show(activity.getFragmentManager(), "authentication");
-                        activity.getFragmentManager().executePendingTransactions();
+                        dialogFragment_authentication.show(((AppCompatActivity)context).getSupportFragmentManager(), "authentication");
+                        ((AppCompatActivity)context).getSupportFragmentManager().executePendingTransactions();
+
                         dialogFragment_authentication.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
                             @Override
                             public void onDismiss(DialogInterface dialogInterface) {
-                                if(dialogFragment_authentication.getSuccess()){
-                                    Toast.makeText(activity, "Success", Toast.LENGTH_SHORT).show();
+                                if (dialogFragment_authentication.getSuccess()) {
+                                    Toast.makeText(context, "Accepted", Toast.LENGTH_SHORT).show();
                                     //Authentication successful
 
 
-                                } else{
-                                    Toast.makeText(activity, "Canceled", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(context, "Canceled", Toast.LENGTH_SHORT).show();
                                     //Authentication canceled
-
                                 }
                             }
                         });
 
-                        dialog.dismiss();
+                        dialogInterface.dismiss();
                     }
                 });
+
 
                 builder.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
-
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        final DialogFragment_Authentication dialogFragment_authentication = new DialogFragment_Authentication();
+                        dialogFragment_authentication.show(((AppCompatActivity)context).getSupportFragmentManager(), "authentication");
+                        ((AppCompatActivity)context).getSupportFragmentManager().executePendingTransactions();
 
+                        dialogFragment_authentication.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialogInterface) {
+                                if (dialogFragment_authentication.getSuccess()) {
+                                    Toast.makeText(context, "Declined", Toast.LENGTH_SHORT).show();
+                                    //Authentication successful
 
-                        dialog.dismiss();
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            AppDatabase.getInstance(context).transaction_notificationDao().delete(transactionNotificationList.get(holder.getAdapterPosition()));
+                                        }
+                                    }).start();
+
+                                } else {
+                                    Toast.makeText(context, "Canceled", Toast.LENGTH_SHORT).show();
+                                    //Authentication canceled
+                                }
+                            }
+                        });
+
+                        dialogInterface.dismiss();
                     }
                 });
-
                 AlertDialog alert = builder.create();
                 alert.show();
             }
@@ -127,6 +152,7 @@ public class RecyclerViewAdpater_Notifications  extends RecyclerView.Adapter<Rec
 
         }
     }
+
 
 
 

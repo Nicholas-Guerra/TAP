@@ -2,7 +2,6 @@ package com.software_engineering.tap.TransactionPage;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.DialogFragment;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -13,6 +12,7 @@ import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -128,9 +128,9 @@ public class DialogFragment_Authentication extends DialogFragment implements Vie
         return rootView;
     }
 
-   // public void setSuccess(boolean success){
-    //    this.success = success;
-    //}
+    public void setSuccess(boolean success){
+        this.success = success;
+    }
 
     public boolean getSuccess(){
         return this.success;

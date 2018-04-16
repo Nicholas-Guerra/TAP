@@ -169,8 +169,6 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
                         e.printStackTrace();
                     } catch (JSONException e) {
                         e.printStackTrace();
-
-
                     }
                 }
             }).start();

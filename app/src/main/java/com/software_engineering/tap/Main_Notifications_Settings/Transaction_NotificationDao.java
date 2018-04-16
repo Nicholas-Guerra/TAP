@@ -3,6 +3,7 @@ package com.software_engineering.tap.Main_Notifications_Settings;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
@@ -21,4 +22,6 @@ public interface Transaction_NotificationDao {
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     void insert(Transaction_Notification transaction_notification);
 
+    @Delete
+    void delete(Transaction_Notification transaction_notification);
 }
