@@ -47,8 +47,11 @@ public class User {
     @ColumnInfo(name = "pin")
     public int pin;
 
+    @ColumnInfo(name = "token")
+    public String token;
 
-    public User ( String userName, String firstName, String lastName, String email, String passwordHash, double balance, String phoneNum, boolean useFingerprint, int pin) {
+
+    public User ( String userName, String firstName, String lastName, String email, String passwordHash, double balance, String phoneNum, boolean useFingerprint, int pin, String token) {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -59,6 +62,7 @@ public class User {
         this.phoneNum = phoneNum;
         this.useFingerprint = useFingerprint;
         this.pin = pin;
+        this.token = token;
     }
 
 

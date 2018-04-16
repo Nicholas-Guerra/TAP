@@ -21,7 +21,6 @@ import com.software_engineering.tap.R;
 public class LoginActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 100;
-    private static AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,6 @@ public class LoginActivity extends AppCompatActivity {
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database-name").fallbackToDestructiveMigration().build();
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED ) {
@@ -57,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(LoginActivity.this, new String[]{ Manifest.permission.INTERNET, Manifest.permission.USE_FINGERPRINT}, REQUEST_CODE);
             }
         }
+
 
 
     }
@@ -83,7 +82,4 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public static AppDatabase getDb(){
-        return db;
-    }
 }

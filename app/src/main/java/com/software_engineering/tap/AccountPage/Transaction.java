@@ -30,17 +30,8 @@ public class Transaction {
     @ColumnInfo(name = "transactionDate")
     public long date;
 
-    public Transaction (String toFromName, double amount, String status, long date) {
-        this.transactionID = UUID.randomUUID().toString();
-        this.toFromName = toFromName;
-        this.status = status;
-        this.date = System.currentTimeMillis();
-        this.amount = amount;
-        this.status = status;
-    }
 
-    @Ignore
-    public Transaction (String toFromName, double amount, String status, long date, String transactionID) {
+    public Transaction (String toFromName, double amount, String status, long date, @NonNull String transactionID) {
         this.transactionID = transactionID;
         this.toFromName = toFromName;
         this.status = status;

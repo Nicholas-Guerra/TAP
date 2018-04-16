@@ -34,21 +34,21 @@ import javax.net.ssl.X509TrustManager;
 
 public class sendToServer extends AsyncTask<Void, Void, JSONObject> {
 
-    private Activity activity;
+    private Context context;
     private boolean progressDialog;
     private ProgressDialog pDialog;
     private String progressMessage;
     private JSONObject jsonMessage;
 
 
-    public sendToServer(Activity activity, boolean progressDialog, String progressMessage, JSONObject jsonMessage) {
-        this.activity = activity;
+    public sendToServer(Context context, boolean progressDialog, String progressMessage, JSONObject jsonMessage) {
+        this.context = context;
         this.progressDialog = progressDialog;
         this.progressMessage = progressMessage;
         this.jsonMessage = jsonMessage;
 
         if(progressDialog)
-            pDialog = new ProgressDialog(activity);
+            pDialog = new ProgressDialog(context);
     }
 
 
@@ -81,7 +81,7 @@ public class sendToServer extends AsyncTask<Void, Void, JSONObject> {
         JSONObject receivedJSON;
 
         try {
-            InputStream caInput = activity.getResources().openRawResource(R.raw.truststore);
+            InputStream caInput = context.getResources().openRawResource(R.raw.truststore);
             KeyStore keyStore = KeyStore.getInstance("BKS");
             keyStore.load(caInput, "123456".toCharArray());
 

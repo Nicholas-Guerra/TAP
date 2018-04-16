@@ -1,10 +1,13 @@
 package com.software_engineering.tap.AccountPage;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Update;
+
+import java.util.List;
 
 
 /**
@@ -13,20 +16,15 @@ import android.arch.persistence.room.Update;
 @Dao
 public interface TransactionDao {
     @Query("SELECT * FROM TRANSACTIONS LIMIT 4")
-    Transaction getRecent();
+    List<Transaction> getRecent();
 
     @Query("SELECT * FROM TRANSACTIONS")
-    Transaction getAll();
+    List<Transaction> getAll();
 
     @Update
     void updateTransaction(Transaction transaction);
 
-    @Insert
+    @Insert (onConflict = OnConflictStrategy.REPLACE)
     void insert(Transaction transaction);
-
-
-
-
-
 
 }
