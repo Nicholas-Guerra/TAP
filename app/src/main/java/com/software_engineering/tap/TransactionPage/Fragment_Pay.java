@@ -2,15 +2,14 @@ package com.software_engineering.tap.TransactionPage;
 
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -22,6 +21,12 @@ import com.software_engineering.tap.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class Fragment_Pay extends Fragment implements View.OnClickListener{
 
@@ -104,10 +109,10 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
 
 
         } else if(v == connect){
-            try {
+            /*try {
 
 
-                JSONObject send = new JSONObject();
+                /*JSONObject send = new JSONObject();
                 send.put("Request", "Transaction");
                 send.put("Sender", "Bob");
                 send.put("Receiver", "Sue");
@@ -124,7 +129,49 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
 
             } catch (JSONException e) {
                 e.printStackTrace();
-            }
+            }*/
+
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        URL myurl = new URL("https://fcm.googleapis.com/fcm/send");
+                        HttpsURLConnection con = (HttpsURLConnection)myurl.openConnection();
+                        con.setDoOutput(true);
+                        con.setRequestMethod("POST");
+
+                        con.setRequestProperty("Content-Type", "application/json");
+                        con.setRequestProperty("Authorization", "key=AAAAvDSzk-s:APA91bEpIUE5NHy-axptjiaSxB5_waxCyH95UuXzw0HM_Sg7UR33pJRrc_AzQH5AxrS38BAqgVlD1Vfj3OeB4oce2IWwfMmMpOiauv9Ssvm32PzgkhAG-Wdu_PpJmCWVnGT7OD2fAjIq");
+
+                        JSONObject object = new JSONObject();
+                        JSONObject data = new JSONObject();
+                        data.put("User Name", "Sally")
+                                .put("Amount", "41.28")
+                                .put("Date", "1523831301798");
+
+                        object.put("to", "dx-5O1rtuD4:APA91bEWTuV2pRwzyFpG8tNK9U6Rj4rwmIq7eHrH6Y7Cgu4hkp5iSmWgJfoPMt3uOXbP1ku6zhONYfY6BKUIsHoNZ-nIugUoyF3nVP0Z-JD9ANRRA0nE5um9xpGlK0iUu4l6Zb7-IlAL")
+                                .put("data", data);
+
+                        OutputStream outputStream = con.getOutputStream();
+                        outputStream.write(object.toString().getBytes());
+                        outputStream.flush();
+
+                        int responseCode = con.getResponseCode();
+                        Log.i("PostRequest", "Sending 'POST' request");
+                        Log.i("PostRequest", "Response Code : " + responseCode+" "+con.getResponseMessage());
+
+
+                        outputStream.close();
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
 
         }
     }

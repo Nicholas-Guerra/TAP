@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.software_engineering.tap.AccountPage.AppDatabase;
 import com.software_engineering.tap.R;
 
 public class Fragment_Request extends Fragment implements View.OnClickListener{
@@ -78,7 +79,37 @@ public class Fragment_Request extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v){
-        if(v == tap){
+        if(v == send){
+            if(total != 0){
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(AppDatabase.getInstance(getContext()).userDao().getUser().balance >= total / 100.0){
+                            DialogFragment_Send_Request.newInstance((double) total / 100.0).show(getFragmentManager().beginTransaction(), "send_request");
+                        } else {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getActivity(), "Insufficient funds", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        }
+                    }
+                }).start();
+
+            } else{
+                toast = Toast.makeText(getActivity(), "Nothing entered", Toast.LENGTH_SHORT);
+                toast.show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        toast.cancel();
+                    }
+                }, 500);
+            }
+        } else if(v == tap){
             if(total!=0) {
                 DialogFragment_NFC_Request.newInstance((double) total / 100.0).show(getFragmentManager().beginTransaction(), "nfc_request");
                 Handler handler = new Handler();
@@ -91,7 +122,7 @@ public class Fragment_Request extends Fragment implements View.OnClickListener{
                     }
                 }, 500);
             } else {
-                toast = Toast.makeText(getActivity(), "Nothing entered!", Toast.LENGTH_SHORT);
+                toast = Toast.makeText(getActivity(), "Nothing entered", Toast.LENGTH_SHORT);
                 toast.show();
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
@@ -101,14 +132,12 @@ public class Fragment_Request extends Fragment implements View.OnClickListener{
                     }
                 }, 500);
             }
-        } else if(v == send){
-
-        } else if(v == btnDEL){
+        }  else if(v == btnDEL){
             total /= 10;
         } else if(v == btnCLR){
             total = 0;
         } else if(String.format("%.2f",(double)total/100.0).length() >= 7) {
-            toast = Toast.makeText(getActivity(), "Too long!" , Toast.LENGTH_SHORT);
+            toast = Toast.makeText(getActivity(), "Too long" , Toast.LENGTH_SHORT);
             toast.show();
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -153,5 +182,6 @@ public class Fragment_Request extends Fragment implements View.OnClickListener{
         TAPtext.setText(String.format("%.2f",(double)total/100.0));
         conversionText.setText(conversionSymbol + String.format("%.2f",(double)total / 100.0 * conversionRate));
     }
+
 
 }
