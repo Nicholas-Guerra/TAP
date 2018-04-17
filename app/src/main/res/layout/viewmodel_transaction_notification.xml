@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relative_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/date"
+        android:text="Monday 2/15/18 06:15 AM"
+        android:textSize="15sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:textColor="@color/colorClick"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"/>
+
+    <TextView
+        android:id="@+id/toName"
+        android:text="Bobby"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/date"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:id="@+id/defaultText"
+        android:layout_toRightOf="@id/toName"
+        android:layout_below="@id/date"
+        android:textSize="18sp"
+        android:text=" has requested "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/amount"
+        android:text="31.70"
+        android:textSize="18sp"
+        android:layout_toRightOf="@+id/defaultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/date" />
+    <TextView
+        android:id="@+id/defaultText2"
+        android:text=" TPC"
+        android:textSize="18sp"
+        android:layout_toRightOf="@+id/amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/date"
+        android:textColor="@color/colorTapOrange"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimaryDark"
+        android:layout_below="@+id/amount"
+        android:layout_marginTop="15dp" />
+
+</RelativeLayout>

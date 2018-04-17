@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.KeyguardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
@@ -19,14 +18,13 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
+
+import com.software_engineering.tap.AccountPage.AppDatabase;
 import com.software_engineering.tap.R;
 
 import java.io.IOException;
@@ -46,8 +44,6 @@ import javax.crypto.SecretKey;
 
 import static android.content.Context.FINGERPRINT_SERVICE;
 import static android.content.Context.KEYGUARD_SERVICE;
-import static android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN;
-import static android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE;
 
 
 public class DialogFragment_Authentication extends DialogFragment implements View.OnClickListener{
@@ -107,7 +103,7 @@ public class DialogFragment_Authentication extends DialogFragment implements Vie
                     final boolean[] fingerprint = new boolean[1];
                     Thread thread = new Thread(new Runnable() {
                         public void run() {
-                            fingerprint[0] = MainActivity.getDb().userDao().getUser().useFingerprint;
+                            fingerprint[0] = AppDatabase.getInstance(getContext()).userDao().getUser().useFingerprint;
                         }
                     });
                     thread.start();
@@ -159,7 +155,7 @@ public class DialogFragment_Authentication extends DialogFragment implements Vie
                         final boolean[] pin = new boolean[1];
                         Thread thread = new Thread(new Runnable() {
                             public void run() {
-                                if(MainActivity.getDb().userDao().getUser().pin == Integer.parseInt(input.getText().toString())){
+                                if(AppDatabase.getInstance(context).userDao().getUser().pin == Integer.parseInt(input.getText().toString())){
                                     pin[0] = true;
                                 } else{
                                     pin[0] = false;
