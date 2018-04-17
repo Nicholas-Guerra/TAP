@@ -1,6 +1,8 @@
 package com.software_engineering.tap.Login;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -9,10 +11,17 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.software_engineering.tap.TransactionPage.sendToServer;
 
 import com.software_engineering.tap.AccountPage.AppDatabase;
 import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
@@ -22,25 +31,36 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 100;
 
+    private Button btnLogin;
+    private TextView btnNewUser;
+    private EditText userName, userPassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button button = findViewById(R.id.login_button);
-        button.setOnClickListener(new View.OnClickListener() {
+        userName = (EditText) findViewById(R.id.user_name);
+        userPassword = (EditText) findViewById(R.id.user_password);
+        btnLogin = (Button) findViewById(R.id.login_button);
+        btnNewUser = (TextView) findViewById(R.id.user_button);
+
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
+                login(userName.getText().toString(), userPassword.getText().toString());
+
             }
         });
 
-        TextView button1 = findViewById(R.id.user_button);
-        button1.setOnClickListener(new View.OnClickListener(){
+
+        btnNewUser.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View view){
 
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                startActivity(new Intent(LoginActivity.this, Fragment_NewUser_Request.class));
 
             }
         });
@@ -57,6 +77,40 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
+
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private void login(final String userName, final String userPassword){
+
+        JSONObject object = new JSONObject();
+
+        try {
+            object.put("userName", userName);
+            object.put("hashedPassword",userPassword );
+
+            new sendToServer(this,true, "Verifying", object){
+
+                @Override
+                public void onPostExecute(JSONObject receivedJSON){
+
+                    try {
+                        String status = receivedJSON.getString("Status");
+                        if(status.equals("Complete")){
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        } else{
+                            Toast.makeText(getBaseContext(), receivedJSON.getString("Message"), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+            }.execute();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
