@@ -51,6 +51,8 @@ public class RecyclerViewAdpater_Notifications  extends RecyclerView.Adapter<Rec
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 final AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
                 builder.setTitle("Confirm");
@@ -58,6 +60,29 @@ public class RecyclerViewAdpater_Notifications  extends RecyclerView.Adapter<Rec
                 builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        final boolean[] availableFunds = {false};
+                        try {
+                            Thread thread = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(AppDatabase.getInstance(context).userDao().getUser().balance < Double.valueOf(holder.amount.getText().toString())){
+                                        availableFunds[0] = false;
+                                    } else{
+                                        availableFunds[0] = true;
+                                    }
+                                }
+                            });
+
+                            thread.start();
+                            thread.join();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        if(!availableFunds[0]) {
+                            Toast.makeText(context, "Insufficient funds", Toast.LENGTH_LONG).show();
+                            return;
+                        }
                         final DialogFragment_Authentication dialogFragment_authentication = new DialogFragment_Authentication();
                         dialogFragment_authentication.show(((AppCompatActivity)context).getSupportFragmentManager(), "authentication");
                         ((AppCompatActivity)context).getSupportFragmentManager().executePendingTransactions();

@@ -87,13 +87,13 @@ public class DialogFragment_Send_Request extends DialogFragment implements View.
             @SuppressLint("StaticFieldLeak")
             @Override
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-                String sender = (String) listView.getItemAtPosition(position);
-                final String[] receiver = new String[1];
+                String to = (String) listView.getItemAtPosition(position);
+                final String[] from = new String[1];
                 try {
                     Thread thread = new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            receiver[0] = AppDatabase.getInstance(getContext()).userDao().getUser().userName;
+                            from[0] = AppDatabase.getInstance(getContext()).userDao().getUser().userName;
                         }
                     });
 
@@ -102,8 +102,8 @@ public class DialogFragment_Send_Request extends DialogFragment implements View.
 
 
                     JSONObject object = new JSONObject();
-                    object.put("sender", sender)
-                            .put("receiver", receiver[0])
+                    object.put("to", to)
+                            .put("from", from[0])
                             .put("amount", amount);
 
                     new sendToServer(getContext(), true, "Sending request", object){
