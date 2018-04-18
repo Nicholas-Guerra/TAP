@@ -102,7 +102,8 @@ public class DialogFragment_Send_Request extends DialogFragment implements View.
 
 
                     JSONObject object = new JSONObject();
-                    object.put("to", to)
+                    object.put("Request", "sendNotification")
+                            .put("to", to)
                             .put("from", from[0])
                             .put("amount", amount);
 
@@ -146,7 +147,8 @@ public class DialogFragment_Send_Request extends DialogFragment implements View.
 
                 try {
                     JSONObject object = new JSONObject();
-                    object.put("Search", searchInput.getText().toString().replaceAll("[^a-zA-Z0-9]", ""));
+                    object.put("Request", "userRequest")
+                            .put("Search", searchInput.getText().toString().replaceAll("[^a-zA-Z0-9]", ""));
                     new sendToServer(getContext(), true, "Searching for users", object){
                         @Override
                         public void onPostExecute(JSONObject receivedJSON) {
