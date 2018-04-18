@@ -1,5 +1,6 @@
 package com.software_engineering.tap.AccountPage;
 import android.arch.persistence.room.Database;
+import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 
 /**
@@ -10,4 +11,10 @@ import android.arch.persistence.room.RoomDatabase;
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract TransactionDao transactionDao();
+
+    /**
+     * Modify by Michael 20180411
+     */
+    //AppDatabase bd = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database-name").build();
+
 }
