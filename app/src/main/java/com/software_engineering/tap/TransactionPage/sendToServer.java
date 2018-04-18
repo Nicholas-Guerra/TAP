@@ -34,21 +34,21 @@ import javax.net.ssl.X509TrustManager;
 
 public class sendToServer extends AsyncTask<Void, Void, JSONObject> {
 
-    private Activity activity;
+    private Context context;
     private boolean progressDialog;
     private ProgressDialog pDialog;
     private String progressMessage;
     private JSONObject jsonMessage;
 
 
-    public sendToServer(Activity activity, boolean progressDialog, String progressMessage, JSONObject jsonMessage) {
-        this.activity = activity;
+    public sendToServer(Context context, boolean progressDialog, String progressMessage, JSONObject jsonMessage) {
+        this.context = context;
         this.progressDialog = progressDialog;
         this.progressMessage = progressMessage;
         this.jsonMessage = jsonMessage;
 
         if(progressDialog)
-            pDialog = new ProgressDialog(activity);
+            pDialog = new ProgressDialog(context);
     }
 
 
@@ -81,7 +81,7 @@ public class sendToServer extends AsyncTask<Void, Void, JSONObject> {
         JSONObject receivedJSON;
 
         try {
-            InputStream caInput = activity.getResources().openRawResource(R.raw.truststore);
+            InputStream caInput = context.getResources().openRawResource(R.raw.truststore);
             KeyStore keyStore = KeyStore.getInstance("BKS");
             keyStore.load(caInput, "123456".toCharArray());
 
@@ -93,9 +93,9 @@ public class sendToServer extends AsyncTask<Void, Void, JSONObject> {
             SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(null, wrappedTrustManagers, null);
 
-            InetAddress addr = InetAddress.getByName("jaredrattray.com");
-            SSLSocket socket = (SSLSocket) sslContext.getSocketFactory().createSocket(addr, 9099);
-            //SSLSocket socket = (SSLSocket) sslContext.getSocketFactory().createSocket("99.58.42.144", 9099);
+           // InetAddress addr = InetAddress.getByName("jaredrattray.com");
+            //SSLSocket socket = (SSLSocket) sslContext.getSocketFactory().createSocket(addr, 9099);
+            SSLSocket socket = (SSLSocket) sslContext.getSocketFactory().createSocket("localhost", 9099);
 
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true); // printWriter from socket
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));

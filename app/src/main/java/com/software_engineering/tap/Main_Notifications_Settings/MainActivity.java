@@ -1,11 +1,14 @@
 package com.software_engineering.tap.Main_Notifications_Settings;
 
 import android.Manifest;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.arch.persistence.room.Room;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -14,22 +17,30 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.software_engineering.tap.AccountPage.AppDatabase;
 import com.software_engineering.tap.AccountPage.Fragment_Account;
+import com.software_engineering.tap.AccountPage.Transaction;
+import com.software_engineering.tap.AccountPage.User;
 import com.software_engineering.tap.ExplorePage.Fragment_Explore;
 import com.software_engineering.tap.R;
 import com.software_engineering.tap.TransactionPage.Fragment_Transaction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private static DrawerLayout mDrawerLayout;
     private TextView toolbarTitle;
     private ArrayList<String> pages;
-    private static AppDatabase db;
+    private RecyclerView drawerRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation = findViewById(R.id.bottom_navigation);
         viewPager = findViewById(R.id.viewpager);
         mDrawerLayout = findViewById(R.id.drawer_layout);
-
+        drawerRecyclerView = findViewById(R.id.drawer_recyclerView);
 
         setupTopNavigation();
         setupViewPager();
@@ -63,7 +74,38 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
 
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database-name").build();
+        drawerRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        final RecyclerViewAdpater_Notifications recyclerViewAdpater = new RecyclerViewAdpater_Notifications(this, new ArrayList<Transaction_Notification>());
+        drawerRecyclerView.setAdapter(recyclerViewAdpater);
+
+        ViewModel_Transaction_Notification viewModel = ViewModelProviders.of(this).get(ViewModel_Transaction_Notification.class);
+        viewModel.getTransactionNotifications().observe(MainActivity.this , new Observer<List<Transaction_Notification>>() {
+            @Override
+            public void onChanged(@Nullable List<Transaction_Notification> transaction_notificationList) {
+                recyclerViewAdpater.addItems(transaction_notificationList);
+            }
+        });
+
+
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase.getInstance(getBaseContext()).userDao().update(new User("Bill", "Bill", "Smith", "Bill@Gmail.com", "adsiub349238uehkwq", 12.50, "2149279303", true, 1234, FirebaseInstanceId.getInstance().getToken()));
+                AppDatabase.getInstance(getBaseContext()).transaction_notificationDao().updateTransaction(new Transaction_Notification("Frank", 16.28, System.currentTimeMillis()));
+                AppDatabase.getInstance(getBaseContext()).transaction_notificationDao().updateTransaction(new Transaction_Notification("Sal", 48.61, System.currentTimeMillis()));
+                AppDatabase.getInstance(getBaseContext()).transaction_notificationDao().updateTransaction(new Transaction_Notification("Suzan", 100.28, System.currentTimeMillis()));
+
+
+            }
+        }).start();
+
+
+        Log.i("Token", FirebaseInstanceId.getInstance().getToken());
+        Log.i("TimeDate", String.valueOf(System.currentTimeMillis()));
+
+
     }
 
     private void setupTopNavigation(){
@@ -170,9 +212,5 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
-
-    public static AppDatabase getDb() {
-        return db;
-    }
 
 }

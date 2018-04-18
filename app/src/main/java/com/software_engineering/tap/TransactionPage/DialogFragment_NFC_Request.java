@@ -2,6 +2,7 @@ package com.software_engineering.tap.TransactionPage;
 
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
+import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -68,8 +69,6 @@ public class DialogFragment_NFC_Request extends DialogFragment {
             }
         }.start();
 
-
-
         close = rootView.findViewById(R.id.close_button);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +76,9 @@ public class DialogFragment_NFC_Request extends DialogFragment {
                 dismiss();
             }
         });
+
+        NfcAdapter adapter = NfcAdapter.getDefaultAdapter(getContext());
+
 
 
 
