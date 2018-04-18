@@ -43,7 +43,7 @@
         android:id="@+id/btn_nfc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/tap_dark"
+        android:src="@drawable/tap"
         android:layout_centerInParent="true" />
 
     <TextView
@@ -55,28 +55,10 @@
         android:layout_marginTop="15dp"
         android:text="Tap To Begin NFC"
         android:textColor="@color/colorSecondaryLight"
-        android:textSize="12sp"/>
-
-    <ProgressBar
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:id="@+id/progressBar"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_centerInParent="true"
-        android:indeterminate="false"
-        android:max="100"
-        android:progress="0"
-        android:progressDrawable="@drawable/custom_progressbar_drawable"/>
-    <!--
-    <ImageView
-        android:id="@+id/btn_nfc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/tap"
-        android:layout_centerInParent="true" />
+        android:textSize="12sp"
+        android:gravity="center"/>
 
 
-    -->
     <Button
         android:id="@+id/connection"
         android:layout_width="wrap_content"

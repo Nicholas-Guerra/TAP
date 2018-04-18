@@ -33,8 +33,6 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
     View rootView;
     TextView notifications;
     ImageView btn_nfc;
-    Button connect;
-    ProgressBar timer;
 
 
     public Fragment_Pay() {
@@ -51,12 +49,6 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
         btn_nfc = rootView.findViewById(R.id.btn_nfc);
         btn_nfc.setOnClickListener(this);
 
-        connect = rootView.findViewById(R.id.connection);
-        connect.setOnClickListener(this);
-
-        timer = rootView.findViewById(R.id.progressBar);
-
-
         return rootView;
     }
 
@@ -66,6 +58,7 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
         if(v == notifications){
             MainActivity.openDrawer();
         } else if(v == btn_nfc){
+
 
             final DialogFragment_Authentication dialog = new DialogFragment_Authentication();
             dialog.show(getFragmentManager(), "authentication");
@@ -77,6 +70,8 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
                         Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
                         //Authentication successful
 
+                        new DialogFragment_NFC_Pay().show(getFragmentManager().beginTransaction(), "nfc_pay");
+
 
                     } else{
                         Toast.makeText(getContext(), "Canceled", Toast.LENGTH_SHORT).show();
@@ -85,94 +80,6 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
                     }
                 }
             });
-
-
-
-            btn_nfc.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.tap));
-                timer.setProgress(1);
-                btn_nfc.setOnClickListener(null);
-
-                new receiveNFC(getActivity()).execute();
-
-            new CountDownTimer(10000, 100) {
-
-                public void onTick(long millisUntilFinished) {
-                    timer.setProgress((int) ((10000 - millisUntilFinished)/100));
-                }
-                public void onFinish() {
-                    btn_nfc.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.tap_dark));
-                    timer.setProgress(100);
-                    timer.setProgress(0);
-                    btn_nfc.setOnClickListener(Fragment_Pay.this);
-                }
-            }.start();
-
-
-        } else if(v == connect){
-            /*try {
-
-
-                /*JSONObject send = new JSONObject();
-                send.put("Request", "Transaction");
-                send.put("Sender", "Bob");
-                send.put("Receiver", "Sue");
-
-                new sendToServer(getActivity(), true,"Connecting", send) {
-                    @Override
-                    public void onPostExecute(JSONObject receivedJSON) {
-                        super.onPostExecute(receivedJSON);
-
-
-                    }
-                }.execute();
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }*/
-
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        URL myurl = new URL("https://fcm.googleapis.com/fcm/send");
-                        HttpsURLConnection con = (HttpsURLConnection)myurl.openConnection();
-                        con.setDoOutput(true);
-                        con.setRequestMethod("POST");
-
-                        con.setRequestProperty("Content-Type", "application/json");
-                        con.setRequestProperty("Authorization", "key=AAAAvDSzk-s:APA91bEpIUE5NHy-axptjiaSxB5_waxCyH95UuXzw0HM_Sg7UR33pJRrc_AzQH5AxrS38BAqgVlD1Vfj3OeB4oce2IWwfMmMpOiauv9Ssvm32PzgkhAG-Wdu_PpJmCWVnGT7OD2fAjIq");
-
-                        JSONObject object = new JSONObject();
-                        JSONObject data = new JSONObject();
-                        data.put("User Name", "Sally")
-                                .put("Amount", "41.28")
-                                .put("Date", "1523831301798");
-
-                        object.put("to", "dx-5O1rtuD4:APA91bEWTuV2pRwzyFpG8tNK9U6Rj4rwmIq7eHrH6Y7Cgu4hkp5iSmWgJfoPMt3uOXbP1ku6zhONYfY6BKUIsHoNZ-nIugUoyF3nVP0Z-JD9ANRRA0nE5um9xpGlK0iUu4l6Zb7-IlAL")
-                                .put("data", data);
-
-                        OutputStream outputStream = con.getOutputStream();
-                        outputStream.write(object.toString().getBytes());
-                        outputStream.flush();
-
-                        int responseCode = con.getResponseCode();
-                        Log.i("PostRequest", "Sending 'POST' request");
-                        Log.i("PostRequest", "Response Code : " + responseCode+" "+con.getResponseMessage());
-
-
-                        outputStream.close();
-
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-
         }
     }
 
