@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,7 +29,7 @@ import com.software_engineering.tap.AccountPage.AppDatabase;
 import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
 import com.software_engineering.tap.R;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends /*AppCompatActivity*/ FragmentActivity{
 
     private static final int REQUEST_CODE = 100;
 
@@ -41,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         userName = (EditText) findViewById(R.id.user_name);
-        //userPassword = (EditText) findViewById(R.id.user_password);
+        userPassword = (EditText) findViewById(R.id.user_password);
         btnLogin = (Button) findViewById(R.id.login_button);
         btnNewUser = (TextView) findViewById(R.id.user_button);
 
@@ -60,7 +62,12 @@ public class LoginActivity extends AppCompatActivity {
 
             public void onClick(View view){
 
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                //startActivity(new Intent(LoginActivity.this, Fragment_NewUser_Request.class));
+
+                Fragment_NewUser_Request newUser = new Fragment_NewUser_Request();
+                newUser;
+
+
 
             }
         });
