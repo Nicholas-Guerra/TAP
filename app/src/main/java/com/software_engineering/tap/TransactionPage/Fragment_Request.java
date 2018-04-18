@@ -81,23 +81,7 @@ public class Fragment_Request extends Fragment implements View.OnClickListener{
     public void onClick(View v){
         if(v == send){
             if(total != 0){
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(AppDatabase.getInstance(getContext()).userDao().getUser().balance >= total / 100.0){
-                            DialogFragment_Send_Request.newInstance((double) total / 100.0).show(getFragmentManager().beginTransaction(), "send_request");
-                        } else {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(getActivity(), "Insufficient funds", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-
-                        }
-                    }
-                }).start();
-
+                DialogFragment_Send_Request.newInstance((double) total / 100.0).show(getFragmentManager().beginTransaction(), "send_request");
             } else{
                 toast = Toast.makeText(getActivity(), "Nothing entered", Toast.LENGTH_SHORT);
                 toast.show();

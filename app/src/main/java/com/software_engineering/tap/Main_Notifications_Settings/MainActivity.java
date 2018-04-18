@@ -1,11 +1,17 @@
 package com.software_engineering.tap.Main_Notifications_Settings;
 
 import android.Manifest;
+import android.app.PendingIntent;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.arch.persistence.room.Room;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -35,6 +41,8 @@ import com.software_engineering.tap.AccountPage.Transaction;
 import com.software_engineering.tap.AccountPage.User;
 import com.software_engineering.tap.ExplorePage.Fragment_Explore;
 import com.software_engineering.tap.R;
+import com.software_engineering.tap.TransactionPage.DialogFragment_NFC_Pay;
+import com.software_engineering.tap.TransactionPage.DialogFragment_NFC_Request;
 import com.software_engineering.tap.TransactionPage.Fragment_Transaction;
 
 import java.util.ArrayList;
@@ -42,7 +50,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Listener{
 
     private MenuItem prevMenuItem;
     private BottomNavigationViewEx bottomNavigation;
@@ -52,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView toolbarTitle;
     private ArrayList<String> pages;
     private RecyclerView drawerRecyclerView;
+    private boolean isDialogDisplayed = false;
+    private boolean isWrite = false;
+
+    private NfcAdapter mNfcAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,5 +224,74 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
+
+    private void initNFC(){
+
+        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+    }
+
+    @Override
+    public void onDialogDisplayed() {
+
+        isDialogDisplayed = true;
+    }
+
+    @Override
+    public void onDialogDismissed() {
+
+        isDialogDisplayed = false;
+        isWrite = false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
+        IntentFilter ndefDetected = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
+        IntentFilter techDetected = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
+        IntentFilter[] nfcIntentFilter = new IntentFilter[]{techDetected,tagDetected,ndefDetected};
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+        if(mNfcAdapter!= null)
+            mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(mNfcAdapter!= null)
+            mNfcAdapter.disableForegroundDispatch(this);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+
+        //Log.d(TAG, "onNewIntent: "+intent.getAction());
+
+        if(tag != null) {
+            //Toast.makeText(this, getString(R.string.message_tag_detected), Toast.LENGTH_SHORT).show();
+            Ndef ndef = Ndef.get(tag);
+
+            if (isDialogDisplayed) {
+
+                if (isWrite) {
+                    //String messageToWrite = mEtMessage.getText().toString();
+                    DialogFragment_NFC_Pay frag = (DialogFragment_NFC_Pay) getSupportFragmentManager().findFragmentByTag("nfc_pay");
+                    frag.onNfcDetected(ndef);
+                    Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    DialogFragment_NFC_Request frag = (DialogFragment_NFC_Request) getSupportFragmentManager().findFragmentByTag("nfc_request");
+                    frag.onNfcDetected(ndef);
+                    Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        }
+    }
 
 }

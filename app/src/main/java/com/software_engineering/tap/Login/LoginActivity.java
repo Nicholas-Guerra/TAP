@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         userName = (EditText) findViewById(R.id.user_name);
-        userPassword = (EditText) findViewById(R.id.user_password);
+        //userPassword = (EditText) findViewById(R.id.user_password);
         btnLogin = (Button) findViewById(R.id.login_button);
         btnNewUser = (TextView) findViewById(R.id.user_button);
 
@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
             public void onClick(View view){
 
-                startActivity(new Intent(LoginActivity.this, Fragment_NewUser_Request.class));
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
             }
         });

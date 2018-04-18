@@ -93,9 +93,9 @@ public class sendToServer extends AsyncTask<Void, Void, JSONObject> {
             SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(null, wrappedTrustManagers, null);
 
-            InetAddress addr = InetAddress.getByName("jaredrattray.com");
-            SSLSocket socket = (SSLSocket) sslContext.getSocketFactory().createSocket(addr, 9099);
-            //SSLSocket socket = (SSLSocket) sslContext.getSocketFactory().createSocket("99.58.42.144", 9099);
+           // InetAddress addr = InetAddress.getByName("jaredrattray.com");
+            //SSLSocket socket = (SSLSocket) sslContext.getSocketFactory().createSocket(addr, 9099);
+            SSLSocket socket = (SSLSocket) sslContext.getSocketFactory().createSocket("localhost", 9099);
 
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true); // printWriter from socket
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
