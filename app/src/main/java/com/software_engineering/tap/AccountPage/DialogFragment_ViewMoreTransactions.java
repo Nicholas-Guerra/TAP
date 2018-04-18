@@ -1,13 +1,10 @@
 package com.software_engineering.tap.AccountPage;
 
-import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.software_engineering.tap.R;
 
@@ -28,7 +25,7 @@ public class DialogFragment_ViewMoreTransactions extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.dialog_fragment_nfc_request, container, false);
+        rootView = inflater.inflate(R.layout.dialog_fragment_nfc, container, false);
         return rootView;
     }
 }
