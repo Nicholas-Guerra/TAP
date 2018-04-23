@@ -38,7 +38,7 @@
     <EditText
         android:id="@+id/user_name"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_height="50dp"
         android:layout_alignBottom="@+id/user_text"
         android:layout_toEndOf="@+id/user_text"
         android:ems="10"
@@ -47,7 +47,7 @@
     <EditText
         android:id="@+id/user_password"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_height="50dp"
         android:layout_alignBottom="@+id/password_text"
         android:layout_toEndOf="@+id/password_text"
         android:ems="10"
@@ -60,6 +60,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="97dp"
+        android:textStyle="bold"
         android:text="New User?"
         android:textColor="@color/colorClick"
         android:textSize="20dp" />

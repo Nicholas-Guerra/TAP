@@ -35,11 +35,9 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
 
         View rootView = inflater.inflate(R.layout.fragment_account, container, false);
 

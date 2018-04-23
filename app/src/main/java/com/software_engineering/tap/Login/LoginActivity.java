@@ -63,27 +63,27 @@ public class LoginActivity extends AppCompatActivity{
         });
 
 
-        btnNewUser.setOnClickListener(new View.OnClickListener(){
+        /*btnNewUser.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View view){
 
                 startActivity(new Intent(LoginActivity.this, Fragment_NewUser_Request.class));
 
-                //Fragment_NewUser_Request newUser = new Fragment_NewUser_Request();
+                Fragment_NewUser_Request newUser = new Fragment_NewUser_Request();
 
             }
-        });
+        });*/
 
 
-        /*btnNewUser.setOnClickListener(new View.OnClickListener() {
+        btnNewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Fragment_NewUser_Request newUser = new Fragment_NewUser_Request();
-                newUser.show(getFragmentManager(), "Fragment_NewUser_Request");
+                //newUser.show(getFragmentManager(), "Fragment_NewUser_Request");
 
             }
-        });*/
+        });
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 

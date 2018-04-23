@@ -45,6 +45,7 @@ public class DialogFragment_NFC_Request extends DialogFragment {
 
         return fragment;
     }
+
     @Override
     public void onStart() {
         super.onStart();
