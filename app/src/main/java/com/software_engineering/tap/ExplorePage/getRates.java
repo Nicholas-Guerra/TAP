@@ -1,7 +1,7 @@
-/*
-package com.software_engineering.tap.ExplorePage;
+/*package com.software_engineering.tap.ExplorePage;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -18,21 +18,19 @@ import okhttp3.Response;
 
 public class getRates
 {
-    public static final MediaType JSON =  MediaType.parse("application/json; charset= utf-8");
-    public Coin getRates(String Param1) throws IOException throws JSONexception
-    {
+    private static final MediaType JSON =  MediaType.parse("application/json; charset= utf-8");
+    public double pullRates(String Param1) throws IOException, JSONException {
 
 
         String coinAPI ="https://www.rest.coinapi.io/v1/exchangerate";
         String charset ="UTF-8";
-        Param1 = "BTC";
         String Param2 = "USD";
-        String json;
+        JSONObject json = new JSONObject();
+
 
         String Query = String.format("/%s/%s/", URLEncoder.encode(Param1,charset),
                 URLEncoder.encode(Param2,charset));
-
-        RequestBody body = RequestBody.create(JSON,json);
+        RequestBody body = RequestBody.create(JSON, String.valueOf(json));
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -45,9 +43,15 @@ public class getRates
         String responseStr = response.body().string();
 
 
-        JSONObject jsonObject = new JSONObject(responseStr);
-        JSONObject rateObj = jsonObject.getJSONObject("exchangerates");
-        JSONArray ratearray = (JSONArray) rateObj.get("rate");
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(responseStr);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Double rate =  jsonObject.getDouble("rate");
+
+        return rate;
 
 
 

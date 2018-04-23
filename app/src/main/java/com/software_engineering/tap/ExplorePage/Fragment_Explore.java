@@ -14,6 +14,9 @@ import android.widget.Toolbar;
 
 import com.software_engineering.tap.R;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +66,26 @@ public class Fragment_Explore extends Fragment{
 
         coin = new Coin("LTC",.007298);
         coinList.add(coin);
+
+        coin = new Coin("BCH",.001135);
+        coinList.add(coin);
+
+        coin = new Coin("GBP",.7);
+        coinList.add(coin);
+
+        coin = new Coin("EUR",.81);
+        coinList.add(coin);
+
+        coin = new Coin("JPY",107.21);
+        coinList.add(coin);
+
+        coin = new Coin("CNY", 6.27);
+        coinList.add(coin);
+
+        coin = new Coin("MEX",18.08);
+        coinList.add(coin);
+
+
     }
 
 }

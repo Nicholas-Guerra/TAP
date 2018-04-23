@@ -50,6 +50,8 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
 
         //User user = MainActivity.getDb().userDao().getUser();
 
+        //String username = user.userName;
+
         //nameText.setText(user.firstName);
 
         return rootView;
