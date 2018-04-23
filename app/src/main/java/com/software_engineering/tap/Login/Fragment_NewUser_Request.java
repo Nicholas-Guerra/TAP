@@ -23,7 +23,7 @@ import com.software_engineering.tap.R;
 
 import com.software_engineering.tap.Main_Notifications_Settings.Listener;
 import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
-import com.software_engineering.tap.R;
+//import com.software_engineering.tap.R;
 
 public class Fragment_NewUser_Request extends DialogFragment {
 
