@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +21,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.app.Dialog;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,9 +32,11 @@ import com.software_engineering.tap.AccountPage.AppDatabase;
 import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
 import com.software_engineering.tap.R;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity{
 
     private static final int REQUEST_CODE = 100;
+
+    //private static final String TAG = "LoginActivity";
 
     private Button btnLogin;
     private TextView btnNewUser;
@@ -41,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         userName = (EditText) findViewById(R.id.user_name);
-        //userPassword = (EditText) findViewById(R.id.user_password);
+        userPassword = (EditText) findViewById(R.id.user_password);
         btnLogin = (Button) findViewById(R.id.login_button);
         btnNewUser = (TextView) findViewById(R.id.user_button);
 
@@ -56,11 +63,24 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-        btnNewUser.setOnClickListener(new View.OnClickListener(){
+        /*btnNewUser.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View view){
 
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                startActivity(new Intent(LoginActivity.this, Fragment_NewUser_Request.class));
+
+                //Fragment_NewUser_Request newUser = new Fragment_NewUser_Request();
+
+            }
+        });*/
+
+
+        btnNewUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Fragment_NewUser_Request newUser = new Fragment_NewUser_Request();
+                newUser.show(getFragmentManager(), "Fragment_NewUser_Request");
 
             }
         });
@@ -87,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
 
         try {
             object.put("userName", userName);
-            object.put("hashedPassword",userPassword );
+            object.put("hashedPassword",userPassword.hashCode() );
 
             new sendToServer(this,true, "Verifying", object){
 
