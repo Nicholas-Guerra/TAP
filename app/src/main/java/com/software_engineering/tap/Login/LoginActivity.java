@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity{
         });
 
 
-        /*btnNewUser.setOnClickListener(new View.OnClickListener(){
+        btnNewUser.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View view){
 
@@ -72,10 +72,10 @@ public class LoginActivity extends AppCompatActivity{
                 //Fragment_NewUser_Request newUser = new Fragment_NewUser_Request();
 
             }
-        });*/
+        });
 
 
-        btnNewUser.setOnClickListener(new View.OnClickListener() {
+        /*btnNewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity{
                 newUser.show(getFragmentManager(), "Fragment_NewUser_Request");
 
             }
-        });
+        });*/
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
