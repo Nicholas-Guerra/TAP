@@ -40,16 +40,7 @@ public class DialogFragment_NFC_Pay extends DialogFragment {
     }
 
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Dialog d = getDialog();
-        if (d!=null){
-            int width = ViewGroup.LayoutParams.MATCH_PARENT;
-            int height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            d.getWindow().setLayout(width, height);
-        }
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,6 +48,17 @@ public class DialogFragment_NFC_Pay extends DialogFragment {
         title = rootView.findViewById(R.id.title);
         title.setText("Pay");
         timer =  rootView.findViewById(R.id.progressBar);
+
+        close = rootView.findViewById(R.id.close_button);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+
+        setCancelable(false);
+
 
         new CountDownTimer(10000, 100) {
 
@@ -68,13 +70,7 @@ public class DialogFragment_NFC_Pay extends DialogFragment {
             }
         }.start();
 
-        close = rootView.findViewById(R.id.close_button);
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
+
 
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -98,7 +94,7 @@ public class DialogFragment_NFC_Pay extends DialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mListener = (MainActivity)context;
-        mListener.onDialogDisplayed();
+        mListener.onDialogDisplayed(true);
     }
 
     @Override
@@ -107,31 +103,19 @@ public class DialogFragment_NFC_Pay extends DialogFragment {
         mListener.onDialogDismissed();
     }
 
-    public void onNfcDetected(Ndef ndef){
-        writeToNfc(ndef);
-    }
+    public NdefMessage onNfcDetected(){
+        byte[] payload = user.
+                getBytes(Charset.forName("UTF-8"));
 
-    private void writeToNfc(Ndef ndef){
+        NdefRecord record = new NdefRecord(
+                NdefRecord.TNF_WELL_KNOWN,  //Our 3-bit Type name format
+                NdefRecord.RTD_TEXT,        //Description of our payload
+                new byte[0],                //The optional id for our Record
+                payload);
 
-        if (ndef != null) {
+        dismiss();
 
-            try {
-                ndef.connect();
-                NdefRecord mimeRecord = NdefRecord.createMime("text/plain", user.getBytes(Charset.forName("US-ASCII")));
-                ndef.writeNdefMessage(new NdefMessage(mimeRecord));
-                ndef.close();
-                //Write Successful
-                //mTvMessage.setText(getString(R.string.message_write_success));
-
-            } catch (IOException | FormatException e) {
-                e.printStackTrace();
-                //mTvMessage.setText(getString(R.string.message_write_error));
-
-            } finally {
-                //mProgress.setVisibility(View.GONE);
-            }
-
-        }
+        return new NdefMessage(record);
     }
 
 

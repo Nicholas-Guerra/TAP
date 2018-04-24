@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.nfc.FormatException;
 import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
 import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.software_engineering.tap.Main_Notifications_Settings.Listener;
 import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
@@ -47,23 +49,16 @@ public class DialogFragment_NFC_Request extends DialogFragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        Dialog d = getDialog();
-        if (d!=null){
-            int width = ViewGroup.LayoutParams.MATCH_PARENT;
-            int height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            d.getWindow().setLayout(width, height);
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.dialog_fragment_nfc, container, false);
         title = rootView.findViewById(R.id.title);
         amount = getArguments().getDouble("Amount");
         title.setText(String.valueOf(amount) + " TPC");
         timer =  rootView.findViewById(R.id.progressBar);
+
+
+
+        setCancelable(false);
 
         new CountDownTimer(10000, 100) {
 
@@ -90,7 +85,7 @@ public class DialogFragment_NFC_Request extends DialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mListener = (MainActivity)context;
-        mListener.onDialogDisplayed();
+        mListener.onDialogDisplayed(false);
     }
 
     @Override
@@ -99,25 +94,10 @@ public class DialogFragment_NFC_Request extends DialogFragment {
         mListener.onDialogDismissed();
     }
 
-    public void onNfcDetected(Ndef ndef){
+    public void onNfcDetected(String message){
 
-        readFromNFC(ndef);
-    }
-
-    private void readFromNFC(Ndef ndef) {
-
-        try {
-            ndef.connect();
-            NdefMessage ndefMessage = ndef.getNdefMessage();
-            String message = new String(ndefMessage.getRecords()[0].getPayload());
-            //Log.d(TAG, "readFromNFC: "+message);
-            //mTvMessage.setText(message);
-            ndef.close();
-
-        } catch (IOException | FormatException e) {
-            e.printStackTrace();
-
-        }
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        dismiss();
     }
 
 }

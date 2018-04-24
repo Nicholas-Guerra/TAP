@@ -9,14 +9,19 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
+import android.nfc.NfcEvent;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -50,7 +55,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements Listener{
+public class MainActivity extends AppCompatActivity implements Listener, NfcAdapter.OnNdefPushCompleteCallback,
+        NfcAdapter.CreateNdefMessageCallback{
 
     private MenuItem prevMenuItem;
     private BottomNavigationViewEx bottomNavigation;
@@ -61,7 +67,9 @@ public class MainActivity extends AppCompatActivity implements Listener{
     private ArrayList<String> pages;
     private RecyclerView drawerRecyclerView;
     private boolean isDialogDisplayed = false;
-    private boolean isWrite = false;
+    private static boolean isWrite = false;
+    private static String user;
+    private Fragment account, transaction, explore;
 
     private NfcAdapter mNfcAdapter;
 
@@ -101,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements Listener{
 
 
 
-        new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 AppDatabase.getInstance(getBaseContext()).userDao().update(new User("Bill", "Bill", "Smith", "Bill@Gmail.com", "adsiub349238uehkwq", 12.50, "2149279303", true, 1234, FirebaseInstanceId.getInstance().getToken()));
@@ -109,13 +117,21 @@ public class MainActivity extends AppCompatActivity implements Listener{
                 AppDatabase.getInstance(getBaseContext()).transaction_notificationDao().updateTransaction(new Transaction_Notification("Sal", 48.61, System.currentTimeMillis()));
                 AppDatabase.getInstance(getBaseContext()).transaction_notificationDao().updateTransaction(new Transaction_Notification("Suzan", 100.28, System.currentTimeMillis()));
 
-
             }
-        }).start();
+        });
+
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
 
         Log.i("Token", FirebaseInstanceId.getInstance().getToken());
         Log.i("TimeDate", String.valueOf(System.currentTimeMillis()));
+
+        initNFC();
 
 
     }
@@ -142,9 +158,13 @@ public class MainActivity extends AppCompatActivity implements Listener{
     private void setupViewPager() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(new Fragment_Account());
-        adapter.addFragment(new Fragment_Transaction());
-        adapter.addFragment(new Fragment_Explore());
+        account = new Fragment_Account();
+        transaction = new Fragment_Transaction();
+        explore = new Fragment_Explore();
+
+        adapter.addFragment(account);
+        adapter.addFragment(transaction);
+        adapter.addFragment(explore);
         viewPager.setAdapter(adapter);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -227,71 +247,97 @@ public class MainActivity extends AppCompatActivity implements Listener{
 
     private void initNFC(){
 
+        //Check if NFC is available on device
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        if(mNfcAdapter != null) {
+            //This will refer back to createNdefMessage for what it will send
+            mNfcAdapter.setNdefPushMessageCallback(this, this);
+
+            //This will be called if the message is sent successfully
+            mNfcAdapter.setOnNdefPushCompleteCallback(this, this);
+        }
     }
 
     @Override
-    public void onDialogDisplayed() {
+    public void onDialogDisplayed(boolean writer) {
+        if(writer) {
+            mNfcAdapter.invokeBeam(this);
+            isWrite = true;
+        }
 
         isDialogDisplayed = true;
     }
 
     @Override
     public void onDialogDismissed() {
+        if(transaction!=null && !isWrite)
+            getSupportFragmentManager().beginTransaction().detach(transaction).attach(transaction).commit();
 
         isDialogDisplayed = false;
         isWrite = false;
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
-        IntentFilter ndefDetected = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
-        IntentFilter techDetected = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
-        IntentFilter[] nfcIntentFilter = new IntentFilter[]{techDetected,tagDetected,ndefDetected};
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(
-                this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-        if(mNfcAdapter!= null)
-            mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
+        if(isDialogDisplayed && !isWrite) {
+            Intent intent = getIntent();
+            if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
+                Parcelable[] rawMessages = intent.getParcelableArrayExtra(
+                        NfcAdapter.EXTRA_NDEF_MESSAGES);
 
-    }
+                NdefMessage message = (NdefMessage) rawMessages[0]; // only one message transferred
+                DialogFragment_NFC_Request frag = (DialogFragment_NFC_Request) getSupportFragmentManager().findFragmentByTag("nfc_request");
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if(mNfcAdapter!= null)
-            mNfcAdapter.disableForegroundDispatch(this);
-    }
+                frag.onNfcDetected(new String(message.getRecords()[0].getPayload()));
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-
-        //Log.d(TAG, "onNewIntent: "+intent.getAction());
-
-        if(tag != null) {
-            //Toast.makeText(this, getString(R.string.message_tag_detected), Toast.LENGTH_SHORT).show();
-            Ndef ndef = Ndef.get(tag);
-
-            if (isDialogDisplayed) {
-
-                if (isWrite) {
-                    //String messageToWrite = mEtMessage.getText().toString();
-                    DialogFragment_NFC_Pay frag = (DialogFragment_NFC_Pay) getSupportFragmentManager().findFragmentByTag("nfc_pay");
-                    frag.onNfcDetected(ndef);
-                    Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
-
-                } else {
-
-                    DialogFragment_NFC_Request frag = (DialogFragment_NFC_Request) getSupportFragmentManager().findFragmentByTag("nfc_request");
-                    frag.onNfcDetected(ndef);
-                    Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
-
-                }
             }
         }
+
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        if(isDialogDisplayed && !isWrite) {
+            if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
+                Parcelable[] receivedArray = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+
+
+                NdefMessage receivedMessage = (NdefMessage) receivedArray[0];
+                NdefRecord[] attachedRecords = receivedMessage.getRecords();
+
+
+                String string = new String(attachedRecords[0].getPayload());
+                //Make sure we don't pass along our AAR (Android Application Record)
+                if (!string.equals(getPackageName())) {
+                    DialogFragment_NFC_Request frag = (DialogFragment_NFC_Request) getSupportFragmentManager().findFragmentByTag("nfc_request");
+                    frag.onNfcDetected(string);
+                }
+
+            }
+        }
+    }
+
+
+    @Override
+    public NdefMessage createNdefMessage(NfcEvent nfcEvent) {
+        if (isDialogDisplayed && isWrite) {
+
+            DialogFragment_NFC_Pay frag = (DialogFragment_NFC_Pay) getSupportFragmentManager().findFragmentByTag("nfc_pay");
+            return frag.onNfcDetected();
+
+        }
+        return null;
+
+    }
+
+    @Override
+    public void onNdefPushComplete(NfcEvent event) {
+        //This is called when the system detects that our NdefMessage was
+        //Successfully sent.
+        Toast.makeText(this, "Successful Transfer", Toast.LENGTH_SHORT).show();
     }
 
 }
