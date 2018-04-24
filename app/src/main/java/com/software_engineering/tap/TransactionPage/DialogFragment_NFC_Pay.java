@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.software_engineering.tap.AccountPage.AppDatabase;
 import com.software_engineering.tap.Main_Notifications_Settings.Listener;
@@ -30,9 +31,7 @@ public class DialogFragment_NFC_Pay extends DialogFragment {
     View rootView;
     TextView title;
     ImageView close;
-    ProgressBar timer;
     private Listener mListener;
-    String user;
 
 
     public DialogFragment_NFC_Pay() {
@@ -47,7 +46,6 @@ public class DialogFragment_NFC_Pay extends DialogFragment {
         rootView = inflater.inflate(R.layout.dialog_fragment_nfc, container, false);
         title = rootView.findViewById(R.id.title);
         title.setText("Pay");
-        timer =  rootView.findViewById(R.id.progressBar);
 
         close = rootView.findViewById(R.id.close_button);
         close.setOnClickListener(new View.OnClickListener() {
@@ -61,30 +59,12 @@ public class DialogFragment_NFC_Pay extends DialogFragment {
 
 
         new CountDownTimer(10000, 100) {
-
-            public void onTick(long millisUntilFinished) {
-                timer.setProgress((int) ((10000 - millisUntilFinished)/100));
-            }
+            public void onTick(long millisUntilFinished) { }
             public void onFinish() {
+                Toast.makeText(getContext(), "Timeout : Try Again", Toast.LENGTH_SHORT).show();
                 dismiss();
             }
         }.start();
-
-
-
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                user = AppDatabase.getInstance(getContext()).userDao().getUser().userName;
-            }
-        });
-
-        thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
 
         return rootView;
@@ -104,7 +84,7 @@ public class DialogFragment_NFC_Pay extends DialogFragment {
     }
 
     public NdefMessage onNfcDetected(){
-        byte[] payload = user.
+        byte[] payload = MainActivity.getUser().userName.
                 getBytes(Charset.forName("UTF-8"));
 
         NdefRecord record = new NdefRecord(

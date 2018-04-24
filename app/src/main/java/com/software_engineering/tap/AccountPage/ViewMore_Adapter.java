@@ -55,7 +55,7 @@ public class ViewMore_Adapter extends RecyclerView.Adapter<ViewMore_Adapter.View
         //Sets up each variable within the view
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.tvAnimalName);
+           // myTextView = itemView.findViewById(R.id.tvAnimalName);
             itemView.setOnClickListener(this);
         }
 

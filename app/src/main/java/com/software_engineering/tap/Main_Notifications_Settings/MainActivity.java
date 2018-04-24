@@ -16,6 +16,7 @@ import android.nfc.NfcEvent;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -68,10 +69,10 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
     private RecyclerView drawerRecyclerView;
     private boolean isDialogDisplayed = false;
     private static boolean isWrite = false;
-    private static String user;
     private Fragment account, transaction, explore;
 
     private NfcAdapter mNfcAdapter;
+    private static User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
                 AppDatabase.getInstance(getBaseContext()).transaction_notificationDao().updateTransaction(new Transaction_Notification("Frank", 16.28, System.currentTimeMillis()));
                 AppDatabase.getInstance(getBaseContext()).transaction_notificationDao().updateTransaction(new Transaction_Notification("Sal", 48.61, System.currentTimeMillis()));
                 AppDatabase.getInstance(getBaseContext()).transaction_notificationDao().updateTransaction(new Transaction_Notification("Suzan", 100.28, System.currentTimeMillis()));
+                user = AppDatabase.getInstance(getBaseContext()).userDao().getUser();
 
             }
         });
@@ -261,7 +263,16 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
     @Override
     public void onDialogDisplayed(boolean writer) {
         if(writer) {
-            mNfcAdapter.invokeBeam(this);
+
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Do this after 0.5s = 500ms
+                    mNfcAdapter.invokeBeam(MainActivity.this);
+                }
+            }, 500);
+
             isWrite = true;
         }
 
@@ -338,6 +349,10 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
         //This is called when the system detects that our NdefMessage was
         //Successfully sent.
         Toast.makeText(this, "Successful Transfer", Toast.LENGTH_SHORT).show();
+    }
+
+    public static User getUser(){
+        return user;
     }
 
 }
