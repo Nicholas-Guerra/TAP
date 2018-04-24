@@ -37,7 +37,7 @@ public class Acc_Adapter extends RecyclerView.Adapter<Acc_Adapter.MyViewHolder>{
     }
 
     @Override
-    public void onCreateViewHolder(ViewGroup parent, int viewType){
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View ItemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_account, parent, false);
 
@@ -45,11 +45,11 @@ public class Acc_Adapter extends RecyclerView.Adapter<Acc_Adapter.MyViewHolder>{
     }
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position){
-        user user = AccountList.get(position);
-        holder.user.setText(user.getUser());
-        holder.balance.setText(user.getbalance());
-        holder.table.setText(user.getTable());
-        holder.profile.setText(user.getProfile());
+        User user = AccountList.get(position);
+        holder.user.setText(user.userName);
+        holder.balance.setText(String.valueOf(user.balance));
+        //holder.table.setText(user.getTable());
+        //holder.profile.setText(user.getProfile());
     }
 
     @Override
