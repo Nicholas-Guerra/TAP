@@ -80,7 +80,7 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
                                 JSONObject object = array.getJSONObject(x);
                                 Transaction transaction = new Transaction(object.getString("to_from"),  object.getDouble("amount"), object.getString("status"),object.getLong("time"), object.getString("transactionID"));
 
-                                //AppDatabase.getInstance(getContext()).transactionDao().updateTransaction(transaction);
+                                // AppDatabase.getInstance(getContext()).transactionDao().updateTransaction(transaction);
 
                             }
                         } catch (JSONException e) {
