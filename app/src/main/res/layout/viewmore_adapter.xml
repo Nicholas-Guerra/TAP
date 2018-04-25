@@ -68,29 +68,32 @@
                 <TextView
                     android:id="@+id/fromName"
                     android:text="Dad"
-                    android:layout_width="5dp"
-                    android:layout_height="20dp"
+                    android:layout_width="20dp"
+                    android:layout_height="30dp"
                     android:layout_weight="1"
                     android:textSize="15sp"/>
                 <TextView
                     android:id="@+id/amountView"
                     android:text="12 TPc"
-                    android:layout_width="60dp"
+                    android:layout_width="20dp"
                     android:layout_height="30dp"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp"
+                    android:layout_weight="1"/>
                 <TextView
                     android:id="@+id/statusView"
                     android:text="Pending"
-                    android:layout_width="60dp"
+                    android:layout_width="20dp"
                     android:layout_height="30dp"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp"
+                    android:layout_weight="1"/>
 
                 <TextView
                     android:id="@+id/dateView"
-                    android:layout_width="60dp"
+                    android:layout_width="20dp"
                     android:layout_height="30dp"
-                    android:text="4/24/2018"
-                    android:textSize="15sp" />
+                    android:text="12/24/2018"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
             </TableRow>
         </TableLayout>
     </RelativeLayout>
