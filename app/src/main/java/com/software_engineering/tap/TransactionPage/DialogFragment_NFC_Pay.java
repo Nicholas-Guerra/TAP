@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.software_engineering.tap.AccountPage.AppDatabase;
 import com.software_engineering.tap.Main_Notifications_Settings.Listener;
@@ -30,9 +31,7 @@ public class DialogFragment_NFC_Pay extends DialogFragment {
     View rootView;
     TextView title;
     ImageView close;
-    ProgressBar timer;
     private Listener mListener;
-    String user;
 
 
     public DialogFragment_NFC_Pay() {
@@ -40,33 +39,13 @@ public class DialogFragment_NFC_Pay extends DialogFragment {
     }
 
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Dialog d = getDialog();
-        if (d!=null){
-            int width = ViewGroup.LayoutParams.MATCH_PARENT;
-            int height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            d.getWindow().setLayout(width, height);
-        }
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.dialog_fragment_nfc, container, false);
         title = rootView.findViewById(R.id.title);
         title.setText("Pay");
-        timer =  rootView.findViewById(R.id.progressBar);
-
-        new CountDownTimer(10000, 100) {
-
-            public void onTick(long millisUntilFinished) {
-                timer.setProgress((int) ((10000 - millisUntilFinished)/100));
-            }
-            public void onFinish() {
-                dismiss();
-            }
-        }.start();
 
         close = rootView.findViewById(R.id.close_button);
         close.setOnClickListener(new View.OnClickListener() {
@@ -76,19 +55,16 @@ public class DialogFragment_NFC_Pay extends DialogFragment {
             }
         });
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                user = AppDatabase.getInstance(getContext()).userDao().getUser().userName;
-            }
-        });
+        setCancelable(false);
 
-        thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        new CountDownTimer(10000, 100) {
+            public void onTick(long millisUntilFinished) { }
+            public void onFinish() {
+                Toast.makeText(getContext(), "Timeout : Try Again", Toast.LENGTH_SHORT).show();
+                dismiss();
+            }
+        }.start();
 
 
         return rootView;
@@ -98,7 +74,7 @@ public class DialogFragment_NFC_Pay extends DialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mListener = (MainActivity)context;
-        mListener.onDialogDisplayed();
+        mListener.onDialogDisplayed(true);
     }
 
     @Override
@@ -107,31 +83,19 @@ public class DialogFragment_NFC_Pay extends DialogFragment {
         mListener.onDialogDismissed();
     }
 
-    public void onNfcDetected(Ndef ndef){
-        writeToNfc(ndef);
-    }
+    public NdefMessage onNfcDetected(){
+        byte[] payload = MainActivity.getUser().userName.
+                getBytes(Charset.forName("UTF-8"));
 
-    private void writeToNfc(Ndef ndef){
+        NdefRecord record = new NdefRecord(
+                NdefRecord.TNF_WELL_KNOWN,  //Our 3-bit Type name format
+                NdefRecord.RTD_TEXT,        //Description of our payload
+                new byte[0],                //The optional id for our Record
+                payload);
 
-        if (ndef != null) {
+        dismiss();
 
-            try {
-                ndef.connect();
-                NdefRecord mimeRecord = NdefRecord.createMime("text/plain", user.getBytes(Charset.forName("US-ASCII")));
-                ndef.writeNdefMessage(new NdefMessage(mimeRecord));
-                ndef.close();
-                //Write Successful
-                //mTvMessage.setText(getString(R.string.message_write_success));
-
-            } catch (IOException | FormatException e) {
-                e.printStackTrace();
-                //mTvMessage.setText(getString(R.string.message_write_error));
-
-            } finally {
-                //mProgress.setVisibility(View.GONE);
-            }
-
-        }
+        return new NdefMessage(record);
     }
 
 

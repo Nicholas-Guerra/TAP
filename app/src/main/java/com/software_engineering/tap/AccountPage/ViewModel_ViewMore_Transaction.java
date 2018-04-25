@@ -15,14 +15,14 @@ public class ViewModel_ViewMore_Transaction extends AndroidViewModel {
 
     private final List<Transaction> transactionList;
 
-    public ViewModel_ViewMore_Transaction(@NonNull Application application, LiveData<List<Transaction>> transactionList) {
+    public ViewModel_ViewMore_Transaction(@NonNull Application application, LiveData<List<Transaction>> transactionList)
+    {
         super(application);
 
         this.transactionList = AppDatabase.getInstance(getApplication()).transactionDao().getAll();
-
     }
 
     public List<Transaction> getTransactionNotifications() {
-        return transactionList;
+    return transactionList;
     }
 }

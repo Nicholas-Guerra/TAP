@@ -1,6 +1,7 @@
 package com.software_engineering.tap.TransactionPage;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +22,8 @@ public class Fragment_Request extends Fragment implements View.OnClickListener{
     View rootView;
     FragmentManager fragmentManager;
     TextView TAPtext, conversionText;
-    Button tap, send, btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btnDEL, btnCLR;
+    Button tap, send, btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
+    ImageButton btnDEL, btnCLR;
     int total = 0;
     double conversionRate;
     String conversionSymbol;
@@ -95,16 +98,29 @@ public class Fragment_Request extends Fragment implements View.OnClickListener{
             }
         } else if(v == tap){
             if(total!=0) {
-                DialogFragment_NFC_Request.newInstance((double) total / 100.0).show(getFragmentManager().beginTransaction(), "nfc_request");
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
+
+                final DialogFragment_Authentication dialog = new DialogFragment_Authentication();
+                dialog.show(getFragmentManager(), "authentication");
+                getFragmentManager().executePendingTransactions();
+                dialog.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
-                    public void run() {
-                        total = 0;
-                        TAPtext.setText(String.format("%.2f",(double)total/100.0));
-                        conversionText.setText(conversionSymbol + String.format("%.2f",(double)total / 100.0 * conversionRate));
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        if(dialog.getSuccess()){
+                            Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
+                            //Authentication successful
+                            DialogFragment_NFC_Request.newInstance((double) total/ 100.0).show(getFragmentManager().beginTransaction(), "nfc_request");
+
+                        } else{
+                            Toast.makeText(getContext(), "Canceled", Toast.LENGTH_SHORT).show();
+                            //Authentication canceled
+
+                        }
                     }
-                }, 500);
+                });
+
+
+
+
             } else {
                 toast = Toast.makeText(getActivity(), "Nothing entered", Toast.LENGTH_SHORT);
                 toast.show();
@@ -166,6 +182,8 @@ public class Fragment_Request extends Fragment implements View.OnClickListener{
         TAPtext.setText(String.format("%.2f",(double)total/100.0));
         conversionText.setText(conversionSymbol + String.format("%.2f",(double)total / 100.0 * conversionRate));
     }
+
+
 
 
 }

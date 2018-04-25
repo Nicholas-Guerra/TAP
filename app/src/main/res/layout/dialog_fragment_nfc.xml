@@ -24,51 +24,31 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_centerHorizontal="true"
         android:layout_alignTop="@+id/toolbar"
         android:layout_alignBottom="@+id/toolbar"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true" />
+        android:gravity="center"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ready to tap"
+        android:text="Ready"
         android:gravity="center"
         android:paddingTop="20dp"
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         android:layout_below="@+id/toolbar"
         android:layout_centerHorizontal="true" />
 
 
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/tap_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="30dp">
-        <ImageView
-            android:id="@+id/tap_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/tap"
-            android:layout_centerInParent="true"/>
-
-        <ProgressBar
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:id="@+id/progressBar"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:indeterminate="false"
-            android:max="100"
-            android:progress="1"
-            android:progressDrawable="@drawable/custom_progressbar_drawable"/>
-
-
-    </RelativeLayout>
+        android:src="@drawable/tap"
+        android:layout_centerInParent="true"/>
 
 
 </RelativeLayout>

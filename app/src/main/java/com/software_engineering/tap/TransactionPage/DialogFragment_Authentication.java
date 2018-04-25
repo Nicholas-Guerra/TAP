@@ -6,6 +6,7 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.security.keystore.KeyGenParameterSpec;
@@ -99,27 +100,20 @@ public class DialogFragment_Authentication extends DialogFragment implements Vie
         }else{
             generateKey();
             if (cipherInit()) {
-                try {
-                    final boolean[] fingerprint = new boolean[1];
-                    Thread thread = new Thread(new Runnable() {
-                        public void run() {
-                            fingerprint[0] = AppDatabase.getInstance(getContext()).userDao().getUser().useFingerprint;
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        boolean fingerprint;
+                        fingerprint = AppDatabase.getInstance(context).userDao().getUser().useFingerprint;
+
+                        if (fingerprint) {
+                            FingerprintManager.CryptoObject cryptoObject = new FingerprintManager.CryptoObject(cipher);
+                            FingerprintHandler helper = new FingerprintHandler(context, DialogFragment_Authentication.this);
+                            helper.startAuth(fingerprintManager, cryptoObject);
+                        } else{
+                            usePinLayout();
                         }
-                    });
-                    thread.start();
-                    thread.join();
-                    if (fingerprint[0]) {
-                        FingerprintManager.CryptoObject cryptoObject = new FingerprintManager.CryptoObject(cipher);
-                        FingerprintHandler helper = new FingerprintHandler(context, DialogFragment_Authentication.this);
-                        helper.startAuth(fingerprintManager, cryptoObject);
-                    } else{
-                        usePinLayout();
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-
+                    }});
             }
         }
 

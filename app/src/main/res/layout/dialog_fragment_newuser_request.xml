@@ -10,23 +10,28 @@
         android:id="@+id/New_FirstEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="@+id/New_FirstText"
-        app:layout_constraintStart_toEndOf="@+id/New_UserText" />
+        app:layout_constraintStart_toEndOf="@+id/New_UserText"
+        app:layout_constraintTop_toBottomOf="@+id/New_UserEdit" />
 
     <TextView
         android:id="@+id/New_FirstText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="9dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="First Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintBottom_toTopOf="@+id/New_LastEdit"
         app:layout_constraintEnd_toStartOf="@+id/New_FirstEdit"
-        app:layout_constraintStart_toStartOf="@+id/New_LastName" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/New_LastName"
+        app:layout_constraintTop_toBottomOf="@+id/New_UserText" />
 
     <CheckBox
         android:id="@+id/user_kiosk2"
@@ -69,17 +74,20 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="28dp"
         android:layout_marginStart="28dp"
+        android:layout_marginTop="60dp"
         android:ems="10"
         android:text="Username"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintBottom_toBottomOf="@+id/New_UserEdit"
         app:layout_constraintEnd_toStartOf="@+id/Title"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/New_UserEdit"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="49dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintStart_toEndOf="@+id/New_UserText"
@@ -90,87 +98,103 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="13dp"
+        android:layout_marginTop="30dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Phone Number"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintBottom_toTopOf="@+id/New_EditEmail"
         app:layout_constraintEnd_toStartOf="@+id/New_PhoneEdit"
-        app:layout_constraintStart_toStartOf="@+id/user_cust" />
+        app:layout_constraintStart_toStartOf="@+id/user_cust"
+        app:layout_constraintTop_toBottomOf="@+id/New_LastName" />
 
     <TextView
         android:id="@+id/New_LastName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="11dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Last Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintBottom_toTopOf="@+id/New_PhoneEdit"
         app:layout_constraintEnd_toStartOf="@+id/New_LastEdit"
-        app:layout_constraintStart_toStartOf="@+id/New_PhoneText" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/New_PhoneText"
+        app:layout_constraintTop_toBottomOf="@+id/New_FirstText" />
 
     <EditText
         android:id="@+id/New_PhoneEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="@+id/New_PhoneText"
-        app:layout_constraintStart_toStartOf="@+id/New_LastEdit" />
+        app:layout_constraintStart_toStartOf="@+id/New_LastEdit"
+        app:layout_constraintTop_toBottomOf="@+id/New_LastEdit" />
 
     <TextView
         android:id="@+id/New_EmailText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Email"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintBottom_toTopOf="@+id/New_PassEdit"
         app:layout_constraintEnd_toStartOf="@+id/New_EditEmail"
-        app:layout_constraintStart_toStartOf="@+id/New_PassText" />
+        app:layout_constraintStart_toStartOf="@+id/New_PassText"
+        app:layout_constraintTop_toBottomOf="@+id/New_PhoneText" />
 
     <EditText
         android:id="@+id/New_EditEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
         android:ems="10"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="@+id/New_EmailText"
-        app:layout_constraintStart_toEndOf="@+id/New_PhoneText" />
+        app:layout_constraintStart_toEndOf="@+id/New_PhoneText"
+        app:layout_constraintTop_toBottomOf="@+id/New_PhoneEdit" />
 
     <TextView
         android:id="@+id/New_PassText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="196dp"
+        android:layout_marginBottom="250dp"
+        android:layout_marginTop="30dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Password"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/New_PassEdit"
-        app:layout_constraintStart_toStartOf="@+id/New_PinText" />
+        app:layout_constraintStart_toStartOf="@+id/New_PinText"
+        app:layout_constraintTop_toBottomOf="@+id/New_EmailText" />
 
     <EditText
         android:id="@+id/New_PassEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp"
         android:ems="10"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="@+id/New_PassText"
-        app:layout_constraintStart_toStartOf="@+id/New_EditEmail" />
+        app:layout_constraintStart_toStartOf="@+id/New_EditEmail"
+        app:layout_constraintTop_toBottomOf="@+id/New_EditEmail" />
 
     <TextView
         android:id="@+id/New_PinText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="95dp"
+        android:layout_height="0dp"
         android:layout_marginEnd="26dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="PIN"
@@ -183,25 +207,29 @@
         android:id="@+id/New_PinEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
         android:ems="10"
         android:inputType="numberPassword"
         app:layout_constraintBottom_toBottomOf="@+id/New_PinText"
-        app:layout_constraintStart_toEndOf="@+id/New_PassText" />
+        app:layout_constraintStart_toEndOf="@+id/New_PassText"
+        app:layout_constraintTop_toBottomOf="@+id/New_PassEdit" />
 
     <EditText
         android:id="@+id/New_LastEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="@+id/New_LastName"
-        app:layout_constraintStart_toStartOf="@+id/New_FirstEdit" />
+        app:layout_constraintStart_toStartOf="@+id/New_FirstEdit"
+        app:layout_constraintTop_toBottomOf="@+id/New_FirstEdit" />
 
-    <RadioButton
+    <CheckBox
         android:id="@+id/Fingerprint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="77dp"
         android:layout_marginEnd="16dp"
         android:text="Fingerprint"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -211,9 +239,10 @@
         android:id="@+id/Submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp"
         android:layout_marginEnd="28dp"
         android:text="Submit"
-        app:layout_constraintBaseline_toBaselineOf="@+id/Fingerprint"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/Fingerprint" />
 
 </android.support.constraint.ConstraintLayout>

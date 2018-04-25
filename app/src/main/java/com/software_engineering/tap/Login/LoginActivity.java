@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity{
         });
 
 
-        btnNewUser.setOnClickListener(new View.OnClickListener(){
+        /*btnNewUser.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View view){
 
@@ -72,18 +72,23 @@ public class LoginActivity extends AppCompatActivity{
                 //Fragment_NewUser_Request newUser = new Fragment_NewUser_Request();
 
             }
-        });
+        });*/
 
 
-        /*btnNewUser.setOnClickListener(new View.OnClickListener() {
+        btnNewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Fragment_NewUser_Request newUser = new Fragment_NewUser_Request();
-                newUser.show(getFragmentManager(), "Fragment_NewUser_Request");
+                //FragmentManager fm = LoginActivity.this.getFragmentManager();
+                //Fragment_NewUser_Request newUser = new Fragment_NewUser_Request();
+                //newUser.show(getSupportFragmentManager(), "Fragment_NewUser_Request");
+
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
+                //newUser.show(getFragmentManager(), Fragment_NewUser_Request.class);
 
             }
-        });*/
+        });
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
@@ -113,7 +118,6 @@ public class LoginActivity extends AppCompatActivity{
 
                 @Override
                 public void onPostExecute(JSONObject receivedJSON){
-
                     try {
                         String status = receivedJSON.getString("Status");
                         if(status.equals("Complete")){
@@ -124,7 +128,6 @@ public class LoginActivity extends AppCompatActivity{
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 }
 
             }.execute();

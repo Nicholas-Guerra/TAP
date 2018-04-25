@@ -69,7 +69,6 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
                     if(dialog.getSuccess()){
                         Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
                         //Authentication successful
-
                         new DialogFragment_NFC_Pay().show(getFragmentManager().beginTransaction(), "nfc_pay");
 
 
