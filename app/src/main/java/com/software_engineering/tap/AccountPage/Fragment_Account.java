@@ -29,11 +29,21 @@ import java.util.UUID;
 public class Fragment_Account extends Fragment implements View.OnClickListener {
 
     ImageView refresh;
+    TextView viewMore;
+
 
 
     public Fragment_Account() {
         // Required empty public constructor
     }
+
+    protected void onCreateView(Bundle savedInstanceState){
+       // View view = super.onCreateView(savedInstanceState);
+       // setContentView(R.layout.fragment_account);
+
+
+    }
+
 
 
     @Override
@@ -46,12 +56,15 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
         refresh = rootView.findViewById(R.id.refresh);
         refresh.setOnClickListener(this);
 
-        //TextView nameText = rootView.findViewById(R.id.name);
+        viewMore = rootView.findViewById(R.id.viewMoreBtn);
+        viewMore.setOnClickListener(this);
 
-        //User user = MainActivity.getDb().userDao().getUser();
+        TextView nameText = rootView.findViewById(R.id.user);
+        User user = MainActivity.getUser();
+        nameText.setText(user.firstName); //setting username on account page to firstName
 
-        //nameText.setText(user.firstName);
-
+        TextView balanceText = rootView.findViewById(R.id.balance);
+        balanceText.setText(String.valueOf(user.balance));
         return rootView;
 
 
@@ -80,7 +93,7 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
                                 JSONObject object = array.getJSONObject(x);
                                 Transaction transaction = new Transaction(object.getString("to_from"),  object.getDouble("amount"), object.getString("status"),object.getLong("time"), object.getString("transactionID"));
 
-                                // AppDatabase.getInstance(getContext()).transactionDao().updateTransaction(transaction);
+                                 //AppDatabase.getInstance(getContext()).transactionDao().updateTransaction(transaction);
 
                             }
                         } catch (JSONException e) {
