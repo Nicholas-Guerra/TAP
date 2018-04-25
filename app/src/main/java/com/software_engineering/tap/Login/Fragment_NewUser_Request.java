@@ -49,16 +49,36 @@ public class Fragment_NewUser_Request extends DialogFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.dialog_fragment_newuser_request, container, false);
 
+        submit = (Button) rootView.findViewById(R.id.Submit);
+        et1 = (EditText) rootView.findViewById(R.id.New_UserEdit);
+        et2 = (EditText) rootView.findViewById(R.id.New_FirstEdit);
+        et3 = (EditText) rootView.findViewById(R.id.New_LastEdit);
+        et4 = (EditText) rootView.findViewById(R.id.New_PhoneEdit);
+        et5 = (EditText) rootView.findViewById(R.id.New_EditEmail);
+        et6 = (EditText) rootView.findViewById(R.id.New_PassEdit);
+        et7 = (EditText) rootView.findViewById(R.id.New_PinEdit);
 
 
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                newuser(et1.getText().toString(), et2.getText().toString(), et3.getText().toString(), et4.getText().toString(), et5.getText().toString(),
+                        et6.getText().toString(), et7.getText().toString());
 
-
-
+            }
+        });
 
 
         return rootView;
     }
 
+
+    @SuppressLint("StaticFieldLeak")
+    private void newuser(final String et1, final String et2, final String et3, final String et4, final String et5, final String et6, final String et7){
+
+
+
+    }
 
 }
