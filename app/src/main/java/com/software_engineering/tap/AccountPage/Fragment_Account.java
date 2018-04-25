@@ -4,7 +4,10 @@ package com.software_engineering.tap.AccountPage;
 import android.annotation.SuppressLint;
 import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.TestLooperManager;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +30,8 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Fragment_Account extends Fragment implements View.OnClickListener {
-
+    TextView view_more;
+    TextView user_name;
     ImageView refresh;
 
 
@@ -45,6 +49,12 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
 
         refresh = rootView.findViewById(R.id.refresh);
         refresh.setOnClickListener(this);
+
+        view_more = rootView.findViewById(R.id.view_more);
+        view_more.setOnClickListener(this);
+
+        user_name = rootView.findViewById(R.id.user_name);
+        user_name.setText(MainActivity.getUser().userName);
 
         //TextView nameText = rootView.findViewById(R.id.name);
 
@@ -80,7 +90,13 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
                                 JSONObject object = array.getJSONObject(x);
                                 Transaction transaction = new Transaction(object.getString("to_from"),  object.getDouble("amount"), object.getString("status"),object.getLong("time"), object.getString("transactionID"));
 
-                                // AppDatabase.getInstance(getContext()).transactionDao().updateTransaction(transaction);
+                                AsyncTask.execute(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        AppDatabase.getInstance(getContext()).transactionDao().insert(transaction);
+                                    }
+                                });
+
 
                             }
                         } catch (JSONException e) {
@@ -94,6 +110,26 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
                 e.printStackTrace();
             }
 
+
+        }
+         else  if(v == view_more){
+            final DialogFragment_Authentication dialog = new DialogFragment_Authentication();
+            dialog.show(getFragmentManager(), "authentication");
+            getFragmentManager().executePendingTransactions();
+            dialog.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    if(dialog.getSuccess()){
+                        Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
+                        //Authentication successful
+                        new DialogFragment_NFC_Pay().show(getFragmentManager().beginTransaction(), "nfc_pay");
+
+
+                    } else{
+                        Toast.makeText(getContext(), "Canceled", Toast.LENGTH_SHORT).show();
+                        //Authentication canceled
+
+                    }
 
         }
 
