@@ -29,7 +29,6 @@ public class DialogFragment_NFC_Request extends DialogFragment {
     View rootView;
     TextView title;
     ImageView close;
-    ProgressBar timer;
     double amount;
     private Listener mListener;
 
@@ -54,18 +53,15 @@ public class DialogFragment_NFC_Request extends DialogFragment {
         title = rootView.findViewById(R.id.title);
         amount = getArguments().getDouble("Amount");
         title.setText(String.valueOf(amount) + " TPC");
-        timer =  rootView.findViewById(R.id.progressBar);
 
 
 
         setCancelable(false);
 
         new CountDownTimer(10000, 100) {
-
-            public void onTick(long millisUntilFinished) {
-                timer.setProgress((int) ((10000 - millisUntilFinished)/100));
-            }
+            public void onTick(long millisUntilFinished) { }
             public void onFinish() {
+                Toast.makeText(getContext(), "Timeout : Try Again", Toast.LENGTH_SHORT).show();
                 dismiss();
             }
         }.start();
