@@ -70,8 +70,8 @@ public class Fragment_NewUser_Request extends DialogFragment{
             @Override
             public void onClick(View view) {
 
-                //newuser(et1.getText().toString(), et2.getText().toString(), et3.getText().toString(), et4.getText().toString(), et5.getText().toString(),
-                   //     et6.getText().toString(), et7.getText().toString(), cb1.getText().toString(), cb2.getText().toString());
+                /*newuser(et1.getText().toString(), et2.getText().toString(), et3.getText().toString(), et4.getText().toString(), et5.getText().toString(),
+                      et6.getText().toString(), et7.getText().toString(), cb1.getText().toString(), cb2.getText().toString());*/
 
             }
         });
