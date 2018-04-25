@@ -52,7 +52,7 @@
         android:layout_marginBottom="68dp"
         android:layout_marginStart="27dp"
         android:layout_marginTop="58dp"
-        android:text="Cust."
+        android:text="Customer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/New_PinText" />
