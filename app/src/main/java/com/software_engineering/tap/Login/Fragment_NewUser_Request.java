@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 
-
-
 import android.app.Dialog;
 import android.content.Context;
 import android.nfc.FormatException;
@@ -13,8 +11,11 @@ import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.tech.Ndef;
 import android.os.Bundle;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.CountDownTimer;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,15 +29,18 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
+import com.software_engineering.tap.AccountPage.AppDatabase;
 import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
 import com.software_engineering.tap.R;
 import com.software_engineering.tap.TransactionPage.sendToServer;
+import com.software_engineering.tap.AccountPage.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 
-public class Fragment_NewUser_Request extends DialogFragment{
+public class Fragment_NewUser_Request extends DialogFragment {
 
     View rootView;
     TextView Title;
@@ -45,7 +49,7 @@ public class Fragment_NewUser_Request extends DialogFragment{
     CheckBox cb1, cb2;
 
 
-    public Fragment_NewUser_Request(){
+    public Fragment_NewUser_Request() {
         //Constructor Needed
     }
 
@@ -70,9 +74,8 @@ public class Fragment_NewUser_Request extends DialogFragment{
             @Override
             public void onClick(View view) {
 
-                /*newuser(et1.getText().toString(), et2.getText().toString(), et3.getText().toString(), et4.getText().toString(), et5.getText().toString(),
-                      et6.getText().toString(), et7.getText().toString(), cb1.getText().toString(), cb2.getText().toString());*/
-
+                newuser(et1.getText().toString(), et2.getText().toString(), et3.getText().toString(), et4.getText().toString(), et5.getText().toString(),
+                      et6.getText().toString(), et7.getInputType() );
             }
         });
 
@@ -81,29 +84,32 @@ public class Fragment_NewUser_Request extends DialogFragment{
     }
 
 
-   /* @SuppressLint("StaticFieldLeak")
-    private void newuser(final String et1, final String et2, final String et3, final String et4, final String et5, final String et6, final String et7,
-                         final String cb1, final String cb2){
+    @SuppressLint("StaticFieldLeak")
+    private void newuser(final String et1, final String et2, final String et3, final String et4, final String et5, final String et6,
+                         final int et7) {
 
         JSONObject object = new JSONObject();
 
-        try{
+        try {
             object.put("userName", et1);
-            //object.put("firstName", et2);
-            //object.put("lastName", et3);
             object.put("phoneNumber", et4);
             object.put("email", et5);
             object.put("hashedPassword", et6.hashCode());
 
-            new sendToServer(this,true, "Verifying", object){
+            new sendToServer( getActivity(), true, "Verifying", object) {
 
                 @Override
-                public void onPostExecute(JSONObject receivedJSON){
+                public void onPostExecute(JSONObject receivedJSON) {
                     try {
                         String status = receivedJSON.getString("Status");
-                        if(status.equals("Complete")){
+
+                        if (status.equals("Complete")) {
+
+                            //User user = new User();
+                            //AppDatabase.getInstance(getContext()).userDao().insert(user);
+
                             dismiss();
-                        } else{
+                        } else {
                             Toast.makeText(getContext(), receivedJSON.getString("Message"), Toast.LENGTH_LONG).show();
                         }
                     } catch (JSONException e) {
@@ -113,12 +119,13 @@ public class Fragment_NewUser_Request extends DialogFragment{
 
             }.execute();
 
-        }catch (JSONException e){
+        } catch (JSONException e) {
 
             e.printStackTrace();
 
         }
-*/
+
 
     }
 
+}
