@@ -29,7 +29,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.software_engineering.tap.AccountPage.AppDatabase;
+import com.software_engineering.tap.Main_Notifications_Settings.FirebaseIDService;
 import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
 import com.software_engineering.tap.R;
 import com.software_engineering.tap.TransactionPage.sendToServer;
@@ -92,21 +94,27 @@ public class Fragment_NewUser_Request extends DialogFragment {
 
         try {
             object.put("userName", et1);
+            object.put("firstName", et2);
+            object.put("lastName", et3);
             object.put("phoneNumber", et4);
             object.put("email", et5);
             object.put("hashedPassword", et6.hashCode());
+            object.put("pin", et7);
 
             new sendToServer( getActivity(), true, "Verifying", object) {
 
                 @Override
                 public void onPostExecute(JSONObject receivedJSON) {
                     try {
+
+                        Long balance = receivedJSON.getLong("balance");
+
+                        User user = new User(et1, et2, et3, et4, et5 , balance, et6 , false, et7, FirebaseInstanceId.getInstance().getToken());
+                        AppDatabase.getInstance(getContext()).userDao().insert(user);
+
                         String status = receivedJSON.getString("Status");
 
                         if (status.equals("Complete")) {
-
-                            //User user = new User();
-                            //AppDatabase.getInstance(getContext()).userDao().insert(user);
 
                             dismiss();
                         } else {
