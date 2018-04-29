@@ -30,14 +30,14 @@ public class Acc_Adapter extends RecyclerView.Adapter<Acc_Adapter.MyViewHolder>{
 
         public MyViewHolder(View view){
             super(view);
-            Balance = (TextView) view.findViewById(R.id.balance);
+            //Balance = (TextView) view.findViewById(R.id.balance);
             Table = (TextView) view.findViewById(R.id.recent_transactions);
 
         }
     }
-    public Acc_Adapter(List<User> AccountList){
-        this.AccountList = AccountList;
-    }
+   // public Acc_Adapter(List<User> AccountList){
+ //      this.AccountList = AccountList;
+  //  }
     public Acc_Adapter(List<Transaction> TranscationList){
         this.TransactionList = TransactionList;
     }
@@ -51,9 +51,9 @@ public class Acc_Adapter extends RecyclerView.Adapter<Acc_Adapter.MyViewHolder>{
     }
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position){
-        User user = AccountList.get(position);
-        Transaction transaction = TransactionList.get(position);
-        holder.Balance.setText(user.balance);
+    //    User user = AccountList.get(position);
+        String transaction = TransactionList.get(position);
+    //    holder.Balance.setText(user.balance);
         holder.Table.setText(transaction.table);
     }
 
