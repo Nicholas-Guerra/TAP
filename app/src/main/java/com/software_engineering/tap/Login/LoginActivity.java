@@ -69,8 +69,8 @@ public class LoginActivity extends AppCompatActivity{
             public void onClick(View view) {
 
                 //FragmentManager fm = LoginActivity.this.getFragmentManager();
-             Fragment_NewUser_Request newUser = new Fragment_NewUser_Request();
-             newUser.show(getSupportFragmentManager(), "Fragment_NewUser_Request");
+                Fragment_NewUser_Request newUser = new Fragment_NewUser_Request();
+                newUser.show(getSupportFragmentManager(), "Fragment_NewUser_Request");
 
                 //startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
@@ -100,13 +100,16 @@ public class LoginActivity extends AppCompatActivity{
         JSONObject object = new JSONObject();
 
         try {
+            object.put("Request", "Login");
             object.put("userName", userName);
-            object.put("hashedPassword",userPassword.hashCode() );
+            object.put("hashedPassword",String.valueOf(userPassword.hashCode()) );
 
             new sendToServer(this,true, "Verifying", object){
 
                 @Override
                 public void onPostExecute(JSONObject receivedJSON){
+                    super.onPostExecute(receivedJSON);
+
                     try {
                         String status = receivedJSON.getString("Status");
                         if(status.equals("Complete")){

@@ -35,7 +35,7 @@ public class DialogFragment_ViewMoreTransactions extends DialogFragment {
     }
 
 
-    @Override
+    /*@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.dialog_fragment_viewmoretransactions, container, false);
         recyclerView = rootView.findViewById(R.id.trv);
@@ -54,5 +54,5 @@ public class DialogFragment_ViewMoreTransactions extends DialogFragment {
 
 
         return rootView;
-    }
+    }*/
 }

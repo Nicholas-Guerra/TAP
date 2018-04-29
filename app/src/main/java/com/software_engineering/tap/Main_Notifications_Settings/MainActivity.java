@@ -88,9 +88,7 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
         mDrawerLayout = findViewById(R.id.drawer_layout);
         drawerRecyclerView = findViewById(R.id.drawer_recyclerView);
 
-        setupTopNavigation();
-        setupViewPager();
-        setupBottomNavigation();
+
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
@@ -113,10 +111,6 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                AppDatabase.getInstance(getBaseContext()).userDao().update(new User("Bill", "Bill", "Smith", "Bill@Gmail.com", "adsiub349238uehkwq", 12.50, "2149279303", true, 1234, FirebaseInstanceId.getInstance().getToken()));
-                AppDatabase.getInstance(getBaseContext()).transaction_notificationDao().updateTransaction(new Transaction_Notification("Frank", 16.28, System.currentTimeMillis()));
-                AppDatabase.getInstance(getBaseContext()).transaction_notificationDao().updateTransaction(new Transaction_Notification("Sal", 48.61, System.currentTimeMillis()));
-                AppDatabase.getInstance(getBaseContext()).transaction_notificationDao().updateTransaction(new Transaction_Notification("Suzan", 100.28, System.currentTimeMillis()));
                 user = AppDatabase.getInstance(getBaseContext()).userDao().getUser();
 
             }
@@ -134,6 +128,10 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
         Log.i("TimeDate", String.valueOf(System.currentTimeMillis()));
 
         initNFC();
+
+        setupTopNavigation();
+        setupViewPager();
+        setupBottomNavigation();
 
 
     }

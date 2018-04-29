@@ -1,9 +1,11 @@
 package com.software_engineering.tap.Login;
 
 import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.support.v4.app.DialogFragment;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
@@ -35,7 +38,7 @@ public class Fragment_NewUser_Request extends DialogFragment {
     View rootView;
     Button submit;
     EditText et1, et2, et3, et4, et5, et6, et7;
-    CheckBox cb1, cb2;
+    RadioButton cb1, cb2;
 
 
     public Fragment_NewUser_Request() {
@@ -55,8 +58,8 @@ public class Fragment_NewUser_Request extends DialogFragment {
         et5 = (EditText) rootView.findViewById(R.id.New_EditEmail);
         et6 = (EditText) rootView.findViewById(R.id.New_PassEdit);
         et7 = (EditText) rootView.findViewById(R.id.New_PinEdit);
-        cb1 = (CheckBox) rootView.findViewById(R.id.user_kiosk2);
-        cb2 = (CheckBox) rootView.findViewById(R.id.user_cust);
+        cb1 = (RadioButton) rootView.findViewById(R.id.user_kiosk2);
+        cb2 = (RadioButton) rootView.findViewById(R.id.user_cust);
 
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -80,38 +83,50 @@ public class Fragment_NewUser_Request extends DialogFragment {
         JSONObject object = new JSONObject();
 
         try {
+            object.put("Request", "NewUser");
             object.put("userName", et1);
             object.put("firstName", et2);
             object.put("lastName", et3);
             object.put("phoneNumber", et4);
             object.put("email", et5);
-            object.put("hashedPassword", et6.hashCode());
+            object.put("hashedPassword", String.valueOf(et6.hashCode()));
             object.put("pin", et7);
 
             new sendToServer( getActivity(), true, "Verifying", object) {
 
                 @Override
-                public void onPostExecute(JSONObject receivedJSON) {
+                public void onPostExecute(final JSONObject receivedJSON) {
                     super.onPostExecute(receivedJSON);
 
                     try {
 
-                        Long balance = receivedJSON.getLong("balance");
 
-                        User user = new User(et1, et2, et3, et4, et5 , balance, et6 , false, et7, FirebaseInstanceId.getInstance().getToken());
-                        AppDatabase.getInstance(getContext()).userDao().insert(user);
 
                         String status = receivedJSON.getString("Status");
-
-                        if (status.equals("Complete")) {
-
-                            dismiss();
-                        } else {
+                        if (!status.equals("Complete"))
                             Toast.makeText(getContext(), receivedJSON.getString("Message"), Toast.LENGTH_LONG).show();
+                        else{
+                            AsyncTask.execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        Long balance = receivedJSON.getLong("balance");
+                                        User user = new User(et1, et2, et3, et4, et5 , balance, et6 , false, et7, FirebaseInstanceId.getInstance().getToken());
+                                        AppDatabase.getInstance(getContext()).userDao().insert(user);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            });
                         }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
+                    dismiss();
+
                 }
 
             }.execute();
