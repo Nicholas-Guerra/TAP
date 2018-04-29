@@ -105,6 +105,8 @@ public class Fragment_NewUser_Request extends DialogFragment {
 
                 @Override
                 public void onPostExecute(JSONObject receivedJSON) {
+                    super.onPostExecute(receivedJSON);
+
                     try {
 
                         Long balance = receivedJSON.getLong("balance");
