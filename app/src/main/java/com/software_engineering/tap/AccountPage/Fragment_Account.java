@@ -29,21 +29,11 @@ import java.util.UUID;
 public class Fragment_Account extends Fragment implements View.OnClickListener {
 
     ImageView refresh;
-    TextView viewMore;
-
 
 
     public Fragment_Account() {
         // Required empty public constructor
     }
-
-    protected void onCreateView(Bundle savedInstanceState){
-       // View view = super.onCreateView(savedInstanceState);
-       // setContentView(R.layout.fragment_account);
-
-
-    }
-
 
 
     @Override
@@ -55,9 +45,6 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
 
         refresh = rootView.findViewById(R.id.refresh);
         refresh.setOnClickListener(this);
-
-        viewMore = rootView.findViewById(R.id.viewMoreBtn);
-        viewMore.setOnClickListener(this);
 
         TextView nameText = rootView.findViewById(R.id.user);
         User user = MainActivity.getUser();
@@ -93,7 +80,7 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
                                 JSONObject object = array.getJSONObject(x);
                                 Transaction transaction = new Transaction(object.getString("to_from"),  object.getDouble("amount"), object.getString("status"),object.getLong("time"), object.getString("transactionID"));
 
-                                 //AppDatabase.getInstance(getContext()).transactionDao().updateTransaction(transaction);
+                                // AppDatabase.getInstance(getContext()).transactionDao().updateTransaction(transaction);
 
                             }
                         } catch (JSONException e) {
