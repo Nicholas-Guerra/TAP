@@ -1,5 +1,6 @@
 package com.software_engineering.tap.AccountPage;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
@@ -19,7 +20,7 @@ public interface TransactionDao {
     List<Transaction> getRecent();
 
     @Query("SELECT * FROM TRANSACTIONS")
-    List<Transaction> getAll();
+    LiveData<List<Transaction>> getAll();
 
     @Update
     void updateTransaction(Transaction transaction);

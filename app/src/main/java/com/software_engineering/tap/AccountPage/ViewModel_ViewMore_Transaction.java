@@ -13,16 +13,17 @@ import java.util.List;
 
 public class ViewModel_ViewMore_Transaction extends AndroidViewModel {
 
-    private final List<Transaction> transactionList;
+    private final LiveData<List<Transaction>> transactionList;
 
-    public ViewModel_ViewMore_Transaction(@NonNull Application application, LiveData<List<Transaction>> transactionList)
+    public ViewModel_ViewMore_Transaction(@NonNull Application application)
     {
         super(application);
 
-        this.transactionList = AppDatabase.getInstance(getApplication()).transactionDao().getAll();
+        transactionList = AppDatabase.getInstance(getApplication()).transactionDao().getAll();
     }
 
-    public List<Transaction> getTransactionNotifications() {
-    return transactionList;
+    public LiveData<List<Transaction>> getTransactionNotifications() {
+
+        return transactionList;
     }
 }
