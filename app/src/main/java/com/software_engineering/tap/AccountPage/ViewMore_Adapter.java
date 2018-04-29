@@ -24,21 +24,19 @@ import java.util.List;
  */
 
 public class ViewMore_Adapter extends RecyclerView.Adapter<ViewMore_Adapter.ViewHolder> {
-    //Lets see if this commit helps push bull shit
 
     private List<Transaction> transactionList;
     private LayoutInflater mInflaters;
     private DateFormat df = new SimpleDateFormat("EEE MM/dd/yy hh:mm aaa");
     private ItemClickListener mClickListener;
     private Context context;
-    public String grant;
+
 
     // data is passed into the constructor
     public ViewMore_Adapter(Context context, List<Transaction> transaction_List) {
         this.mInflaters = LayoutInflater.from(context);
         transactionList = transaction_List;
         this.context = context;
-        grant = "hello";
     }
 
     // inflates the row layout from xml when needed
