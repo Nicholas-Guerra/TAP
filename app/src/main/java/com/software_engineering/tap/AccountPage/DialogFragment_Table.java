@@ -48,7 +48,13 @@ public class DialogFragment_Table {
         table.setText("Recent Transactions");
 
         close = rootView(R.id.close_button);
-        close.setOnClickListener((view)-> {dismiss(); });
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+
 
         return  rootView;
     }
@@ -65,7 +71,7 @@ public class DialogFragment_Table {
         super.OnDetach();
         mListener.onDialogDismissed();
     }
-    //Still working on
+
 
 
 
