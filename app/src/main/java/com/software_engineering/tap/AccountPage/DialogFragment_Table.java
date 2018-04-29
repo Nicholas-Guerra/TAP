@@ -24,14 +24,16 @@ import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
 import com.software_engineering.tap.R;
 
 import java.io.IOException;
+import java.lang.annotation.Inherited;
 import java.nio.charset.Charset;
 
 //**Created by Michael 20180425*
+//**Modified by Michael 20180429*
 
 public class DialogFragment_Table {
 
     View rootView;
-    TextView title;
+    TextView table;
     ImageView close;
     private Listener mListener;
 
@@ -39,6 +41,30 @@ public class DialogFragment_Table {
         // Required empty public constructor
     }
 
+    @Override
+    public View onCreatedView(LayoutInflater inflater, View container, Bundle savedInstanceState){
+        View v = inflater.inflate(R.layout.dialog_fragment_viewmoretransactions, container, false);
+        table = rootView(R.id.table);
+        table.setText("Recent Transactions");
+
+        close = rootView(R.id.close_button);
+        close.setOnClickListener((view)-> {dismiss(); });
+
+        return  rootView;
+    }
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        mListener = (MainActivity)context;
+        mListener.onDialogDisplayed(true);
+    }
+
+    @Override
+    public void OnDetach(){
+        super.OnDetach();
+        mListener.onDialogDismissed();
+    }
     //Still working on
 
 
