@@ -1,22 +1,10 @@
 package com.software_engineering.tap.Login;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 
-import android.app.Dialog;
-import android.content.Context;
-import android.nfc.FormatException;
-import android.nfc.NdefMessage;
-import android.nfc.NdefRecord;
-import android.nfc.tech.Ndef;
+
 import android.os.Bundle;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.os.CountDownTimer;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
