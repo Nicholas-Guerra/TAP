@@ -46,12 +46,12 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
         refresh = rootView.findViewById(R.id.refresh);
         refresh.setOnClickListener(this);
 
-        //TextView nameText = rootView.findViewById(R.id.name);
+        TextView nameText = rootView.findViewById(R.id.user);
+        User user = MainActivity.getUser();
+        nameText.setText(user.firstName); //setting username on account page to firstName
 
-        //User user = MainActivity.getDb().userDao().getUser();
-
-        //nameText.setText(user.firstName);
-
+        TextView balanceText = rootView.findViewById(R.id.balance);
+        balanceText.setText(String.valueOf(user.balance));
         return rootView;
 
 
