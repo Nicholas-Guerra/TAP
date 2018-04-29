@@ -3,7 +3,7 @@ package com.software_engineering.tap.Login;
 import android.annotation.SuppressLint;
 import android.support.v4.app.DialogFragment;
 
-
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +33,6 @@ import org.json.JSONArray;
 public class Fragment_NewUser_Request extends DialogFragment {
 
     View rootView;
-    TextView Title;
     Button submit;
     EditText et1, et2, et3, et4, et5, et6, et7;
     CheckBox cb1, cb2;
