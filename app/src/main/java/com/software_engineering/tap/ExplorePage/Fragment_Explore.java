@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 import com.software_engineering.tap.R;
 
 import org.json.JSONException;
@@ -35,6 +38,14 @@ public class Fragment_Explore extends Fragment{
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_explore, container, false);
         mRecyclerView = (RecyclerView)rootView.findViewById(R.id.Exp_recycleview);
+
+        GraphView graph = (GraphView) rootView.findViewById(R.id.graph);
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
+                new DataPoint(0, 1),
+                new DataPoint(1, 5),
+                new DataPoint(2, 3)
+        });
+        graph.addSeries(series);
 
 
         // Specify this Adapter
