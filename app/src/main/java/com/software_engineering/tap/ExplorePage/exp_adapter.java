@@ -47,7 +47,15 @@ public class exp_adapter extends RecyclerView.Adapter<exp_adapter.mViewHolder>{
         holder.rate.setText(rateStr);
 
     }
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
     @Override
     public int getItemCount(){
         return CoinList.size();
