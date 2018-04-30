@@ -119,19 +119,13 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
             }
             i++;
         }
+//        AsyncTask.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                AppDatabase.getInstance(getContext()).transactionDao().insert(new Transaction("dad", 28.1, "Pending", 012516, "010101"));
 
-
-
-
-
-       AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-
-                AppDatabase.getInstance(getContext()).transactionDao().insert(new Transaction("dad", 28.1, "Pending", 012516, "010101"));
-
-            }
-        });
+//            }
+//        });
 
         return rootView;
 
