@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.software_engineering.tap.R;
@@ -74,6 +75,10 @@ public class Fragment_Explore extends Fragment{
         */
 
         GraphView graph = (GraphView) rootView.findViewById(R.id.graph);
+        GridLabelRenderer gridlabel = graph.getGridLabelRenderer();
+        gridlabel.setHorizontalAxisTitle("Past 30 Days");
+        gridlabel.setVerticalAxisTitle("Price in TAPcoin");
+        gridlabel.setHorizontalLabelsVisible(false);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
                 new DataPoint(0,btchistory[0]), new DataPoint(1,btchistory[1]),
                 new DataPoint(2,btchistory[2]), new DataPoint(3,btchistory[3]),
