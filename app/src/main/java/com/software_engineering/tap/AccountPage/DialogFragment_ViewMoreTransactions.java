@@ -1,10 +1,10 @@
 package com.software_engineering.tap.AccountPage;
 
-import android.app.DialogFragment;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,7 +35,7 @@ public class DialogFragment_ViewMoreTransactions extends DialogFragment {
     }
 
 
-    /*@Override
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.dialog_fragment_viewmoretransactions, container, false);
         recyclerView = rootView.findViewById(R.id.trv);
@@ -54,5 +54,5 @@ public class DialogFragment_ViewMoreTransactions extends DialogFragment {
 
 
         return rootView;
-    }*/
+    }
 }

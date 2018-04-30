@@ -3,6 +3,7 @@ package com.software_engineering.tap.ExplorePage;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -57,9 +58,11 @@ public class Fragment_Explore extends Fragment{
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         //Set Animations
-        //mRecyclerView.addItemDecoration(new DividerItemDecoration(this , LinearLayoutManager.VERTICAL));
+        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),1);
+        mRecyclerView.addItemDecoration(mDividerItemDecoration);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        
+
+
 
         createCoinData();
         mAdapter.notifyDataSetChanged();
@@ -67,6 +70,7 @@ public class Fragment_Explore extends Fragment{
         return rootView;
 
     }
+
 
     private void createCoinData() {
 
