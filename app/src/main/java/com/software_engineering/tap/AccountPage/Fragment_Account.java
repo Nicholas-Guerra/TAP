@@ -26,6 +26,7 @@ import com.software_engineering.tap.TransactionPage.sendToServer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.Date;
 import java.util.List;
@@ -65,22 +66,62 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
         TextView balanceText = rootView.findViewById(R.id.actualBalance);
         balanceText.setText(String.valueOf(user.balance));
 
-   //     List<Transaction> transactions = AppDatabase.getInstance(getContext()).transactionDao().getRecent();
-     //   for(Transaction transaction: transactions){
-       //     transaction.toFromName
-       // }
+        //Whole block sets up names to be used for the first recent transactions
+        TextView frsttofromName = rootView.findViewById(R.id.fstTransName);
+        TextView frsttransAmount = rootView.findViewById(R.id.fstTransAmount);
+        TextView frsttransStatus = rootView.findViewById(R.id.fstTransStatus);
 
-//        recentTransactions = AppDatabase.getInstance(getContext()).transactionDao().getRecent();
-  //      Object[] recentTransArray;
-    //    recentTransArray = recentTransactions.toArray();
+        //Whole block sets up names to be used for the sencond recent transactions
+        TextView sndtofromName = rootView.findViewById(R.id.sndTransName);
+        TextView sndTransAmount = rootView.findViewById(R.id.sndTransAmount);
+        TextView sndtransStatus = rootView.findViewById(R.id.sndTransStatus);
+
+        //Whole block sets up names to be used for the third recent transactions
+        TextView thrdtofromName = rootView.findViewById(R.id.trdTransName);
+        TextView thrdTransAmount = rootView.findViewById(R.id.trdTransAmount);
+        TextView thrdtransStatus = rootView.findViewById(R.id.trdTransStatus);
+
+        recentTransactions = AppDatabase.getInstance(getContext()).transactionDao().getRecent();
+        for(Transaction transaction: recentTransactions){
+            int i = 0;
+            if(i == 0) {
+                frsttofromName.setText(transaction.toFromName);
+                frsttransAmount.setText(String.valueOf(transaction.amount));
+                if (transaction.amount > 0) {
+                    frsttransAmount.setTextColor(this.getResources().getColor(R.color.colorDeposit));
+                }
+                else{
+                    frsttransAmount.setTextColor(this.getResources().getColor(R.color.colorDeduct));
+                }
+                frsttransStatus.setText(transaction.status);
+            }
+            else if(i == 1){
+                sndtofromName.setText(transaction.toFromName);
+                sndTransAmount.setText(String.valueOf(transaction.amount));
+                if(transaction.amount > 0 ){
+                    sndTransAmount.setTextColor(this.getResources().getColor(R.color.colorDeposit));
+                }
+                else{
+                    sndTransAmount.setTextColor(this.getResources().getColor(R.color.colorDeduct));
+                }
+                sndtransStatus.setText(transaction.status);
+            }
+            else if (i == 2) {
+                thrdtofromName.setText(transaction.toFromName);
+                thrdTransAmount.setText(String.valueOf(transaction.amount));
+                if(transaction.amount > 0 ){
+                    thrdTransAmount.setTextColor(this.getResources().getColor(R.color.colorDeposit));
+                }
+                else{
+                    thrdTransAmount.setTextColor(this.getResources().getColor(R.color.colorDeduct));
+                }
+                thrdtransStatus.setText(transaction.status);
+            }
+            i++;
+        }
 
 
-      //  for(int i=0; i >= 3; i++) {
-        //    TextView fstTransName = rootView.findViewById(R.id.fstTransName);
-          //  fstTransName.setText((Integer) recentTransArray[i]);
 
-
-        //}
 
 
        AsyncTask.execute(new Runnable() {
