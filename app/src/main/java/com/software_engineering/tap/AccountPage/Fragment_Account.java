@@ -2,11 +2,14 @@ package com.software_engineering.tap.AccountPage;
 
 
 import android.annotation.SuppressLint;
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,11 +27,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class Fragment_Account extends Fragment implements View.OnClickListener {
 
     ImageView refresh;
+
+    TextView vwMore;
 
 
     public Fragment_Account() {
@@ -46,13 +52,37 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
         refresh = rootView.findViewById(R.id.refresh);
         refresh.setOnClickListener(this);
 
+        vwMore = rootView.findViewById(R.id.viewMore);
+        vwMore.setOnClickListener(this);
+
         TextView nameText = rootView.findViewById(R.id.user);
         User user = MainActivity.getUser();
         nameText.setText(user.firstName); //setting username on account page to firstName
 
-        TextView balanceText = rootView.findViewById(R.id.balance);
+        TextView balanceText = rootView.findViewById(R.id.actualBalance);
         balanceText.setText(String.valueOf(user.balance));
+
+
+        /*for(i=0; i >= 3; i++) {
+            TextView firstTransactionAmount = ;
+            firstTransactionAmount.setText();
+            if ()
+                firstTransactionAmount.setTextColor(ContextCompat.getColor(getContext(), R.color.colorDeposit));
+
+        }*/
+
+
+       /* AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+
+                AppDatabase.getInstance(getContext()).transactionDao().insert(new Transaction("dad", 28.1, "Pending", 012516, "010101"));
+
+            }
+        });
+        */
         return rootView;
+
 
 
     }
@@ -95,6 +125,8 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
             }
 
 
+        } else if(v == vwMore){
+           new DialogFragment_ViewMoreTransactions().show(getFragmentManager(), "DialogViewMore");
         }
 
 
