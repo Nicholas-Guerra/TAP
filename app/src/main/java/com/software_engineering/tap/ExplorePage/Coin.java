@@ -2,12 +2,12 @@ package com.software_engineering.tap.ExplorePage;
 
 public class Coin {
     private String name;
-    private double rate;
+    private String rate;
 
     public Coin(){
 
     }
-    public Coin(String name, double rate){
+    public Coin(String name, String rate){
         this.name = name;
         this.rate = rate;
     }
@@ -16,7 +16,7 @@ public class Coin {
         return name;
     }
 
-    public double getRate() {
+    public String getRate() {
         return rate;
     }
 
@@ -24,7 +24,7 @@ public class Coin {
         this.name = name;
     }
 
-    public void setRate(double rate) {
+    public void setRate(String rate) {
         this.rate = rate;
     }
 }

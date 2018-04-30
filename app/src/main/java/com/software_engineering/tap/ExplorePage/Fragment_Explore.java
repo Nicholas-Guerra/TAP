@@ -8,17 +8,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.software_engineering.tap.R;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class Fragment_Explore extends Fragment{
     private RecyclerView mRecyclerView;
@@ -48,23 +46,72 @@ public class Fragment_Explore extends Fragment{
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         //Set Animations
+        //mRecyclerView.addItemDecoration(new DividerItemDecoration(this , LinearLayoutManager.VERTICAL));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        
 
         createCoinData();
+        mAdapter.notifyDataSetChanged();
 
         return rootView;
 
     }
 
-    private void createCoinData()
-    {
-        Coin coin = new Coin("BTC",.00012);
+    private void createCoinData() {
+
+        String result;
+        String url = "https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=BTC,ETH,LTC,BCH,EUR,GBP,JPY,CNY";
+
+        fetchRates rateGet = new fetchRates();
+        try {
+            //parse HTTP
+            result = rateGet.execute(url).get();
+            JSONObject jo = new JSONObject(result);
+
+            coinList.clear();
+
+            Coin coin = new Coin("BTC",jo.get("BTC").toString());
+            coinList.add(coin);
+
+            coin = new Coin("ETH",jo.get("ETH").toString());
+            coinList.add(coin);
+
+            coin = new Coin("LTC",jo.get("LTC").toString());
+            coinList.add(coin);
+
+            coin = new Coin("BCH",jo.get("BCH").toString());
+            coinList.add(coin);
+
+            coin = new Coin("EUR",jo.get("EUR").toString());
+            coinList.add(coin);
+
+            coin = new Coin("GBP",jo.get("GBP").toString());
+            coinList.add(coin);
+
+            coin = new Coin("CNY",jo.get("CNY").toString());
+            coinList.add(coin);
+
+            coin = new Coin("JPY",jo.get("JPY").toString());
+            coinList.add(coin);
+
+
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        /*
+        Coin coin = new Coin("BTC",.00011);
         coinList.add(coin);
 
-        coin = new Coin("ETH",.001946 );
+        coin = new Coin("ETH",.018);
         coinList.add(coin);
 
-        coin = new Coin("LTC",.007298);
+        coin = new Coin("LTC",.018);
         coinList.add(coin);
 
         coin = new Coin("BCH",.001135);
@@ -84,7 +131,7 @@ public class Fragment_Explore extends Fragment{
 
         coin = new Coin("MEX",18.08);
         coinList.add(coin);
-
+        */
 
     }
 
