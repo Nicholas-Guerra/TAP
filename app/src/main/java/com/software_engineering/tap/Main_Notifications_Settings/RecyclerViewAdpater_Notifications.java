@@ -2,6 +2,7 @@ package com.software_engineering.tap.Main_Notifications_Settings;
 
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -18,6 +19,10 @@ import android.widget.Toast;
 import com.software_engineering.tap.AccountPage.AppDatabase;
 import com.software_engineering.tap.R;
 import com.software_engineering.tap.TransactionPage.DialogFragment_Authentication;
+import com.software_engineering.tap.TransactionPage.sendToServer;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -88,11 +93,43 @@ public class RecyclerViewAdpater_Notifications  extends RecyclerView.Adapter<Rec
                         ((AppCompatActivity)context).getSupportFragmentManager().executePendingTransactions();
 
                         dialogFragment_authentication.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @SuppressLint("StaticFieldLeak")
                             @Override
                             public void onDismiss(DialogInterface dialogInterface) {
                                 if (dialogFragment_authentication.getSuccess()) {
                                     Toast.makeText(context, "Accepted", Toast.LENGTH_SHORT).show();
                                     //Authentication successful
+
+                                    JSONObject object = new JSONObject();
+                                    try {
+                                        object.put("Request", "Transaction")
+                                                .put("sender", MainActivity.getUser().userName)
+                                                .put("receiver", holder.toName.getText().toString())
+                                                .put("amount", Double.valueOf(holder.amount.getText().toString()));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    new sendToServer(context,true, "Verifying", object) {
+                                        @Override
+                                        public void onPostExecute(final JSONObject receivedJSON) {
+                                            super.onPostExecute(receivedJSON);
+                                            try {
+                                                String status = receivedJSON.getString("Status");
+                                                if(status.equals("Complete")){
+                                                    Toast.makeText(context, "Success", Toast.LENGTH_LONG).show();
+                                                } else{
+                                                    String message = receivedJSON.getString("Message");
+                                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                                                }
+
+
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+
+                                        }
+                                    }.execute();
 
 
                                 } else {
