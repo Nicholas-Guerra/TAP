@@ -19,7 +19,7 @@ public interface UserDao {
     @Update
     void update(User user);
 
-    @Insert
+    @Insert (onConflict = OnConflictStrategy.REPLACE)
     void insert(User user);
 
     @Delete

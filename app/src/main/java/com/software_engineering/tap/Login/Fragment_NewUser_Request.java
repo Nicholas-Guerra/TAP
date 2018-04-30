@@ -7,6 +7,7 @@ import android.support.v4.app.DialogFragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,6 +116,7 @@ public class Fragment_NewUser_Request extends DialogFragment {
                                         AppDatabase.getInstance(getContext()).userDao().insert(user);
                                     } catch (JSONException e) {
                                         e.printStackTrace();
+                                        Log.e("JSONError", e.getMessage());
                                     }
 
                                 }
@@ -123,6 +125,7 @@ public class Fragment_NewUser_Request extends DialogFragment {
 
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        Log.e("JSONError", e.getMessage());
                     }
 
                     dismiss();

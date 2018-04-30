@@ -3,6 +3,7 @@ package com.software_engineering.tap.TransactionPage;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.software_engineering.tap.Login.LoginActivity;
 import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
 import com.software_engineering.tap.R;
 
@@ -33,6 +35,7 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
     View rootView;
     TextView notifications;
     ImageView btn_nfc;
+    Button connection;
 
 
     public Fragment_Pay() {
@@ -48,6 +51,9 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
 
         btn_nfc = rootView.findViewById(R.id.btn_nfc);
         btn_nfc.setOnClickListener(this);
+
+        connection = rootView.findViewById(R.id.connection);
+        connection.setOnClickListener(this);
 
         return rootView;
     }
@@ -67,10 +73,8 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
                 @Override
                 public void onDismiss(DialogInterface dialogInterface) {
                     if(dialog.getSuccess()){
-                        Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
                         //Authentication successful
                         new DialogFragment_NFC_Pay().show(getFragmentManager().beginTransaction(), "nfc_pay");
-
 
                     } else{
                         Toast.makeText(getContext(), "Canceled", Toast.LENGTH_SHORT).show();
@@ -79,6 +83,29 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
                     }
                 }
             });
+        } else if(v == connection){
+
+            try {
+                JSONObject object = new JSONObject();
+                object.put("Request", "NewUser")
+                        .put("userName", "BobByyy")
+                        .put("hashedPassword","asodabsasdsd" )
+                        .put("phoneNumber", "2149872973")
+                        .put("email", "bobbyyy@gmail.com");
+
+                new sendToServer(getContext(),true, "Sending", object){
+
+                    @Override
+                    public void onPostExecute(JSONObject receivedJSON){
+                        super.onPostExecute(receivedJSON);
+
+                    }
+
+                }.execute();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 

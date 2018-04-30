@@ -15,6 +15,7 @@ import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -105,27 +106,14 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
             }
         });
 
-
-
-
-        Thread thread = new Thread(new Runnable() {
+        AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                user = AppDatabase.getInstance(getBaseContext()).userDao().getUser();
-
+                while(user==null) {
+                    user = AppDatabase.getInstance(MainActivity.this).userDao().getUser();
+                }
             }
         });
-
-        thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-
-        Log.i("Token", FirebaseInstanceId.getInstance().getToken());
-        Log.i("TimeDate", String.valueOf(System.currentTimeMillis()));
 
         initNFC();
 
@@ -350,6 +338,8 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
     }
 
     public static User getUser(){
+        while(user == null){}
+
         return user;
     }
 

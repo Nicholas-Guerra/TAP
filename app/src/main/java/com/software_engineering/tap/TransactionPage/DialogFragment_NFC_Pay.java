@@ -2,6 +2,7 @@ package com.software_engineering.tap.TransactionPage;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.nfc.FormatException;
 import android.nfc.NdefMessage;
@@ -55,35 +56,27 @@ public class DialogFragment_NFC_Pay extends DialogFragment {
             }
         });
 
+        mListener = (MainActivity) getActivity();
+        mListener.onDialogDisplayed(true);
+
         setCancelable(false);
-
-
-        new CountDownTimer(10000, 100) {
-            public void onTick(long millisUntilFinished) { }
-            public void onFinish() {
-                Toast.makeText(getContext(), "Timeout : Try Again", Toast.LENGTH_SHORT).show();
-                dismiss();
-            }
-        }.start();
 
 
         return rootView;
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mListener = (MainActivity)context;
-        mListener.onDialogDisplayed(true);
-    }
+
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
         mListener.onDialogDismissed();
     }
 
+
+
     public NdefMessage onNfcDetected(){
+
         byte[] payload = MainActivity.getUser().userName.
                 getBytes(Charset.forName("UTF-8"));
 
@@ -97,6 +90,4 @@ public class DialogFragment_NFC_Pay extends DialogFragment {
 
         return new NdefMessage(record);
     }
-
-
 }
