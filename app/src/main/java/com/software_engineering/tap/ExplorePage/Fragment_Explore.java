@@ -104,34 +104,7 @@ public class Fragment_Explore extends Fragment{
             e.printStackTrace();
         }
 
-        /*
-        Coin coin = new Coin("BTC",.00011);
-        coinList.add(coin);
 
-        coin = new Coin("ETH",.018);
-        coinList.add(coin);
-
-        coin = new Coin("LTC",.018);
-        coinList.add(coin);
-
-        coin = new Coin("BCH",.001135);
-        coinList.add(coin);
-
-        coin = new Coin("GBP",.7);
-        coinList.add(coin);
-
-        coin = new Coin("EUR",.81);
-        coinList.add(coin);
-
-        coin = new Coin("JPY",107.21);
-        coinList.add(coin);
-
-        coin = new Coin("CNY", 6.27);
-        coinList.add(coin);
-
-        coin = new Coin("MEX",18.08);
-        coinList.add(coin);
-        */
 
     }
 
