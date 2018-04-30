@@ -66,15 +66,17 @@ public class LoginActivity extends AppCompatActivity{
         differentUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                userName.setText("");
+                userName.setEnabled(true);
+
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
-                        AppDatabase.getInstance(getBaseContext()).userDao().deleteALL();
-                        AppDatabase.getInstance(getBaseContext()).transactionDao().deleteALL();
-                        AppDatabase.getInstance(getBaseContext()).transaction_notificationDao().deleteALL();
-
-                        userName.setText("");
-                        userName.setEnabled(true);
+                        AppDatabase.getInstance(LoginActivity.this).userDao().deleteALL();
+                        AppDatabase.getInstance(LoginActivity.this).transactionDao().deleteALL();
+                        AppDatabase.getInstance(LoginActivity.this).transaction_notificationDao().deleteALL();
+                        user = null;
                     }
                 });
             }
