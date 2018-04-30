@@ -17,7 +17,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.software_engineering.tap.AccountPage.AppDatabase;
+import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
 import com.software_engineering.tap.R;
 
 import org.json.JSONArray;
@@ -35,6 +37,7 @@ public class DialogFragment_Send_Request extends DialogFragment implements View.
     private ImageView close;
     private double amount;
     private ArrayList<String> searchList = new ArrayList<>();
+    private ArrayList<String> tokenList = new ArrayList<>();
     private ArrayAdapter<String> listAdapter;
 
 
@@ -87,24 +90,14 @@ public class DialogFragment_Send_Request extends DialogFragment implements View.
             @SuppressLint("StaticFieldLeak")
             @Override
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-                String to = (String) listView.getItemAtPosition(position);
-                final String[] from = new String[1];
+
+
                 try {
-                    Thread thread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            from[0] = AppDatabase.getInstance(getContext()).userDao().getUser().userName;
-                        }
-                    });
-
-                    thread.start();
-                    thread.join();
-
-
                     JSONObject object = new JSONObject();
                     object.put("Request", "sendNotification")
-                            .put("to", to)
-                            .put("from", from[0])
+                            .put("to", tokenList.get(position))
+                            .put("toName", searchList.get(position))
+                            .put("fromName", MainActivity.getUser().userName)
                             .put("amount", amount);
 
                     new sendToServer(getContext(), true, "Sending request", object){
@@ -126,8 +119,6 @@ public class DialogFragment_Send_Request extends DialogFragment implements View.
 
 
                 } catch (JSONException e) {
-                    e.printStackTrace();
-                }catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
@@ -156,8 +147,12 @@ public class DialogFragment_Send_Request extends DialogFragment implements View.
                             try {
                                 JSONArray array = receivedJSON.getJSONArray("Array");
 
+                                searchList.clear();
+                                tokenList.clear();
+
                                 for (int i = 0; i < array.length(); i++) {
                                     searchList.add(array.getJSONObject(i).getString("userName"));
+                                    tokenList.add(array.getJSONObject(i).getString("token"));
                                 }
 
                                 listAdapter.notifyDataSetChanged();
