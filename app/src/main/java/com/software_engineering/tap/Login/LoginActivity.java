@@ -4,16 +4,21 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.arch.persistence.room.Room;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.hardware.camera2.TotalCaptureResult;
+import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +31,7 @@ import android.app.Dialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.software_engineering.tap.AccountPage.User;
 import com.software_engineering.tap.TransactionPage.sendToServer;
 
 import com.software_engineering.tap.AccountPage.AppDatabase;
@@ -41,16 +47,17 @@ public class LoginActivity extends AppCompatActivity{
     private Button btnLogin;
     private TextView btnNewUser;
     private EditText userName, userPassword;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        userName = (EditText) findViewById(R.id.user_name);
-        userPassword = (EditText) findViewById(R.id.user_password);
-        btnLogin = (Button) findViewById(R.id.login_button);
-        btnNewUser = (TextView) findViewById(R.id.user_button);
+        userName =  findViewById(R.id.user_name);
+        userPassword =  findViewById(R.id.user_password);
+        btnLogin =  findViewById(R.id.login_button);
+        btnNewUser = findViewById(R.id.user_button);
 
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +97,17 @@ public class LoginActivity extends AppCompatActivity{
             }
         }
 
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                user = AppDatabase.getInstance(getBaseContext()).userDao().getUser();
+                if(user !=null){
+                    userName.setText(user.userName);
+                    userName.setEnabled(false);
+                }
+            }
+        });
+
 
 
     }
@@ -113,6 +131,43 @@ public class LoginActivity extends AppCompatActivity{
                     try {
                         String status = receivedJSON.getString("Status");
                         if(status.equals("Complete")){
+                            if(user == null){
+
+                                final AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
+
+                                final EditText edittext = new EditText(LoginActivity.this);
+                                edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                alert.setMessage("Enter Your Message");
+                                alert.setTitle("Enter Your Title");
+                                alert.setPositiveButton("Submit", null);
+
+                                alert.setView(edittext);
+
+                                alert.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        if(edittext.getText().toString().length() <= 3){
+                                            Toast.makeText(LoginActivity.this, "Too short: Try again", Toast.LENGTH_SHORT).show();
+                                        } else {
+
+                                            user.userName =;
+                                            user.firstName =;
+                                            user.lastName =;
+                                            user.balance =;
+                                            user.email =;
+                                            user.passwordHash =;
+                                            user.date = System.currentTimeMillis();
+                                            user.pin = Integer.valueOf(edittext.getText().toString());
+
+                                            dialog.dismiss();
+
+                                        }
+                                    }
+                                });
+
+                                alert.show();
+
+                            }
+
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         } else{
                             Toast.makeText(getBaseContext(), receivedJSON.getString("Message"), Toast.LENGTH_LONG).show();
