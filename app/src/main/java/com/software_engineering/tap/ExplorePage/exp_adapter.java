@@ -6,8 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.LineGraphSeries;
 import com.software_engineering.tap.R;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 public class exp_adapter extends RecyclerView.Adapter<exp_adapter.mViewHolder>{
     private Context context;
     private List<Coin> CoinList;
+    GraphView graph;
 
     public class mViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView head, rate;
@@ -29,44 +31,70 @@ public class exp_adapter extends RecyclerView.Adapter<exp_adapter.mViewHolder>{
         @Override
         public void onClick(View view)
         {
-            Toast.makeText(view.getContext(),"position =" + getLayoutPosition(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(view.getContext(),"position =" + getLayoutPosition(), Toast.LENGTH_SHORT).show();
             if(getLayoutPosition() == 0)
             {
-                System.out.println("BTC");
+                popGraph popGraph=new popGraph();
+                graph.removeAllSeries();
+                LineGraphSeries series = popGraph.populateBTC();
+                graph.addSeries(series);
+
             }
             else if(getLayoutPosition() == 1)
             {
-                System.out.println("ETH");
+                popGraph popGraph=new popGraph();
+                graph.removeAllSeries();
+                LineGraphSeries series = popGraph.populateETH();
+                graph.addSeries(series);
             }
             else if(getLayoutPosition() == 2)
             {
-                System.out.println("LTC");
+                popGraph popGraph=new popGraph();
+                graph.removeAllSeries();
+                LineGraphSeries series = popGraph.populateLTC();
+                graph.addSeries(series);
             }
             else if(getLayoutPosition() == 3)
             {
-                System.out.println("BCH");
+                popGraph popGraph=new popGraph();
+                graph.removeAllSeries();
+                LineGraphSeries series = popGraph.populateBCH();
+                graph.addSeries(series);
             }
             else if(getLayoutPosition() == 4)
             {
-                System.out.println("EUR");
+                popGraph popGraph=new popGraph();
+                graph.removeAllSeries();
+                LineGraphSeries series = popGraph.populateEUR();
+                graph.addSeries(series);
             }
             else if(getLayoutPosition() == 5)
             {
-                System.out.println("GBP");
+                popGraph popGraph=new popGraph();
+                graph.removeAllSeries();
+                LineGraphSeries series = popGraph.populateGBP();
+                graph.addSeries(series);
             }
             else if(getLayoutPosition() == 6)
             {
-                System.out.println("JPY");
+                popGraph popGraph=new popGraph();
+                graph.removeAllSeries();
+                LineGraphSeries series = popGraph.populateCNY();
+                graph.addSeries(series);
             }
             else if(getLayoutPosition() == 7)
             {
-                System.out.println("CNY");
+                popGraph popGraph=new popGraph();
+                graph.removeAllSeries();
+                LineGraphSeries series = popGraph.populateJPY();
+                graph.addSeries(series);
             }
         }
     }
 
-    public exp_adapter(List<Coin> Coinlist){
+    public exp_adapter(List<Coin> Coinlist, GraphView graph){
         this.CoinList = Coinlist;
+        this.graph = graph;
 
     }
 

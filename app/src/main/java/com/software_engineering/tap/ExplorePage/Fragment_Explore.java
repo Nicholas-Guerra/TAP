@@ -44,7 +44,7 @@ public class Fragment_Explore extends Fragment{
                 6773.94,6830.90,6939.55,7916.37,7889.23,8003.68,8357.04,7890.15,
                 8163.69,8373.74,8863.50,8917.60,8792.63,8938.30,9652.16,8864.09,
                 9279.00,8978.33,9342.47,9392.03,9314.39};
-        double ethhistory[] = new double[]{403.11,
+        /*double ethhistory[] = new double[]{403.11,
                 364.77,391.73,406.30,376.37,380.39,367.15,386.97,401.62,396.42,
                 405.83,420.71,463.98,514.14,492.46,522.74,503.76,513.49,511.00,
                 553.86,588.93,602.99,633.63,643.71,699.05,618.01,631.29,674.25,
@@ -71,19 +71,32 @@ public class Fragment_Explore extends Fragment{
         double cnyhistory[] = new double[]{6.3330,6.3330,6.3599,6.3259,6.3063,6.3171,6.2965,6.2965,
                 6.2791,6.2744,6.2820,6.2946,6.2744,6.2820,6.2946,6.2749,6.2749,6.2747,6.2909,6.2686,
                 6.819,6.3100,6.3020,6.3020,6.3020,6.3060,6.3060,6.2866,6.2866,6.2866,6.2892,6.2975};
-
+        */
 
         GraphView graph = (GraphView) rootView.findViewById(R.id.graph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3)
+                new DataPoint(0,btchistory[0]), new DataPoint(1,btchistory[1]),
+                new DataPoint(2,btchistory[2]), new DataPoint(3,btchistory[3]),
+                new DataPoint(4,btchistory[4]), new DataPoint(5,btchistory[5]),
+                new DataPoint(6,btchistory[6]), new DataPoint(7,btchistory[7]),
+                new DataPoint(8,btchistory[8]), new DataPoint(9,btchistory[9]),
+                new DataPoint(10,btchistory[10]), new DataPoint(11,btchistory[11]),
+                new DataPoint(12,btchistory[12]), new DataPoint(13,btchistory[13]),
+                new DataPoint(14,btchistory[14]), new DataPoint(15,btchistory[15]),
+                new DataPoint(16,btchistory[16]), new DataPoint(17,btchistory[17]),
+                new DataPoint(18,btchistory[18]), new DataPoint(19,btchistory[19]),
+                new DataPoint(20,btchistory[20]), new DataPoint(21,btchistory[21]),
+                new DataPoint(22,btchistory[22]), new DataPoint(23,btchistory[23]),
+                new DataPoint(24,btchistory[24]), new DataPoint(25,btchistory[25]),
+                new DataPoint(26,btchistory[26]), new DataPoint(27,btchistory[27]),
+                new DataPoint(28,btchistory[28]), new DataPoint(29,btchistory[29])
         });
         graph.addSeries(series);
 
 
+
         // Specify this Adapter
-        mAdapter = new exp_adapter(coinList);
+        mAdapter = new exp_adapter(coinList, graph);
         mRecyclerView.setAdapter(mAdapter);
 
         //Set Layout Manager
