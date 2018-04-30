@@ -92,6 +92,7 @@ public class Fragment_NewUser_Request extends DialogFragment {
             object.put("email", et5);
             object.put("hashedPassword", String.valueOf(et6.hashCode()));
             object.put("pin", et7);
+            object.put("token", FirebaseInstanceId.getInstance().getToken());
 
             new sendToServer( getActivity(), true, "Verifying", object) {
 
