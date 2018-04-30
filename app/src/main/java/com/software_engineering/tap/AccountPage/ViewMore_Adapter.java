@@ -35,23 +35,32 @@ public class ViewMore_Adapter extends RecyclerView.Adapter<ViewMore_Adapter.View
     // data is passed into the constructor
     public ViewMore_Adapter(Context context, List<Transaction> transaction_List) {
         this.mInflaters = LayoutInflater.from(context);
-        transactionList = transaction_List;
         this.context = context;
+        transactionList = transaction_List;
+
     }
 
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.viewmodel_transaction_notification, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.viewmore_adapter, parent, false));
     }
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.fromName.setText(transactionList.get(position).toFromName);
-        holder.dateView.setText(df.format(new Date(transactionList.get(position).date)));
-        holder.amountView.setText(String.valueOf(transactionList.get(position).amount));
-        holder.statusView.setText(transactionList.get(position).status);
+    public void onBindViewHolder(ViewHolder obholder, int position) {
+        if(transactionList == null) {
+            obholder.fromName.setText("No Transactions To Display");
+            obholder.dateView.setText("No Transactions To Display");
+            obholder.amountView.setText("No Transactions To Display");
+            obholder.statusView.setText("No Transactions To Display");
+        }
+        else{
+            obholder.fromName.setText(transactionList.get(position).toFromName);
+            obholder.dateView.setText(df.format(new Date(transactionList.get(position).date)));
+            obholder.amountView.setText(String.valueOf(transactionList.get(position).amount));
+            obholder.statusView.setText(transactionList.get(position).status);
+        }
     }
 
     // total number of rows
@@ -60,7 +69,20 @@ public class ViewMore_Adapter extends RecyclerView.Adapter<ViewMore_Adapter.View
 
         return transactionList.size();
     }
+    public void addItems(List<Transaction> transaction_List) {
+        this.transactionList = transaction_List;
+        notifyDataSetChanged();
+    }
 
+    // allows clicks events to be caught
+    void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
+    // parent activity will implement this method to respond to click events
+    public interface ItemClickListener {
+        void onItemClick(View view, int position);
+    }
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -94,18 +116,5 @@ public class ViewMore_Adapter extends RecyclerView.Adapter<ViewMore_Adapter.View
         }
     }
 
-    public void addItems(List<Transaction> transaction_List) {
-        this.transactionList = transaction_List;
-        notifyDataSetChanged();
-    }
 
-    // allows clicks events to be caught
-    void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
-    }
-
-    // parent activity will implement this method to respond to click events
-    public interface ItemClickListener {
-        void onItemClick(View view, int position);
-    }
 }

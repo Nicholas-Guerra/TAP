@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Dao
 public interface TransactionDao {
-    @Query("SELECT * FROM TRANSACTIONS LIMIT 4")
+    @Query("SELECT * FROM TRANSACTIONS ORDER BY DATE DESC LIMIT 3")
     List<Transaction> getRecent();
 
     @Query("SELECT * FROM TRANSACTIONS")
