@@ -6,9 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.RelativeLayout;
-
 import android.widget.TextView;
 
 import com.software_engineering.tap.R;
@@ -28,7 +25,7 @@ public class Refresh_Button extends RecyclerView.Adapter<Refresh_Button.MyViewHo
         private List<Transaction> TransactionList;
         private ViewMore_Adapter.ItemClickListener mClickListener;
 
-        public class MyViewHolder extends RecyclerView.ViewHolder{
+        public static class MyViewHolder extends RecyclerView.ViewHolder{
             public TextView RelativeLayout, Balance;
 
             public MyViewHolder(View view){
