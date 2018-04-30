@@ -24,4 +24,7 @@ public interface Transaction_NotificationDao {
 
     @Delete
     void delete(Transaction_Notification transaction_notification);
+
+    @Query("DELETE FROM TRANSACTION_NOTIFICATIONS")
+    void deleteALL();
 }

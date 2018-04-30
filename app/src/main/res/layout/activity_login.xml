@@ -57,10 +57,25 @@
         android:id="@+id/user_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="212dp"
+        android:layout_alignTop="@id/different_user"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="25dp"
+        android:layout_alignBottom="@id/different_user"
         android:text="New User?"
+        android:gravity="center"
+        android:layout_below="@id/login_button"
+        android:textColor="@color/colorClick"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/different_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/login_button"
+        android:text="Different\nUsername?"
+        android:layout_margin="25dp"
+        android:gravity="center"
         android:textColor="@color/colorClick"
         android:textSize="20dp" />
 

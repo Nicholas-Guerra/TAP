@@ -20,8 +20,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +33,7 @@ import android.app.Dialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.software_engineering.tap.AccountPage.User;
 import com.software_engineering.tap.TransactionPage.sendToServer;
 
@@ -45,7 +48,7 @@ public class LoginActivity extends AppCompatActivity{
     //private static final String TAG = "LoginActivity";
 
     private Button btnLogin;
-    private TextView btnNewUser;
+    private TextView btnNewUser, differentUser;
     private EditText userName, userPassword;
     private User user;
 
@@ -58,6 +61,25 @@ public class LoginActivity extends AppCompatActivity{
         userPassword =  findViewById(R.id.user_password);
         btnLogin =  findViewById(R.id.login_button);
         btnNewUser = findViewById(R.id.user_button);
+        differentUser = findViewById(R.id.different_user);
+
+        differentUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        AppDatabase.getInstance(getBaseContext()).userDao().deleteALL();
+                        AppDatabase.getInstance(getBaseContext()).transactionDao().deleteALL();
+                        AppDatabase.getInstance(getBaseContext()).transaction_notificationDao().deleteALL();
+
+                        userName.setText("");
+                        userName.setEnabled(true);
+                    }
+                });
+            }
+        });
+
 
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -101,7 +123,7 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void run() {
                 user = AppDatabase.getInstance(getBaseContext()).userDao().getUser();
-                if(user !=null){
+                if(user != null){
                     userName.setText(user.userName);
                     userName.setEnabled(false);
                 }
@@ -125,61 +147,79 @@ public class LoginActivity extends AppCompatActivity{
             new sendToServer(this,true, "Verifying", object){
 
                 @Override
-                public void onPostExecute(JSONObject receivedJSON){
-                    super.onPostExecute(receivedJSON);
+                public void onPostExecute(final JSONObject receivedJSON){
+
 
                     try {
                         String status = receivedJSON.getString("Status");
                         if(status.equals("Complete")){
                             if(user == null){
 
-                                final AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
+                                Toast.makeText(LoginActivity.this, "user null", Toast.LENGTH_SHORT).show();
 
-                                final EditText edittext = new EditText(LoginActivity.this);
-                                edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
-                                alert.setMessage("Enter Your Message");
-                                alert.setTitle("Enter Your Title");
-                                alert.setPositiveButton("Submit", null);
 
-                                alert.setView(edittext);
+                                final Dialog dialog = new Dialog(LoginActivity.this);
+                                dialog.setContentView(R.layout.alertdialog_refresh_pin_fingerprint);
 
-                                alert.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int whichButton) {
-                                        if(edittext.getText().toString().length() <= 3){
+                                final EditText pin_edit = dialog.findViewById(R.id.pin_edit);
+                                pin_edit.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                final CheckBox fingerprint_check = dialog.findViewById(R.id.fingerprint_check);
+                                Button dialogButton = dialog.findViewById(R.id.submit);
+
+                                dialogButton.setOnClickListener( new View.OnClickListener() {
+                                    public void onClick(View v) {
+                                        if(pin_edit.getText().toString().length() <= 3){
                                             Toast.makeText(LoginActivity.this, "Too short: Try again", Toast.LENGTH_SHORT).show();
                                         } else {
 
-                                            user.userName =;
-                                            user.firstName =;
-                                            user.lastName =;
-                                            user.balance =;
-                                            user.email =;
-                                            user.passwordHash =;
-                                            user.date = System.currentTimeMillis();
-                                            user.pin = Integer.valueOf(edittext.getText().toString());
+                                            try {
+                                                user = new User(userName, receivedJSON.getString("firstName"), receivedJSON.getString("lastName"),
+                                                        receivedJSON.getString("email"), String.valueOf(userPassword.hashCode()), receivedJSON.getDouble("balance"),
+                                                        receivedJSON.getString("phoneNumber"), fingerprint_check.isChecked(), Integer.valueOf(pin_edit.getText().toString()),
+                                                        FirebaseInstanceId.getInstance().getToken());
 
-                                            dialog.dismiss();
+                                                AsyncTask.execute(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        AppDatabase.getInstance(LoginActivity.this).userDao().insert(user);
+                                                    }
+                                                });
 
+                                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                                dialog.dismiss();
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                                Log.e("JSONError", e.getMessage());
+                                                Toast.makeText(LoginActivity.this, "Server Error: Try again", Toast.LENGTH_SHORT).show();
+                                                dialog.dismiss();
+                                            }
                                         }
                                     }
                                 });
 
-                                alert.show();
+                                dialog.show();
 
+                            } else {
+                                Toast.makeText(LoginActivity.this, "not null", Toast.LENGTH_SHORT).show();
+
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             }
 
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
                         } else{
                             Toast.makeText(getBaseContext(), receivedJSON.getString("Message"), Toast.LENGTH_LONG).show();
                         }
                     } catch (JSONException e) {
+                        Log.e("JSONError", e.getMessage());
                         e.printStackTrace();
                     }
-                }
 
+                    super.onPostExecute(receivedJSON);
+                }
             }.execute();
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.e("JSONError", e.getMessage());
         }
 
     }

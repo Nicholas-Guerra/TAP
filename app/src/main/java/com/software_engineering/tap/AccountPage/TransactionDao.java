@@ -28,4 +28,7 @@ public interface TransactionDao {
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     void insert(Transaction transaction);
 
+    @Query("DELETE FROM TRANSACTIONS")
+    void deleteALL();
+
 }
