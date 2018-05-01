@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
@@ -19,6 +20,7 @@ import com.software_engineering.tap.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -79,6 +81,10 @@ public class Fragment_Explore extends Fragment{
         gridlabel.setHorizontalAxisTitle("Past 30 Days");
         gridlabel.setVerticalAxisTitle("Price in TAPcoin");
         gridlabel.setHorizontalLabelsVisible(false);
+        NumberFormat nf = NumberFormat.getInstance();
+        nf.setMaximumFractionDigits(2);
+        graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(nf, nf));
+
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
                 new DataPoint(0,btchistory[0]), new DataPoint(1,btchistory[1]),
                 new DataPoint(2,btchistory[2]), new DataPoint(3,btchistory[3]),
