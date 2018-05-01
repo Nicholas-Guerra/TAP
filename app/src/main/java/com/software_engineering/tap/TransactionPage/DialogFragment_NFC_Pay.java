@@ -1,5 +1,6 @@
 package com.software_engineering.tap.TransactionPage;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,6 +11,7 @@ import android.nfc.NdefRecord;
 import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.CpuUsageInfo;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,9 @@ import com.software_engineering.tap.AccountPage.AppDatabase;
 import com.software_engineering.tap.Main_Notifications_Settings.Listener;
 import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
 import com.software_engineering.tap.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -56,15 +61,24 @@ public class DialogFragment_NFC_Pay extends DialogFragment {
             }
         });
 
-        mListener = (MainActivity) getActivity();
-        mListener.onDialogDisplayed(true);
-
         setCancelable(false);
 
+        new CountDownTimer(10000, 100) {
+            public void onTick(long millisUntilFinished) { }
+            public void onFinish() {
+                dismiss();
+            }
+        }.start();
 
         return rootView;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mListener = (MainActivity)context;
+        mListener.onDialogDisplayed(false);
+    }
 
 
     @Override
@@ -75,19 +89,38 @@ public class DialogFragment_NFC_Pay extends DialogFragment {
 
 
 
-    public NdefMessage onNfcDetected(){
+    @SuppressLint("StaticFieldLeak")
+    public void onNfcDetected(String receiver, double amount){
+        JSONObject object = new JSONObject();
+        try {
+            object.put("Request", "Transaction")
+                    .put("sender", MainActivity.getUser().userName)
+                    .put("receiver", receiver)
+                    .put("amount", amount);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        byte[] payload = MainActivity.getUser().userName.
-                getBytes(Charset.forName("UTF-8"));
+        new sendToServer(getContext(),true, "Verifying", object) {
+            @Override
+            public void onPostExecute(final JSONObject receivedJSON) {
+                super.onPostExecute(receivedJSON);
+                try {
+                    String status = receivedJSON.getString("Status");
+                    if(status.equals("Complete")){
+                        mListener.showToast("Success");
+                    } else{
+                        String message = receivedJSON.getString("Message");
+                        mListener.showToast(message);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-        NdefRecord record = new NdefRecord(
-                NdefRecord.TNF_WELL_KNOWN,  //Our 3-bit Type name format
-                NdefRecord.RTD_TEXT,        //Description of our payload
-                new byte[0],                //The optional id for our Record
-                payload);
+            }
+        }.execute();
+
 
         dismiss();
-
-        return new NdefMessage(record);
     }
 }
