@@ -96,6 +96,7 @@ public class Fragment_Explore extends Fragment{
                 new DataPoint(26,btchistory[26]), new DataPoint(27,btchistory[27]),
                 new DataPoint(28,btchistory[28]), new DataPoint(29,btchistory[29])
         });
+        graph.setTitle("BTC History");
         graph.addSeries(series);
 
 
