@@ -2,8 +2,10 @@ package com.software_engineering.tap.Login;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.arch.persistence.room.Room;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -241,10 +243,16 @@ public class LoginActivity extends AppCompatActivity{
         }
     }
 
-    public static void setUser(User userInput){
+    public static void setUser(User userInput, Activity activity){
         user = userInput;
-        userName.setText(user.userName);
-        userName.setEnabled(false);
+
+        activity.runOnUiThread(new Runnable(){
+            public void run() {
+                userName.setText(user.userName);
+                userName.setEnabled(false);
+            }
+        });
+
     }
 
 }

@@ -40,6 +40,7 @@ public class Fragment_NewUser_Request extends DialogFragment {
     Button submit;
     EditText et1, et2, et3, et4, et5, et6, et7;
     RadioButton cb1, cb2;
+    CheckBox fingerprint;
 
 
     public Fragment_NewUser_Request() {
@@ -51,16 +52,17 @@ public class Fragment_NewUser_Request extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.dialog_fragment_newuser_request, container, false);
 
-        submit = (Button) rootView.findViewById(R.id.Submit);
-        et1 = (EditText) rootView.findViewById(R.id.New_UserEdit);
-        et2 = (EditText) rootView.findViewById(R.id.New_FirstEdit);
-        et3 = (EditText) rootView.findViewById(R.id.New_LastEdit);
-        et4 = (EditText) rootView.findViewById(R.id.New_PhoneEdit);
-        et5 = (EditText) rootView.findViewById(R.id.New_EditEmail);
-        et6 = (EditText) rootView.findViewById(R.id.New_PassEdit);
-        et7 = (EditText) rootView.findViewById(R.id.New_PinEdit);
-        cb1 = (RadioButton) rootView.findViewById(R.id.user_kiosk2);
-        cb2 = (RadioButton) rootView.findViewById(R.id.user_cust);
+        submit =  rootView.findViewById(R.id.Submit);
+        et1 = rootView.findViewById(R.id.New_UserEdit);
+        et2 =  rootView.findViewById(R.id.New_FirstEdit);
+        et3 =  rootView.findViewById(R.id.New_LastEdit);
+        et4 = rootView.findViewById(R.id.New_PhoneEdit);
+        et5 =  rootView.findViewById(R.id.New_EditEmail);
+        et6 = rootView.findViewById(R.id.New_PassEdit);
+        et7 = rootView.findViewById(R.id.New_PinEdit);
+        cb1 = rootView.findViewById(R.id.user_kiosk2);
+        cb2 =  rootView.findViewById(R.id.user_cust);
+        fingerprint = rootView.findViewById(R.id.Fingerprint);
 
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -114,8 +116,6 @@ public class Fragment_NewUser_Request extends DialogFragment {
                     super.onPostExecute(receivedJSON);
 
                     try {
-
-
                         String status = receivedJSON.getString("Status");
                         if (!status.equals("Complete"))
                             Toast.makeText(getContext(), receivedJSON.getString("Message"), Toast.LENGTH_LONG).show();
@@ -125,9 +125,9 @@ public class Fragment_NewUser_Request extends DialogFragment {
                                 public void run() {
                                     try {
                                         Long balance = receivedJSON.getLong("balance");
-                                        User user = new User(et1, et2, et3, et4, et5 , balance, et6 , false, et7, FirebaseInstanceId.getInstance().getToken());
+                                        User user = new User(et1, et2, et3, et4, et5 , balance, et6 , fingerprint.isChecked(), et7, FirebaseInstanceId.getInstance().getToken());
                                         AppDatabase.getInstance(getContext()).userDao().insert(user);
-                                        LoginActivity.setUser(user);
+                                        LoginActivity.setUser(user, getActivity());
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                         Log.e("JSONError", e.getMessage());
