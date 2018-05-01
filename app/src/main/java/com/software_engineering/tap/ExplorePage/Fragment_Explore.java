@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
@@ -19,6 +20,7 @@ import com.software_engineering.tap.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -45,40 +47,16 @@ public class Fragment_Explore extends Fragment{
                 6773.94,6830.90,6939.55,7916.37,7889.23,8003.68,8357.04,7890.15,
                 8163.69,8373.74,8863.50,8917.60,8792.63,8938.30,9652.16,8864.09,
                 9279.00,8978.33,9342.47,9392.03,9314.39};
-        /*double ethhistory[] = new double[]{403.11,
-                364.77,391.73,406.30,376.37,380.39,367.15,386.97,401.62,396.42,
-                405.83,420.71,463.98,514.14,492.46,522.74,503.76,513.49,511.00,
-                553.86,588.93,602.99,633.63,643.71,699.05,618.01,631.29,674.25,
-                688.18,680.94};
-        double ltchistory[] = new double[]{116.02,
-                120.96,111.34,120.18,126.74,117.69,119.34,113.79,119.38,117.40,
-                114.97,114.17,114.96,120.62,130.82,125.43,130.58,126.23,136.72,
-                136.09,142.21,149.97,148.94,149.71,151.17,162.37,145.96,146.96,
-                150.49,152.24};
-        double bchhistory[] = new double[]{708.98,
-                656.34,669.68,711.16,652.89,630.16,607.08,650.54,653.51,639.36,
-                648.35,655.83,703.67,763.08,730.88,772.52,751.58,777.17,847.74,
-                975.67,1099.27,1149.86,1233.71,1356.53,1484.87,1295.2,1329.80,
-                1386.36,1403.51,1435.03,1390.13};
-        double eurhistory[] = new double[]{1.2148,1.2107,1.2165,1.2234,1.2210,1.2313,1.348,1.2378,
-                1.2372,1.2382, 1.2348,1.2327,1.2368,1.2354,1.2322,1.2299,1.2240,1.2282,1.2271,2.2304,
-                1.2331,1.2302,1.2311,1.2408,1.2449,1.2357,1.2322,1.2343,1.2247,1.2336,1.2288};
-        double gbphistory[] = new double[]{1.3776,1.3780,1.3916,1.3932,1.3979,1.3939,1.4006,1.4004,
-                1.4086,1.4203,1.4288,1.4339,1.4244,1.4242,1.4232,1.4178,1.4177,1.4129,1.4089,1.4087,
-                1.4005,1.4082,1.4060,1.4050,1.4031,1.4016,1.4031,1.4080,1.4162,1.4227};
-        double jpyhistory[] = new double[]{.0092,.0092,.0092,.0092,.0091,.0092,.0093,.0093,.0093,
-                .0093,.0093,.0093,.0093,.0093,.0093,.0093,.0093,.0094,.0093,.0094,.0094,.0094,.0094,.0093,
-                .0094,.0094,.0095,.0094,.0094,.0094};
-        double cnyhistory[] = new double[]{6.3330,6.3330,6.3599,6.3259,6.3063,6.3171,6.2965,6.2965,
-                6.2791,6.2744,6.2820,6.2946,6.2744,6.2820,6.2946,6.2749,6.2749,6.2747,6.2909,6.2686,
-                6.819,6.3100,6.3020,6.3020,6.3020,6.3060,6.3060,6.2866,6.2866,6.2866,6.2892,6.2975};
-        */
 
         GraphView graph = (GraphView) rootView.findViewById(R.id.graph);
         GridLabelRenderer gridlabel = graph.getGridLabelRenderer();
         gridlabel.setHorizontalAxisTitle("Past 30 Days");
         gridlabel.setVerticalAxisTitle("Price in TAPcoin");
         gridlabel.setHorizontalLabelsVisible(false);
+        NumberFormat nf = NumberFormat.getInstance();
+        nf.setMaximumFractionDigits(2);
+        graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(nf, nf));
+
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
                 new DataPoint(0,btchistory[0]), new DataPoint(1,btchistory[1]),
                 new DataPoint(2,btchistory[2]), new DataPoint(3,btchistory[3]),
