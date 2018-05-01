@@ -76,6 +76,19 @@ public class Fragment_NewUser_Request extends DialogFragment {
         return rootView;
     }
 
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null)
+        {
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            dialog.getWindow().setLayout(width, height);
+        }
+    }
+
 
     @SuppressLint("StaticFieldLeak")
     private void newuser(final String et1, final String et2, final String et3, final String et4, final String et5, final String et6,

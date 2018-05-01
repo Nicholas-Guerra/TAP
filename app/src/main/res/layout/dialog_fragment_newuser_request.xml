@@ -2,28 +2,48 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="25dp">
+    android:layout_height="wrap_content"
+    android:id="@+id/main_layout">
+
+    <View
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary">
+    </View>
+
+    <ImageView
+        android:id="@+id/close_button"
+        android:layout_marginLeft="10dp"
+        android:layout_height="wrap_content"
+        android:layout_width="35dp"
+        android:layout_alignTop="@+id/toolbar"
+        android:layout_alignBottom="@+id/toolbar"
+        android:src="@drawable/ic_close_white_24px"/>
 
     <TextView
         android:id="@+id/Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:text="New User"
+        android:layout_alignTop="@id/toolbar"
+        android:layout_alignBottom="@id/toolbar"
+        android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:layout_centerHorizontal="true" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_centerInParent="true"
+        android:id="@+id/inner_layout"
+        android:layout_margin="20dp">
 
         <TextView
             android:id="@+id/New_UserText"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="Username"
+            android:text="Username: "
             android:textSize="20sp"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:layout_alignBottom="@+id/New_UserEdit"
@@ -42,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:inputType="textPersonName"
-            android:text="First Name"
+            android:text="First Name: "
             android:textSize="20sp"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:layout_below="@+id/New_UserEdit"
@@ -64,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:inputType="textPersonName"
-            android:text="Last Name"
+            android:text="Last Name: "
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:layout_below="@+id/New_FirstEdit"
             android:textSize="20sp"
@@ -84,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:inputType="textPersonName"
-            android:text="Phone Number"
+            android:text="Phone Number: "
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:layout_below="@id/New_LastEdit"
             android:textSize="20sp"
@@ -104,7 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:inputType="textPersonName"
-            android:text="Email"
+            android:text="Email: "
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:layout_below="@+id/New_PhoneEdit"
             android:textSize="20sp"
@@ -125,7 +145,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:inputType="textPersonName"
-            android:text="Password"
+            android:text="Password: "
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:layout_below="@+id/New_EditEmail"
             android:textSize="20sp"
@@ -145,7 +165,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:inputType="textPersonName"
-            android:text="PIN"
+            android:text="PIN: "
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:layout_below="@+id/New_PassEdit"
             android:textSize="20sp"
@@ -162,39 +182,48 @@
 
     </RelativeLayout>
 
-    <RadioGroup
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_below="@id/inner_layout"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="20dp">
 
-        <RadioButton
-            android:id="@+id/user_kiosk2"
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kiosk" />
+            android:layout_marginLeft="10dp">
 
-        <RadioButton
-            android:id="@+id/user_cust"
+            <RadioButton
+                android:id="@+id/user_kiosk2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kiosk" />
+
+            <RadioButton
+                android:id="@+id/user_cust"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Customer" />
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/Submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Customer" />
+            android:text="Submit"
+            android:layout_centerHorizontal="true" />
 
-    </RadioGroup>
+        <CheckBox
+            android:id="@+id/Fingerprint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fingerprint"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"/>
+    </RelativeLayout>
 
-    <Button
-        android:id="@+id/Submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"/>
 
-    <CheckBox
-        android:id="@+id/Fingerprint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fingerprint"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
 
 </RelativeLayout>

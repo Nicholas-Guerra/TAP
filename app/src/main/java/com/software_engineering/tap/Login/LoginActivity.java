@@ -99,13 +99,8 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
 
-                //FragmentManager fm = LoginActivity.this.getFragmentManager();
                 Fragment_NewUser_Request newUser = new Fragment_NewUser_Request();
                 newUser.show(getSupportFragmentManager(), "Fragment_NewUser_Request");
-
-                //startActivity(new Intent(LoginActivity.this, MainActivity.class));
-
-                //newUser.show(getFragmentManager(), Fragment_NewUser_Request.class);
 
             }
         });
