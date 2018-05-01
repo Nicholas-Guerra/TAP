@@ -49,8 +49,9 @@ public class LoginActivity extends AppCompatActivity{
 
     private Button btnLogin;
     private TextView btnNewUser, differentUser;
-    private EditText userName, userPassword;
-    private User user;
+    private static EditText userName;
+    private EditText userPassword;
+    private static User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +102,8 @@ public class LoginActivity extends AppCompatActivity{
 
                 Fragment_NewUser_Request newUser = new Fragment_NewUser_Request();
                 newUser.show(getSupportFragmentManager(), "Fragment_NewUser_Request");
+
+
 
             }
         });
@@ -236,6 +239,12 @@ public class LoginActivity extends AppCompatActivity{
                 }
                 break;
         }
+    }
+
+    public static void setUser(User userInput){
+        user = userInput;
+        userName.setText(user.userName);
+        userName.setEnabled(false);
     }
 
 }

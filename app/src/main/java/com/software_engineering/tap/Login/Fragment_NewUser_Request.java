@@ -116,7 +116,6 @@ public class Fragment_NewUser_Request extends DialogFragment {
                     try {
 
 
-
                         String status = receivedJSON.getString("Status");
                         if (!status.equals("Complete"))
                             Toast.makeText(getContext(), receivedJSON.getString("Message"), Toast.LENGTH_LONG).show();
@@ -128,6 +127,7 @@ public class Fragment_NewUser_Request extends DialogFragment {
                                         Long balance = receivedJSON.getLong("balance");
                                         User user = new User(et1, et2, et3, et4, et5 , balance, et6 , false, et7, FirebaseInstanceId.getInstance().getToken());
                                         AppDatabase.getInstance(getContext()).userDao().insert(user);
+                                        LoginActivity.setUser(user);
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                         Log.e("JSONError", e.getMessage());
