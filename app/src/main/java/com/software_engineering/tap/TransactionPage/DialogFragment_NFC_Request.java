@@ -23,6 +23,8 @@ import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
 import com.software_engineering.tap.R;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 
 public class DialogFragment_NFC_Request extends DialogFragment {
 
@@ -55,15 +57,13 @@ public class DialogFragment_NFC_Request extends DialogFragment {
         title.setText(String.valueOf(amount) + " TPC");
 
 
+        mListener = (MainActivity) getActivity();
+        mListener.onDialogDisplayed(true);
+
+
+
 
         setCancelable(false);
-
-        new CountDownTimer(10000, 100) {
-            public void onTick(long millisUntilFinished) { }
-            public void onFinish() {
-                dismiss();
-            }
-        }.start();
 
         close = rootView.findViewById(R.id.close_button);
         close.setOnClickListener(new View.OnClickListener() {
@@ -76,12 +76,7 @@ public class DialogFragment_NFC_Request extends DialogFragment {
         return rootView;
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mListener = (MainActivity)context;
-        mListener.onDialogDisplayed(false);
-    }
+
 
     @Override
     public void onDetach() {
@@ -89,10 +84,32 @@ public class DialogFragment_NFC_Request extends DialogFragment {
         mListener.onDialogDismissed();
     }
 
-    public void onNfcDetected(String message){
 
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+
+
+    public NdefMessage onNfcDetected(){
+
+        byte[] payload = MainActivity.getUser().userName.
+                getBytes(Charset.forName("UTF-8"));
+
+        NdefRecord record = new NdefRecord(
+                NdefRecord.TNF_WELL_KNOWN,  //Our 3-bit Type name format
+                NdefRecord.RTD_TEXT,        //Description of our payload
+                new byte[0],                //The optional id for our Record
+                payload);
+
+        byte[] payload2 = new byte[8];
+        ByteBuffer.wrap(payload2).putDouble(amount);
+
+        NdefRecord record2 = new NdefRecord(
+                NdefRecord.TNF_WELL_KNOWN,  //Our 3-bit Type name format
+                NdefRecord.RTD_TEXT,        //Description of our payload
+                new byte[0],                //The optional id for our Record
+                payload2);
+
         dismiss();
+
+        return new NdefMessage(new NdefRecord[]{record, record2});
     }
 
 }

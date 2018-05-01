@@ -52,6 +52,7 @@ import com.software_engineering.tap.TransactionPage.DialogFragment_NFC_Pay;
 import com.software_engineering.tap.TransactionPage.DialogFragment_NFC_Request;
 import com.software_engineering.tap.TransactionPage.Fragment_Transaction;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -267,7 +268,7 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
 
     @Override
     public void onDialogDismissed() {
-        if(transaction!=null && !isWrite)
+        if(transaction!=null && isWrite)
             getSupportFragmentManager().beginTransaction().detach(transaction).attach(transaction).commit();
 
         isDialogDisplayed = false;
@@ -285,10 +286,15 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
                 Parcelable[] rawMessages = intent.getParcelableArrayExtra(
                         NfcAdapter.EXTRA_NDEF_MESSAGES);
 
-                NdefMessage message = (NdefMessage) rawMessages[0]; // only one message transferred
-                DialogFragment_NFC_Request frag = (DialogFragment_NFC_Request) getSupportFragmentManager().findFragmentByTag("nfc_request");
+                NdefMessage message = (NdefMessage) rawMessages[0];
+                NdefRecord[] attachedRecords = message.getRecords();
 
-                frag.onNfcDetected(new String(message.getRecords()[0].getPayload()));
+                String receiver = new String(attachedRecords[0].getPayload());
+                double amount = ByteBuffer.wrap(attachedRecords[1].getPayload()).getDouble();// only one message transferred
+
+                DialogFragment_NFC_Pay frag = (DialogFragment_NFC_Pay) getSupportFragmentManager().findFragmentByTag("nfc_pay");
+
+                frag.onNfcDetected(receiver, amount);
 
             }
         }
@@ -306,11 +312,13 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
                 NdefRecord[] attachedRecords = receivedMessage.getRecords();
 
 
-                String string = new String(attachedRecords[0].getPayload());
+                String receiver = new String(attachedRecords[0].getPayload());
+                double amount = ByteBuffer.wrap(attachedRecords[1].getPayload()).getDouble();
+
                 //Make sure we don't pass along our AAR (Android Application Record)
-                if (!string.equals(getPackageName())) {
-                    DialogFragment_NFC_Request frag = (DialogFragment_NFC_Request) getSupportFragmentManager().findFragmentByTag("nfc_request");
-                    frag.onNfcDetected(string);
+                if (!receiver.equals(getPackageName())) {
+                    DialogFragment_NFC_Pay frag = (DialogFragment_NFC_Pay) getSupportFragmentManager().findFragmentByTag("nfc_pay");
+                    frag.onNfcDetected(receiver, amount);
                 }
 
             }
@@ -322,7 +330,7 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
     public NdefMessage createNdefMessage(NfcEvent nfcEvent) {
         if (isDialogDisplayed && isWrite) {
 
-            DialogFragment_NFC_Pay frag = (DialogFragment_NFC_Pay) getSupportFragmentManager().findFragmentByTag("nfc_pay");
+            DialogFragment_NFC_Request frag = (DialogFragment_NFC_Request) getSupportFragmentManager().findFragmentByTag("nfc_request");
             return frag.onNfcDetected();
 
         }
@@ -337,10 +345,16 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
         Toast.makeText(this, "Successful Transfer", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void showToast(String message){
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
     public static User getUser(){
         while(user == null){}
 
         return user;
     }
+
 
 }
