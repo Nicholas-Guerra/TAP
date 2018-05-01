@@ -157,9 +157,6 @@ public class LoginActivity extends AppCompatActivity{
                         if(status.equals("Complete")){
                             if(user == null){
 
-                                Toast.makeText(LoginActivity.this, "user null", Toast.LENGTH_SHORT).show();
-
-
                                 final Dialog dialog = new Dialog(LoginActivity.this);
                                 dialog.setContentView(R.layout.alertdialog_refresh_pin_fingerprint);
 
@@ -202,8 +199,6 @@ public class LoginActivity extends AppCompatActivity{
                                 dialog.show();
 
                             } else {
-                                Toast.makeText(LoginActivity.this, "not null", Toast.LENGTH_SHORT).show();
-
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             }
 
