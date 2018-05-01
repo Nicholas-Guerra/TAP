@@ -69,8 +69,40 @@ public class Fragment_NewUser_Request extends DialogFragment {
             @Override
             public void onClick(View view) {
 
-                newuser(et1.getText().toString(), et2.getText().toString(), et3.getText().toString(), et4.getText().toString(), et5.getText().toString(),
-                      et6.getText().toString(), et7.getInputType() );
+                if(et1.getText().toString().isEmpty() ||
+                        et2.getText().toString().isEmpty() ||
+                        et3.getText().toString().isEmpty() ||
+                        et4.getText().toString().isEmpty() ||
+                        et5.getText().toString().isEmpty() ||
+                        et6.getText().toString().isEmpty() ||
+                        et7.getText().toString().isEmpty()){
+
+                    if(et1.getText().toString().isEmpty()){
+                        et1.setError("Required");
+                    }
+                    if(et2.getText().toString().isEmpty()){
+                        et2.setError("Required");
+                    }
+                    if(et3.getText().toString().isEmpty()){
+                        et3.setError("Required");
+                    }
+                    if(et4.getText().toString().isEmpty()){
+                        et4.setError("Required");
+                    }
+                    if(et5.getText().toString().isEmpty()){
+                        et5.setError("Required");
+                    }
+                    if(et6.getText().toString().isEmpty()){
+                        et6.setError("Required");
+                    }
+                    if(et7.getText().toString().isEmpty()){
+                        et7.setError("Required");
+                    }
+
+                } else{
+                    newuser(et1.getText().toString(), et2.getText().toString(), et3.getText().toString(), et4.getText().toString(), et5.getText().toString(),
+                            et6.getText().toString(), Integer.valueOf(et7.getText().toString()));
+                }
             }
         });
 
