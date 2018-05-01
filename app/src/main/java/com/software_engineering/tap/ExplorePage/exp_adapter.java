@@ -37,6 +37,7 @@ public class exp_adapter extends RecyclerView.Adapter<exp_adapter.mViewHolder>{
                 popGraph popGraph=new popGraph();
                 graph.removeAllSeries();
                 LineGraphSeries series = popGraph.populateBTC();
+                graph.setTitle("BTC History");
                 graph.addSeries(series);
 
             }
@@ -45,6 +46,7 @@ public class exp_adapter extends RecyclerView.Adapter<exp_adapter.mViewHolder>{
                 popGraph popGraph=new popGraph();
                 graph.removeAllSeries();
                 LineGraphSeries series = popGraph.populateETH();
+                graph.setTitle("ETH History");
                 graph.addSeries(series);
             }
             else if(getLayoutPosition() == 2)
@@ -52,6 +54,7 @@ public class exp_adapter extends RecyclerView.Adapter<exp_adapter.mViewHolder>{
                 popGraph popGraph=new popGraph();
                 graph.removeAllSeries();
                 LineGraphSeries series = popGraph.populateLTC();
+                graph.setTitle("LTC History");
                 graph.addSeries(series);
             }
             else if(getLayoutPosition() == 3)
@@ -59,6 +62,7 @@ public class exp_adapter extends RecyclerView.Adapter<exp_adapter.mViewHolder>{
                 popGraph popGraph=new popGraph();
                 graph.removeAllSeries();
                 LineGraphSeries series = popGraph.populateBCH();
+                graph.setTitle("BCH History");
                 graph.addSeries(series);
             }
             else if(getLayoutPosition() == 4)
@@ -66,6 +70,7 @@ public class exp_adapter extends RecyclerView.Adapter<exp_adapter.mViewHolder>{
                 popGraph popGraph=new popGraph();
                 graph.removeAllSeries();
                 LineGraphSeries series = popGraph.populateEUR();
+                graph.setTitle("EUR History");
                 graph.addSeries(series);
             }
             else if(getLayoutPosition() == 5)
@@ -73,6 +78,7 @@ public class exp_adapter extends RecyclerView.Adapter<exp_adapter.mViewHolder>{
                 popGraph popGraph=new popGraph();
                 graph.removeAllSeries();
                 LineGraphSeries series = popGraph.populateGBP();
+                graph.setTitle("GBP History");
                 graph.addSeries(series);
             }
             else if(getLayoutPosition() == 6)
@@ -80,6 +86,7 @@ public class exp_adapter extends RecyclerView.Adapter<exp_adapter.mViewHolder>{
                 popGraph popGraph=new popGraph();
                 graph.removeAllSeries();
                 LineGraphSeries series = popGraph.populateCNY();
+                graph.setTitle("CNY History");
                 graph.addSeries(series);
             }
             else if(getLayoutPosition() == 7)
@@ -87,6 +94,7 @@ public class exp_adapter extends RecyclerView.Adapter<exp_adapter.mViewHolder>{
                 popGraph popGraph=new popGraph();
                 graph.removeAllSeries();
                 LineGraphSeries series = popGraph.populateJPY();
+                graph.setTitle("JPY History");
                 graph.addSeries(series);
             }
         }
