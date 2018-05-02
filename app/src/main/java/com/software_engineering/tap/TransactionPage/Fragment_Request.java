@@ -77,8 +77,8 @@ public class Fragment_Request extends Fragment implements View.OnClickListener{
         btnDEL.setOnClickListener(this);
         btnCLR.setOnClickListener(this);
 
-        conversionRate = 1.1;
-        conversionSymbol = "$";
+        conversionRate = 1.0;
+        conversionSymbol = "USD";
 
         return rootView;
     }

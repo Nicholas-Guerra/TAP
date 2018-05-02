@@ -73,8 +73,6 @@
             android:layout_height="wrap_content"
             android:text="Recent Transactions"
             android:textSize="20sp"
-            android:drawableLeft="@drawable/ic_down_arrow"
-            android:drawableRight="@drawable/ic_down_arrow"
             android:textColor="@color/colorPrimaryLight"
             android:paddingBottom="20sp"
             android:layout_centerHorizontal="true"/>
@@ -98,7 +96,8 @@
                     android:text="To/From"
                     android:textStyle="bold"
                     android:textSize="20sp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:gravity="center"/>
 
                 <TextView
                     android:layout_width="100dp"
@@ -106,7 +105,8 @@
                     android:text="Amount"
                     android:textStyle="bold"
                     android:textSize="20sp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:gravity="center"/>
 
                 <TextView
                     android:layout_width="100dp"
@@ -114,7 +114,8 @@
                     android:text="Status"
                     android:textStyle="bold"
                     android:textSize="20sp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:gravity="center"/>
 
 
 
@@ -125,7 +126,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:id="@+id/fstTransName"
                     android:text=""
@@ -133,24 +134,26 @@
                     android:layout_weight="1"
                     android:ellipsize="marquee"
                     android:singleLine="true"
-                    android:scrollHorizontally="true"/>
+                    android:scrollHorizontally="true"
+                    android:gravity="center"/>
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:id="@+id/fstTransAmount"
                     android:text=""
                     android:textSize="18sp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:gravity="center"/>
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:id="@+id/fstTransStatus"
                     android:text=""
-                    android:textStyle="italic"
                     android:textSize="18sp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:gravity="center"/>
 
             </TableRow>
             <TableRow
@@ -158,7 +161,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:id="@+id/sndTransName"
                     android:text=""
@@ -166,25 +169,27 @@
                     android:layout_weight="1"
                     android:ellipsize="marquee"
                     android:singleLine="true"
-                    android:scrollHorizontally="true"/>
+                    android:scrollHorizontally="true"
+                    android:gravity="center"/>
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:id="@+id/sndTransAmount"
                     android:text=""
                     android:textColor="@color/colorDeduct"
                     android:textSize="18sp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:gravity="center"/>
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:id="@+id/sndTransStatus"
                     android:text=""
-                    android:textStyle="italic"
                     android:textSize="18sp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:gravity="center"/>
 
             </TableRow>
 
@@ -193,7 +198,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:id="@+id/trdTransName"
                     android:text=""
@@ -201,24 +206,27 @@
                     android:layout_weight="1"
                     android:ellipsize="marquee"
                     android:singleLine="true"
-                    android:scrollHorizontally="true"/>
+                    android:scrollHorizontally="true"
+                    android:gravity="center"/>
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:id="@+id/trdTransAmount"
                     android:text=""
                     android:textColor="@color/colorDeposit"
                     android:textSize="18sp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:gravity="center"/>
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:id="@+id/trdTransStatus"
                     android:text=""
                     android:textSize="18sp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:gravity="center"/>
 
             </TableRow>
         </TableLayout>

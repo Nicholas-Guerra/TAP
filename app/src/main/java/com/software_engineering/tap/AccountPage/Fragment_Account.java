@@ -172,20 +172,19 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
                             Transaction entry = new Transaction(to_from, amount, stat, time, id);
                             AppDatabase.getInstance(getContext()).transactionDao().insert(entry);
 
-                            user = MainActivity.getUser();
-                            recentTransactions = AppDatabase.getInstance(getContext()).transactionDao().getRecent();
-
-
-
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    updateUI();
-                                }
-                            });
-
-
                         }
+
+                        user = MainActivity.getUser();
+                        recentTransactions = AppDatabase.getInstance(getContext()).transactionDao().getRecent();
+
+
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                updateUI();
+                            }
+                        });
 
                     } else{
                         Toast.makeText(getContext(), receivedJSON.getString("Message"), Toast.LENGTH_SHORT).show();

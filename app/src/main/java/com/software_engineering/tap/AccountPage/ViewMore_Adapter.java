@@ -62,6 +62,13 @@ public class ViewMore_Adapter extends RecyclerView.Adapter<ViewMore_Adapter.View
             obholder.dateView.setText(format.format(new Date(transactionList.get(position).date)));
             obholder.amountView.setText(String.valueOf(transactionList.get(position).amount));
             obholder.statusView.setText(transactionList.get(position).status);
+
+
+            if (transactionList.get(position).amount > 0) {
+                obholder.amountView.setTextColor(context.getResources().getColor(R.color.colorDeposit));
+            } else {
+                obholder.amountView.setTextColor(context.getResources().getColor(R.color.colorDeduct));
+            }
         }
     }
 
