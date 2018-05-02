@@ -20,7 +20,7 @@
     <TextView
         android:id="@+id/toName"
         android:text="Bobby"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/date"
@@ -30,7 +30,7 @@
         android:id="@+id/defaultText"
         android:layout_toRightOf="@id/toName"
         android:layout_below="@id/date"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:text=" has requested "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -38,7 +38,7 @@
     <TextView
         android:id="@+id/amount"
         android:text="31.70"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:layout_toRightOf="@+id/defaultText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
     <TextView
         android:id="@+id/defaultText2"
         android:text=" TPC"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:layout_toRightOf="@+id/amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
