@@ -27,7 +27,8 @@
                     android:layout_weight="1"
                     android:textSize="15sp"
                     android:gravity="center"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="5dp"
+                    android:ellipsize="marquee"/>
                 <TextView
                     android:id="@+id/amountView"
                     android:text="12 TPC"
