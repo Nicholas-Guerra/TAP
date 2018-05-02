@@ -191,6 +191,9 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
 
+            case R.id.settings_help:
+                new DialogFragment_Help().show(getFragmentManager(), "DialogHelp");
+
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.

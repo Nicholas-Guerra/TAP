@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -118,6 +119,12 @@ public class RecyclerViewAdpater_Notifications  extends RecyclerView.Adapter<Rec
                                                 String status = receivedJSON.getString("Status");
                                                 if(status.equals("Complete")){
                                                     Toast.makeText(context, "Success", Toast.LENGTH_LONG).show();
+                                                    AsyncTask.execute(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            AppDatabase.getInstance(context).transaction_notificationDao().delete(transactionNotificationList.get(holder.getAdapterPosition()));
+                                                        }
+                                                    });
                                                 } else{
                                                     String message = receivedJSON.getString("Message");
                                                     Toast.makeText(context, message, Toast.LENGTH_LONG).show();
@@ -147,32 +154,32 @@ public class RecyclerViewAdpater_Notifications  extends RecyclerView.Adapter<Rec
                 builder.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        final DialogFragment_Authentication dialogFragment_authentication = new DialogFragment_Authentication();
-                        dialogFragment_authentication.show(((AppCompatActivity)context).getSupportFragmentManager(), "authentication");
-                        ((AppCompatActivity)context).getSupportFragmentManager().executePendingTransactions();
 
-                        dialogFragment_authentication.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                             @Override
-                            public void onDismiss(DialogInterface dialogInterface) {
-                                if (dialogFragment_authentication.getSuccess()) {
-                                    Toast.makeText(context, "Declined", Toast.LENGTH_SHORT).show();
-                                    //Authentication successful
-
-                                    new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            AppDatabase.getInstance(context).transaction_notificationDao().delete(transactionNotificationList.get(holder.getAdapterPosition()));
-                                        }
-                                    }).start();
-
-                                } else {
-                                    Toast.makeText(context, "Canceled", Toast.LENGTH_SHORT).show();
-                                    //Authentication canceled
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which){
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        AsyncTask.execute(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                AppDatabase.getInstance(context).transaction_notificationDao().delete(transactionNotificationList.get(holder.getAdapterPosition()));
+                                            }
+                                        });
+                                        break;
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        //No button clicked
+                                        break;
                                 }
                             }
-                        });
+                        };
 
-                        dialogInterface.dismiss();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                                .setNegativeButton("No", dialogClickListener).show();
+
                     }
                 });
                 AlertDialog alert = builder.create();
