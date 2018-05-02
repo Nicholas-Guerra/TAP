@@ -58,6 +58,7 @@ public class ViewMore_Adapter extends RecyclerView.Adapter<ViewMore_Adapter.View
         }
         else{
             obholder.fromName.setText(transactionList.get(position).toFromName);
+            obholder.fromName.setSelected(true);
             obholder.dateView.setText(format.format(new Date(transactionList.get(position).date)));
             obholder.amountView.setText(String.valueOf(transactionList.get(position).amount));
             obholder.statusView.setText(transactionList.get(position).status);
