@@ -81,8 +81,8 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
         TextView thrdTransAmount = rootView.findViewById(R.id.trdTransAmount);
         TextView thrdtransStatus = rootView.findViewById(R.id.trdTransStatus);
         int i = 0;
-
-/*        recentTransactions = AppDatabase.getInstance(getContext()).transactionDao().getRecent();
+/*
+        recentTransactions = AppDatabase.getInstance(getContext()).transactionDao().getRecent();
         for(Transaction transaction: recentTransactions){
             if(i == 0) {
                 frsttofromName.setText(transaction.toFromName);
@@ -118,15 +118,17 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
                 thrdtransStatus.setText(transaction.status);
             }
             i++;
-        }*/
-//        AsyncTask.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                AppDatabase.getInstance(getContext()).transactionDao().insert(new Transaction("dad", 28.1, "Pending", 012516, "010101"));
+        }
+        */
+        /*
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase.getInstance(getContext()).transactionDao().insert(new Transaction("dad", 28.1, "Pending", 012516, "010101"));
 
-//            }
-//        });
-
+            }
+        });
+        */
         return rootView;
 
 
