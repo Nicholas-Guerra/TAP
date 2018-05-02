@@ -7,29 +7,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <View
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"><View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/about_toolbar"
             android:background="@color/colorPrimary">
         </View>
 
-        <ImageView
-            android:id="@+id/about_close_button"
-            android:layout_marginLeft="10dp"
-            android:layout_height="wrap_content"
-            android:layout_width="35dp"
-            android:layout_alignTop="@+id/about_toolbar"
-            android:layout_alignBottom="@+id/about_toolbar"
-            android:src="@drawable/ic_close_white_24px"/>
+            <ImageView
+                android:id="@+id/about_close_button"
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="35dp"
+                android:layout_alignTop="@+id/about_toolbar"
+                android:layout_alignBottom="@+id/about_toolbar"
+                android:src="@drawable/ic_close_white_24px"/>
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/aboutinfo"
-            android:text="here is where about will go"
-            android:textSize="15sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/aboutinfo"
+                android:text="here is where about will go"
+                android:textSize="15sp"/></RelativeLayout>
+
+
     </ScrollView>
 
 
