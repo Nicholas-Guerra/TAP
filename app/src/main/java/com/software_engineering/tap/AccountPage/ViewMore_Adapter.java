@@ -27,9 +27,9 @@ public class ViewMore_Adapter extends RecyclerView.Adapter<ViewMore_Adapter.View
 
     private List<Transaction> transactionList;
     private LayoutInflater mInflaters;
-    private DateFormat df = new SimpleDateFormat("EEE MM/dd/yy hh:mm aaa");
     private ItemClickListener mClickListener;
     private Context context;
+    private SimpleDateFormat format;
 
 
     // data is passed into the constructor
@@ -37,6 +37,7 @@ public class ViewMore_Adapter extends RecyclerView.Adapter<ViewMore_Adapter.View
         this.mInflaters = LayoutInflater.from(context);
         this.context = context;
         transactionList = transaction_List;
+        format = new SimpleDateFormat("MM/dd/yy\nh:mm a");
 
     }
 
@@ -57,7 +58,7 @@ public class ViewMore_Adapter extends RecyclerView.Adapter<ViewMore_Adapter.View
         }
         else{
             obholder.fromName.setText(transactionList.get(position).toFromName);
-            obholder.dateView.setText(df.format(new Date(transactionList.get(position).date)));
+            obholder.dateView.setText(format.format(new Date(transactionList.get(position).date)));
             obholder.amountView.setText(String.valueOf(transactionList.get(position).amount));
             obholder.statusView.setText(transactionList.get(position).status);
         }

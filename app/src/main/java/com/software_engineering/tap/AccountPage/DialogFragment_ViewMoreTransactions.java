@@ -1,5 +1,6 @@
 package com.software_engineering.tap.AccountPage;
 
+import android.app.Dialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.AsyncTask;
@@ -19,6 +20,7 @@ import com.software_engineering.tap.Main_Notifications_Settings.Transaction_Noti
 import com.software_engineering.tap.Main_Notifications_Settings.ViewModel_Transaction_Notification;
 import com.software_engineering.tap.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +43,8 @@ public class DialogFragment_ViewMoreTransactions extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.dialog_fragment_viewmoretransactions, container, false);
+
+
         recyclerView = rootView.findViewById(R.id.trv);
 
         close = rootView.findViewById(R.id.viewMore_close_button);
@@ -62,5 +66,18 @@ public class DialogFragment_ViewMoreTransactions extends DialogFragment {
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null)
+        {
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            dialog.getWindow().setLayout(width, height);
+        }
     }
 }

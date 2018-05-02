@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="50dp"
         android:id="@+id/viewMore_toolbar"
         android:background="@color/colorPrimary">
     </View>
@@ -21,12 +21,81 @@
         android:layout_alignBottom="@+id/viewMore_toolbar"
         android:src="@drawable/ic_close_white_24px"/>
 
+    <TableLayout
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/viewMore_toolbar">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@drawable/vertical_divider"
+            android:showDividers="middle">
+
+            <TextView
+                android:textColor="@color/colorTapOrange"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="To/From"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_margin="5dp"/>
+
+            <TextView
+                android:textColor="@color/colorTapOrange"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Amount"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_margin="5dp"/>
+
+            <TextView
+                android:textColor="@color/colorTapOrange"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_margin="5dp"/>
+
+            <TextView
+                android:textColor="@color/colorTapOrange"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Date"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_margin="5dp"/>
+
+
+
+        </TableRow>
+    </TableLayout>
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/colorPrimary"
+        android:layout_below="@id/table"/>
+
     <!-- A RecyclerView with some commonly used attributes -->
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/separator"
         android:id="@+id/trv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:scrollbars="vertical" />
 
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
