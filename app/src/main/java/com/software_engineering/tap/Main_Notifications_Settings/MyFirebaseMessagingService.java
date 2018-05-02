@@ -30,10 +30,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String username = remoteMessage.getData().get("User Name");
         double amount = Double.valueOf(remoteMessage.getData().get("Amount"));
         Long date = Long.valueOf(remoteMessage.getData().get("Date"));
+        String id = remoteMessage.getData().get("transactionID");
 
         Log.i("DataTransfer", username + "     " + String.valueOf(amount));
 
-        AppDatabase.getInstance(this).transaction_notificationDao().insert(new Transaction_Notification(username, amount, date));
+        AppDatabase.getInstance(this).transaction_notificationDao().insert(new Transaction_Notification(username, amount, date, id));
 
 
 

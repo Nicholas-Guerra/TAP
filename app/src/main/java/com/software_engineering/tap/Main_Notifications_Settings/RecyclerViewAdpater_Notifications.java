@@ -52,6 +52,7 @@ public class RecyclerViewAdpater_Notifications  extends RecyclerView.Adapter<Rec
         holder.toName.setText(transactionNotificationList.get(position).toName);
         holder.amount.setText(String.valueOf(transactionNotificationList.get(position).amount));
         holder.date.setText(df.format(new Date(transactionNotificationList.get(position).date)));
+        holder.transactionID = transactionNotificationList.get(position).transactionID;
 
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +107,8 @@ public class RecyclerViewAdpater_Notifications  extends RecyclerView.Adapter<Rec
                                         object.put("Request", "Transaction")
                                                 .put("sender", MainActivity.getUser().userName)
                                                 .put("receiver", holder.toName.getText().toString())
-                                                .put("amount", Double.valueOf(holder.amount.getText().toString()));
+                                                .put("amount", Double.valueOf(holder.amount.getText().toString()))
+                                                .put("transactionID", holder.transactionID);
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -207,6 +209,7 @@ public class RecyclerViewAdpater_Notifications  extends RecyclerView.Adapter<Rec
 
         private TextView toName, amount, date;
         private RelativeLayout relativeLayout;
+        private String transactionID;
 
 
         RecyclerViewHolder(View view) {
@@ -216,8 +219,6 @@ public class RecyclerViewAdpater_Notifications  extends RecyclerView.Adapter<Rec
             amount =view.findViewById(R.id.amount);
             date = view.findViewById(R.id.date);
             relativeLayout = view.findViewById(R.id.relative_layout);
-
-
 
         }
     }

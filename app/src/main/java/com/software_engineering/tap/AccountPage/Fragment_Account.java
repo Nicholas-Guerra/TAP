@@ -2,16 +2,9 @@ package com.software_engineering.tap.AccountPage;
 
 
 import android.annotation.SuppressLint;
-import android.app.Application;
-import android.arch.lifecycle.LiveData;
-import android.arch.persistence.room.Room;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +19,8 @@ import com.software_engineering.tap.TransactionPage.sendToServer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 public class Fragment_Account extends Fragment implements View.OnClickListener {
 
@@ -170,8 +160,17 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
                             AppDatabase.getInstance(getContext()).transactionDao().insert(entry);
 
                             user = MainActivity.getUser();
-                            balanceText.setText(String.valueOf(user.balance));
-                            refreshRecent();
+                            recentTransactions = AppDatabase.getInstance(getContext()).transactionDao().getRecent();
+
+
+
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    updateUI();
+                                }
+                            });
+
 
                         }
 
@@ -185,10 +184,12 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
         });
   }
 
-  private void refreshRecent(){
-              int i = 0;
-              recentTransactions = AppDatabase.getInstance(getContext()).transactionDao().getRecent();
-              for(Transaction transaction: recentTransactions) {
+  private void updateUI(){
+
+        balanceText.setText(String.valueOf(user.balance));
+        int i = 0;
+
+        for(Transaction transaction: recentTransactions) {
                   if (i == 0) {
                       frsttofromName.setText(transaction.toFromName);
                       frsttransAmount.setText(String.valueOf(transaction.amount));
@@ -218,7 +219,7 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
                       thrdtransStatus.setText(transaction.status);
                   }
                   i++;
-              }
+        }
   }
 
 }

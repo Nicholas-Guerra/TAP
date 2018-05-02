@@ -19,10 +19,15 @@ public class Transaction_Notification {
     @ColumnInfo(name = "transactionDate")
     public long date;
 
-    public Transaction_Notification (String toName, double amount, long date) {
+    @NonNull
+    @ColumnInfo(name = "transactionID")
+    public String transactionID;
+
+    public Transaction_Notification (String toName, double amount, long date, String transactionID) {
         this.toName = toName;
         this.date = date;
         this.amount = amount;
+        this.transactionID = transactionID;
     }
 
 }
