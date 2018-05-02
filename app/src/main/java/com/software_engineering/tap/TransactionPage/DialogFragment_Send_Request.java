@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.software_engineering.tap.AccountPage.AppDatabase;
+import com.software_engineering.tap.Main_Notifications_Settings.Listener;
 import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
 import com.software_engineering.tap.R;
 
@@ -39,6 +40,7 @@ public class DialogFragment_Send_Request extends DialogFragment implements View.
     private ArrayList<String> searchList = new ArrayList<>();
     private ArrayList<String> tokenList = new ArrayList<>();
     private ArrayAdapter<String> listAdapter;
+    private Listener mListener;
 
 
     public DialogFragment_Send_Request() {
@@ -68,6 +70,8 @@ public class DialogFragment_Send_Request extends DialogFragment implements View.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.dialog_fragment_send_request, container, false);
+
+        mListener = (MainActivity)getContext();
         amount = getArguments().getDouble("Amount");
 
         close = rootView.findViewById(R.id.close_button);
@@ -108,6 +112,8 @@ public class DialogFragment_Send_Request extends DialogFragment implements View.
                                 String status = receivedJSON.getString("Status");
                                 if(status.equals("Complete")){
                                     Toast.makeText(getContext(), "Sent", Toast.LENGTH_SHORT).show();
+                                    mListener.refreshPage();
+                                    dismiss();
                                 } else{
                                     Toast.makeText(getContext(), receivedJSON.getString("Message"), Toast.LENGTH_SHORT).show();
                                 }

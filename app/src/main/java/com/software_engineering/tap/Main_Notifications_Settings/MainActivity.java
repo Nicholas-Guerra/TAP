@@ -365,5 +365,11 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
         return user;
     }
 
+    @Override
+    public void refreshPage(){
+        if(transaction!=null)
+            getSupportFragmentManager().beginTransaction().detach(transaction).attach(transaction).commit();
+    }
+
 
 }

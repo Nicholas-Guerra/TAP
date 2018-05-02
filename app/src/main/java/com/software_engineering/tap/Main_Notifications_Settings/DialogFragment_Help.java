@@ -1,5 +1,6 @@
 package com.software_engineering.tap.Main_Notifications_Settings;
 
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.text.Html;
@@ -42,5 +43,18 @@ public class DialogFragment_Help extends DialogFragment {
         });
 
         return mView;
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null)
+        {
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            dialog.getWindow().setLayout(width, height);
+        }
     }
 }

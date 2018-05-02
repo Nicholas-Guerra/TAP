@@ -4,4 +4,5 @@ public interface Listener {
     void onDialogDisplayed(boolean writer);
     void onDialogDismissed();
     void showToast(String message);
+    void refreshPage();
 }

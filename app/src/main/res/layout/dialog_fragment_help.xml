@@ -8,29 +8,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <View
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/help_toolbar"
-            android:background="@color/colorPrimary">
-        </View>
+            android:layout_margin="20dp">
 
-        <ImageView
-            android:id="@+id/help_close_button"
-            android:layout_marginLeft="10dp"
-            android:layout_height="wrap_content"
-            android:layout_width="35dp"
-            android:layout_alignTop="@+id/help_toolbar"
-            android:layout_alignBottom="@+id/help_toolbar"
-            android:src="@drawable/ic_close_white_24px"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/help_toolbar"
+                android:background="@color/colorPrimary">
+            </View>
+
+            <ImageView
+                android:id="@+id/help_close_button"
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="35dp"
+                android:layout_alignTop="@+id/help_toolbar"
+                android:layout_alignBottom="@+id/help_toolbar"
+                android:src="@drawable/ic_close_white_24px"/>
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/helpInfo"
-            android:text="Here is where the info goes"
-            android:textSize="15sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/helpInfo"
+                android:text="Here is where the info goes"
+                android:textSize="15sp"/>
+
+        </RelativeLayout>
+
+
 
     </ScrollView>
 
