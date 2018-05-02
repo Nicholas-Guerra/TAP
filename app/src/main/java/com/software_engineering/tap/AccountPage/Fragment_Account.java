@@ -37,8 +37,24 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
     ImageView refresh;
     TextView vwMore;
     List<Transaction> recentTransactions;
+    TextView frsttofromName;
+    TextView frsttransAmount;
+    TextView frsttransStatus;
 
-   // SwipeRefreshLayout swipeRefreshLayout;
+    //Whole block sets up names to be used for the sencond recent transactions
+    TextView sndtofromName;
+    TextView sndTransAmount;
+    TextView sndtransStatus;
+
+    //Whole block sets up names to be used for the third recent transactions
+    TextView thrdtofromName;
+    TextView thrdTransAmount;
+    TextView thrdtransStatus;
+    TextView nameText;
+    TextView balanceText;
+
+
+    User user;
 
 
     public Fragment_Account() {
@@ -53,79 +69,36 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
 
         View rootView = inflater.inflate(R.layout.fragment_account, container, false);
 
+        user = MainActivity.getUser();
+
         refresh = rootView.findViewById(R.id.refresh);
         refresh.setOnClickListener(this);
 
         vwMore = rootView.findViewById(R.id.viewMore);
         vwMore.setOnClickListener(this);
 
-        TextView nameText = rootView.findViewById(R.id.user);
-        User user = MainActivity.getUser();
-        nameText.setText(user.firstName); //setting username on account page to firstName
+        nameText = rootView.findViewById(R.id.user);
+        nameText.setText(user.userName); //setting username on account page to firstName
 
-        TextView balanceText = rootView.findViewById(R.id.actualBalance);
-        balanceText.setText(String.valueOf(user.balance));
+        balanceText = rootView.findViewById(R.id.actualBalance);
+
 
         //Whole block sets up names to be used for the first recent transactions
-        TextView frsttofromName = rootView.findViewById(R.id.fstTransName);
-        TextView frsttransAmount = rootView.findViewById(R.id.fstTransAmount);
-        TextView frsttransStatus = rootView.findViewById(R.id.fstTransStatus);
+        frsttofromName = rootView.findViewById(R.id.fstTransName);
+        frsttransAmount = rootView.findViewById(R.id.fstTransAmount);
+        frsttransStatus = rootView.findViewById(R.id.fstTransStatus);
 
         //Whole block sets up names to be used for the sencond recent transactions
-        TextView sndtofromName = rootView.findViewById(R.id.sndTransName);
-        TextView sndTransAmount = rootView.findViewById(R.id.sndTransAmount);
-        TextView sndtransStatus = rootView.findViewById(R.id.sndTransStatus);
+        sndtofromName = rootView.findViewById(R.id.sndTransName);
+        sndTransAmount = rootView.findViewById(R.id.sndTransAmount);
+        sndtransStatus = rootView.findViewById(R.id.sndTransStatus);
 
         //Whole block sets up names to be used for the third recent transactions
-        TextView thrdtofromName = rootView.findViewById(R.id.trdTransName);
-        TextView thrdTransAmount = rootView.findViewById(R.id.trdTransAmount);
-        TextView thrdtransStatus = rootView.findViewById(R.id.trdTransStatus);
-        int i = 0;
+        thrdtofromName = rootView.findViewById(R.id.trdTransName);
+        thrdTransAmount = rootView.findViewById(R.id.trdTransAmount);
+        thrdtransStatus = rootView.findViewById(R.id.trdTransStatus);
 
-/*        recentTransactions = AppDatabase.getInstance(getContext()).transactionDao().getRecent();
-        for(Transaction transaction: recentTransactions){
-            if(i == 0) {
-                frsttofromName.setText(transaction.toFromName);
-                frsttransAmount.setText(String.valueOf(transaction.amount));
-                if (transaction.amount > 0) {
-                    frsttransAmount.setTextColor(this.getResources().getColor(R.color.colorDeposit));
-                }
-                else{
-                    frsttransAmount.setTextColor(this.getResources().getColor(R.color.colorDeduct));
-                }
-                frsttransStatus.setText(transaction.status);
-            }
-            else if(i == 1){
-                sndtofromName.setText(transaction.toFromName);
-                sndTransAmount.setText(String.valueOf(transaction.amount));
-                if(transaction.amount > 0 ){
-                    sndTransAmount.setTextColor(this.getResources().getColor(R.color.colorDeposit));
-                }
-                else{
-                    sndTransAmount.setTextColor(this.getResources().getColor(R.color.colorDeduct));
-                }
-                sndtransStatus.setText(transaction.status);
-            }
-            else if (i == 2) {
-                thrdtofromName.setText(transaction.toFromName);
-                thrdTransAmount.setText(String.valueOf(transaction.amount));
-                if(transaction.amount > 0 ){
-                    thrdTransAmount.setTextColor(this.getResources().getColor(R.color.colorDeposit));
-                }
-                else{
-                    thrdTransAmount.setTextColor(this.getResources().getColor(R.color.colorDeduct));
-                }
-                thrdtransStatus.setText(transaction.status);
-            }
-            i++;
-        }*/
-//        AsyncTask.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                AppDatabase.getInstance(getContext()).transactionDao().insert(new Transaction("dad", 28.1, "Pending", 012516, "010101"));
-
-//            }
-//        });
+        //refresh();
 
         return rootView;
 
@@ -139,59 +112,114 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v){
         if(v == refresh){
-            final JSONObject obj = new JSONObject();
-            User user = AppDatabase.getInstance(getContext()).userDao().getUser();
-            try {
-                obj.put("Request", "TransactionUpdate");
-                obj.put("userName", user.userName);
-
-                new sendToServer(getActivity(), true,"Connecting", obj) {
-                    @Override
-                    public void onPostExecute(JSONObject receivedJSON) {
-                        super.onPostExecute(receivedJSON);
-
-                        try {
-                            JSONArray array = receivedJSON.getJSONArray("array");
-                            for(int x = 0; x <= array.length(); x++){
-                                JSONObject object = array.getJSONObject(x);
-                                Transaction transaction = new Transaction(object.getString("to_from"),
-                                        object.getDouble("amount"), object.getString("status"),object.getLong("time"),
-                                        object.getString("transactionID"));
-
-                                // AppDatabase.getInstance(getContext()).transactionDao().updateTransaction(transaction);
-
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }.execute();
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
+            refresh();
         } else if(v == vwMore){
            new DialogFragment_ViewMoreTransactions().show(getFragmentManager(), "DialogViewMore");
         }
-
 
     }
 
 
 
-  /* public void onCreate(Bundle savedInstanceState) {
-       super.onCreate(savedInstanceState);
-       swipeRefreshLayout = swipeRefreshLayout.findViewById(R.id.swipe);
-       (R.id.fragment_account);
-       swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-           @Override
-           public void onRefresh() {
-           }
-       });
-   }*/
+  @SuppressLint("StaticFieldLeak")
+  private void refresh(){
+      try {
+          JSONObject object = new JSONObject();
+          object.put("Request", "History")
+                  .put("userName", MainActivity.getUser().userName);
+
+          new sendToServer(getContext(), true, "Updating", object){
+              @Override
+              public void onPostExecute(final JSONObject receivedJSON) {
+                  super.onPostExecute(receivedJSON);
+                          updateDatabaseTransactions(receivedJSON);
+              }
+          }.execute();
+
+
+      } catch (JSONException e) {
+          e.printStackTrace();
+      }
+  }
+
+  private void updateDatabaseTransactions(final JSONObject receivedJSON){
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String status = receivedJSON.getString("Status");
+                    if(status.equals("Complete")){
+
+                        MainActivity.getUser().balance = receivedJSON.getDouble("balance");
+                        AppDatabase.getInstance(getContext()).userDao().update(MainActivity.getUser());
+
+                        AppDatabase.getInstance(getContext()).transactionDao().deleteALL();
+
+                        JSONArray array = receivedJSON.getJSONArray("array");
+                        JSONObject transaction;
+                        for (int i=0; i < array.length(); i++) {
+                            transaction = array.getJSONObject(i);
+
+                            String id = transaction.getString("transactionID");
+                            String to_from = transaction.getString("to_from");
+                            String stat = transaction.getString("status");
+                            double amount = transaction.getDouble("amount");
+                            long time = transaction.getLong("time");
+
+                            Transaction entry = new Transaction(to_from, amount, stat, time, id);
+                            AppDatabase.getInstance(getContext()).transactionDao().insert(entry);
+
+                            user = MainActivity.getUser();
+                            balanceText.setText(String.valueOf(user.balance));
+                            refreshRecent();
+
+                        }
+
+                    } else{
+                        Toast.makeText(getContext(), receivedJSON.getString("Message"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+  }
+
+  private void refreshRecent(){
+              int i = 0;
+              recentTransactions = AppDatabase.getInstance(getContext()).transactionDao().getRecent();
+              for(Transaction transaction: recentTransactions) {
+                  if (i == 0) {
+                      frsttofromName.setText(transaction.toFromName);
+                      frsttransAmount.setText(String.valueOf(transaction.amount));
+                      if (transaction.amount > 0) {
+                          frsttransAmount.setTextColor(Fragment_Account.this.getResources().getColor(R.color.colorDeposit));
+                      } else {
+                          frsttransAmount.setTextColor(Fragment_Account.this.getResources().getColor(R.color.colorDeduct));
+                      }
+                      frsttransStatus.setText(transaction.status);
+                  } else if (i == 1) {
+                      sndtofromName.setText(transaction.toFromName);
+                      sndTransAmount.setText(String.valueOf(transaction.amount));
+                      if (transaction.amount > 0) {
+                          sndTransAmount.setTextColor(Fragment_Account.this.getResources().getColor(R.color.colorDeposit));
+                      } else {
+                          sndTransAmount.setTextColor(Fragment_Account.this.getResources().getColor(R.color.colorDeduct));
+                      }
+                      sndtransStatus.setText(transaction.status);
+                  } else if (i == 2) {
+                      thrdtofromName.setText(transaction.toFromName);
+                      thrdTransAmount.setText(String.valueOf(transaction.amount));
+                      if (transaction.amount > 0) {
+                          thrdTransAmount.setTextColor(Fragment_Account.this.getResources().getColor(R.color.colorDeposit));
+                      } else {
+                          thrdTransAmount.setTextColor(Fragment_Account.this.getResources().getColor(R.color.colorDeduct));
+                      }
+                      thrdtransStatus.setText(transaction.status);
+                  }
+                  i++;
+              }
+  }
 
 }
 
