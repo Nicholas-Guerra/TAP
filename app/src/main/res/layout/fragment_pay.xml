@@ -16,18 +16,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25sp"
-            android:text="0 new"
+            android:text="Check notifications"
             android:textStyle="bold"
             android:textColor="@color/colorClick"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/notification_num"
-            android:text=" transaction requests"
-            android:textColor="@color/colorSecondaryLight"
-            android:textStyle="bold"
-            android:textSize="25sp"/>
 
         <View
             android:layout_width="wrap_content"
@@ -57,15 +48,6 @@
         android:textColor="@color/colorSecondaryLight"
         android:textSize="12sp"
         android:gravity="center"/>
-
-
-    <Button
-        android:id="@+id/connection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Test Server Connection"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
 
 
 

@@ -35,7 +35,6 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
     View rootView;
     TextView notifications;
     ImageView btn_nfc;
-    Button connection;
 
 
     public Fragment_Pay() {
@@ -52,8 +51,6 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
         btn_nfc = rootView.findViewById(R.id.btn_nfc);
         btn_nfc.setOnClickListener(this);
 
-        connection = rootView.findViewById(R.id.connection);
-        connection.setOnClickListener(this);
 
         return rootView;
     }
@@ -83,29 +80,6 @@ public class Fragment_Pay extends Fragment implements View.OnClickListener{
                     }
                 }
             });
-        } else if(v == connection){
-
-            try {
-                JSONObject object = new JSONObject();
-                object.put("Request", "NewUser")
-                        .put("userName", "BobByyy")
-                        .put("hashedPassword","asodabsasdsd" )
-                        .put("phoneNumber", "2149872973")
-                        .put("email", "bobbyyy@gmail.com");
-
-                new sendToServer(getContext(),true, "Sending", object){
-
-                    @Override
-                    public void onPostExecute(JSONObject receivedJSON){
-                        super.onPostExecute(receivedJSON);
-
-                    }
-
-                }.execute();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
         }
     }
 

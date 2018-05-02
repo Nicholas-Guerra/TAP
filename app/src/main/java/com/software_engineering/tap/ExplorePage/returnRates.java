@@ -19,7 +19,7 @@ public class returnRates
         try {
             result = rateGet.execute(url).get();
             JSONObject jo = new JSONObject(result);
-            rateValue = (double) jo.get(code);
+            rateValue =  (double) jo.get(code);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

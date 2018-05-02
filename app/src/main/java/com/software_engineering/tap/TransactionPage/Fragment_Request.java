@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.software_engineering.tap.AccountPage.AppDatabase;
+import com.software_engineering.tap.ExplorePage.returnRates;
 import com.software_engineering.tap.R;
 
 public class Fragment_Request extends Fragment implements View.OnClickListener{
@@ -41,6 +43,7 @@ public class Fragment_Request extends Fragment implements View.OnClickListener{
 
         TAPtext = rootView.findViewById(R.id.tapCoin);
         conversionText = rootView.findViewById(R.id.conversion);
+        conversionText.setOnClickListener(this);
 
         tap = rootView.findViewById(R.id.tap);
         send = rootView.findViewById(R.id.send);
@@ -82,7 +85,34 @@ public class Fragment_Request extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v){
-        if(v == send){
+        if(v == conversionText){
+
+
+// Strings to Show In Dialog with Radio Buttons
+            final CharSequence[] items = {"USD","BTC","ETH","LTC","BCH","EUR","GBP","JPY","CNY"};
+
+            // Creating and Building the Dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("Select conversion rate");
+            AlertDialog alertDialog;
+            builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int item) {
+
+                    if(items[item].toString().equals("USD"))
+                        conversionRate = 1.0;
+                    else
+                        conversionRate = new returnRates().rates(items[item].toString());
+                    conversionSymbol = items[item].toString();
+                    conversionText.setText(String.format("%.2f",(double)total / 100.0 * conversionRate) + conversionSymbol);
+
+                    dialog.dismiss();
+                }
+            });
+            alertDialog = builder.create();
+            alertDialog.show();
+
+
+        } else if(v == send){
             if(total != 0){
                 DialogFragment_Send_Request.newInstance((double) total / 100.0).show(getFragmentManager().beginTransaction(), "send_request");
             } else{
@@ -180,7 +210,7 @@ public class Fragment_Request extends Fragment implements View.OnClickListener{
 
 
         TAPtext.setText(String.format("%.2f",(double)total/100.0));
-        conversionText.setText(conversionSymbol + String.format("%.2f",(double)total / 100.0 * conversionRate));
+        conversionText.setText(String.format("%.2f",(double)total / 100.0 * conversionRate) + conversionSymbol);
     }
 
 

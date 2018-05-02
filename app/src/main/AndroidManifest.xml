@@ -7,7 +7,6 @@
     <uses-feature android:name="android.hardware.nfc" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
-
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -15,7 +14,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
 
         <activity
             android:name=".Main_Notifications_Settings.MainActivity"

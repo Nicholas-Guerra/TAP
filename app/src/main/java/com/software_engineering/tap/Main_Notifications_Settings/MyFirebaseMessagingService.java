@@ -53,7 +53,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "Request")
-                .setSmallIcon(R.drawable.tap)
+                .setSmallIcon(R.drawable.ic_stat_name)
                 .setContentTitle("Transaction Request")
                 .setContentText("From " + username)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
