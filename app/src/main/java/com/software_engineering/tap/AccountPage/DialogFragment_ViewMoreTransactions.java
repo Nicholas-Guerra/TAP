@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.software_engineering.tap.Main_Notifications_Settings.MainActivity;
 import com.software_engineering.tap.Main_Notifications_Settings.RecyclerViewAdpater_Notifications;
@@ -30,6 +31,7 @@ public class DialogFragment_ViewMoreTransactions extends DialogFragment {
 
     View rootView;
     RecyclerView recyclerView;
+    ImageView close;
 
     public DialogFragment_ViewMoreTransactions() {
         // Required empty public constructor
@@ -40,6 +42,14 @@ public class DialogFragment_ViewMoreTransactions extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.dialog_fragment_viewmoretransactions, container, false);
         recyclerView = rootView.findViewById(R.id.trv);
+
+        close = rootView.findViewById(R.id.viewMore_close_button);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                dismiss();
+            }
+        });
 
 
         AsyncTask.execute(new Runnable() {

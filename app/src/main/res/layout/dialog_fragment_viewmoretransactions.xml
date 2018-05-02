@@ -5,6 +5,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/viewMore_toolbar"
+        android:background="@color/colorPrimary">
+    </View>
+
+    <ImageView
+        android:id="@+id/viewMore_close_button"
+        android:layout_marginLeft="10dp"
+        android:layout_height="wrap_content"
+        android:layout_width="35dp"
+        android:layout_alignTop="@+id/viewMore_toolbar"
+        android:layout_alignBottom="@+id/viewMore_toolbar"
+        android:src="@drawable/ic_close_white_24px"/>
 
     <!-- A RecyclerView with some commonly used attributes -->
     <android.support.v7.widget.RecyclerView
