@@ -130,7 +130,10 @@
                     android:id="@+id/fstTransName"
                     android:text=""
                     android:textSize="18sp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:ellipsize="marquee"
+                    android:singleLine="true"
+                    android:scrollHorizontally="true"/>
 
                 <TextView
                     android:layout_width="100dp"
@@ -160,7 +163,10 @@
                     android:id="@+id/sndTransName"
                     android:text=""
                     android:textSize="18sp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:ellipsize="marquee"
+                    android:singleLine="true"
+                    android:scrollHorizontally="true"/>
 
                 <TextView
                     android:layout_width="100dp"
@@ -192,7 +198,10 @@
                     android:id="@+id/trdTransName"
                     android:text=""
                     android:textSize="18sp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:ellipsize="marquee"
+                    android:singleLine="true"
+                    android:scrollHorizontally="true"/>
 
                 <TextView
                     android:layout_width="100dp"

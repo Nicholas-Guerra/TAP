@@ -205,6 +205,7 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
         for(Transaction transaction: recentTransactions) {
                   if (i == 0) {
                       frsttofromName.setText(transaction.toFromName);
+                      frsttofromName.setSelected(true);
                       frsttransAmount.setText(String.valueOf(transaction.amount));
                       if (transaction.amount > 0) {
                           frsttransAmount.setTextColor(Fragment_Account.this.getResources().getColor(R.color.colorDeposit));
@@ -214,6 +215,7 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
                       frsttransStatus.setText(transaction.status);
                   } else if (i == 1) {
                       sndtofromName.setText(transaction.toFromName);
+                      sndtofromName.setSelected(true);
                       sndTransAmount.setText(String.valueOf(transaction.amount));
                       if (transaction.amount > 0) {
                           sndTransAmount.setTextColor(Fragment_Account.this.getResources().getColor(R.color.colorDeposit));
@@ -223,6 +225,7 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
                       sndtransStatus.setText(transaction.status);
                   } else if (i == 2) {
                       thrdtofromName.setText(transaction.toFromName);
+                      thrdtofromName.setSelected(true);
                       thrdTransAmount.setText(String.valueOf(transaction.amount));
                       if (transaction.amount > 0) {
                           thrdTransAmount.setTextColor(Fragment_Account.this.getResources().getColor(R.color.colorDeposit));
