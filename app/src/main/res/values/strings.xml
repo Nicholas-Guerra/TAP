@@ -13,5 +13,35 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="Help"> hello   </string>
+    <string name="Help"><![CDATA[<p dir="ltr"><span>Help</span></p>
+<p dir="ltr"><span>Transaction page</span><span>: The transaction page (also your home page) allows you to either &ldquo;Request&rdquo; or &ldquo;Pay&rdquo;. </span></p>
+<ol>
+<li dir="ltr">
+<p dir="ltr"><span>To request a payment tap the on screen buttons until the desired amount is set in the displayed field.</span></p>
+</li>
+</ol>
+<p dir="ltr"><span>You then have the option to either &ldquo;TAP&rdquo; or &ldquo;Send&rdquo; options. </span></p>
+<ul>
+<li dir="ltr">
+<p dir="ltr"><span>&ldquo;TAP&rdquo; uses NFC or near-field communication. Otherwise this is used whenever you are receiving TAP coin to someone near you.</span></p>
+</li>
+<li dir="ltr">
+<p dir="ltr"><span>&ldquo;Send&rdquo; uses our dedicated server to allow you to pick the user you wish to request the desired amount from over a wireless connection. Otherwise this is used whenever you are receiving TAP coin from someone far away.</span></p>
+</li>
+</ul>
+<p dir="ltr"><span>2. &nbsp;To make a payment, a notification will be sent to your phone</span></p>
+<p dir="ltr"><span>You then have the option to Accept or Decline</span></p>
+<ul>
+<li dir="ltr">
+<p dir="ltr"><span>Accepting the transaction as a NFC brings you to the &ldquo;Pay&rdquo; screen and you may tap to begin the transaction.</span></p>
+</li>
+<li dir="ltr">
+<p dir="ltr"><span>Clicking accept on a server request </span></p>
+</li>
+</ul>
+<p dir="ltr"><span>Account page</span><span>: To access the account page you may swipe from left to right or tap on the account icon at the bottom left of the screen. This shows your available balance, recent transactions and you may click &ldquo;view more&rdquo; to see all of your transactions. You may also click the &ldquo;Refresh image&rdquo; which will refresh your profile for new transactions.</span></p>
+<p dir="ltr"><span>Explore page</span><span>: To access the explore page you may swipe from right to left or clicking the explore icon at the bottom right of the screen. This shows you conversions from the American Dollar to different cryptocurrencies and the most used currencies in the world. You may click on each currency to show a 30-day graph of the close-cost of the currency.</span></p>
+<p><span>&nbsp;</span></p>]]> </string>
+
+
 </resources>
