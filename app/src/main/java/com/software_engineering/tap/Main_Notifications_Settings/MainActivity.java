@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
                 return true;
 
             case R.id.settings_logout:
-                onBackPressed();
+                finish();
                 return true;
 
 
