@@ -193,6 +193,16 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
 
             case R.id.settings_help:
                 new DialogFragment_Help().show(getFragmentManager(), "DialogHelp");
+                return true;
+
+            case R.id.settings_about:
+                new DialogFragment_About().show(getFragmentManager(), "DialogAbout");
+                return true;
+
+            case R.id.settings_logout:
+                finish();
+                return true;
+
 
             default:
                 // If we got here, the user's action was not recognized.
