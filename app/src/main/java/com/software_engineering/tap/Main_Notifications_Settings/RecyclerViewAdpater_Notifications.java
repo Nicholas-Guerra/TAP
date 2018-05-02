@@ -48,7 +48,7 @@ public class RecyclerViewAdpater_Notifications  extends RecyclerView.Adapter<Rec
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerViewHolder holder, final int position) {
         holder.toName.setText(transactionNotificationList.get(position).toName);
         holder.amount.setText(String.valueOf(transactionNotificationList.get(position).amount));
         holder.date.setText(df.format(new Date(transactionNotificationList.get(position).date)));
@@ -159,7 +159,8 @@ public class RecyclerViewAdpater_Notifications  extends RecyclerView.Adapter<Rec
 
 
 
-                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @SuppressLint("StaticFieldLeak")
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 switch (which){
@@ -170,6 +171,30 @@ public class RecyclerViewAdpater_Notifications  extends RecyclerView.Adapter<Rec
                                                 AppDatabase.getInstance(context).transaction_notificationDao().delete(transactionNotificationList.get(holder.getAdapterPosition()));
                                             }
                                         });
+
+
+                                        JSONObject object = new JSONObject();
+                                        try {
+                                            object.put("Request", "decline");
+                                            object.put("transactionID", transactionNotificationList.get(position).transactionID);
+                                            new sendToServer(context,false, null, object) {
+                                                @Override
+                                                public void onPostExecute(final JSONObject receivedJSON) {
+                                                    super.onPostExecute(receivedJSON);
+
+                                                    try {
+                                                        String status = receivedJSON.getString("Status");
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+
+
+                                                }
+                                            }.execute();
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
                                         break;
                                     case DialogInterface.BUTTON_NEGATIVE:
                                         //No button clicked

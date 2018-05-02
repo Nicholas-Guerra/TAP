@@ -282,6 +282,7 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
         if(transaction!=null && isWrite)
             getSupportFragmentManager().beginTransaction().detach(transaction).attach(transaction).commit();
 
+
         isDialogDisplayed = false;
         isWrite = false;
 
@@ -354,17 +355,6 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
         //This is called when the system detects that our NdefMessage was
         //Successfully sent.
         Toast.makeText(this, "Successful Transfer", Toast.LENGTH_SHORT).show();
-
-        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-        alertDialog.setTitle("Transaction");
-        alertDialog.setMessage("Successfully sent: Update account page to check status");
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        alertDialog.show();
     }
 
     @Override
