@@ -29,7 +29,8 @@
                     android:gravity="center"
                     android:layout_margin="5dp"
                     android:ellipsize="marquee"
-                    android:singleLine="true"/>
+                    android:singleLine="true"
+                    android:scrollHorizontally="true"/>
                 <TextView
                     android:id="@+id/amountView"
                     android:text="12 TPC"
