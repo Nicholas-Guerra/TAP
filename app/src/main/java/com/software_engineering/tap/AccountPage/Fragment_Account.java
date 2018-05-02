@@ -88,7 +88,20 @@ public class Fragment_Account extends Fragment implements View.OnClickListener {
         thrdTransAmount = rootView.findViewById(R.id.trdTransAmount);
         thrdtransStatus = rootView.findViewById(R.id.trdTransStatus);
 
-        //refresh();
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                recentTransactions = AppDatabase.getInstance(getContext()).transactionDao().getRecent();
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateUI();
+                    }
+                });
+            }
+        });
 
         return rootView;
 
