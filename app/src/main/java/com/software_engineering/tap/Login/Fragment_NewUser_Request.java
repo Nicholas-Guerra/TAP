@@ -163,10 +163,18 @@ public class Fragment_NewUser_Request extends DialogFragment {
 
                     try {
                         String status = receivedJSON.getString("Status");
-                        if (!status.equals("Complete"))
-                            Toast.makeText(getActivity(), receivedJSON.getString("Message"), Toast.LENGTH_LONG).show();
+                        String message;
+                        if (!status.equals("Complete")) {
 
-                        else{
+                            message = receivedJSON.getString("Message");
+                            if (message.equalsIgnoreCase("username already in use"))
+                                Fragment_NewUser_Request.this.et1.setError("Already taken");
+                            else if (message.equalsIgnoreCase("email already in use"))
+                                Fragment_NewUser_Request.this.et5.setError("Already taken");
+                            else
+                                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+
+                        }else{
                             AsyncTask.execute(new Runnable() {
                                 @Override
                                 public void run() {
