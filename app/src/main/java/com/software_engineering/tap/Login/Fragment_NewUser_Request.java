@@ -159,17 +159,30 @@ public class Fragment_NewUser_Request extends DialogFragment {
 
                 @Override
                 public void onPostExecute(final JSONObject receivedJSON) {
-                    super.onPostExecute(receivedJSON);
+
 
                     try {
                         String status = receivedJSON.getString("Status");
-                        if (!status.equals("Complete"))
-                            Toast.makeText(getContext(), receivedJSON.getString("Message"), Toast.LENGTH_LONG).show();
-                        else{
+                        String message;
+                        if (!status.equals("Complete")) {
+
+                            message = receivedJSON.getString("Message");
+                            if (message.equalsIgnoreCase("username already in use"))
+                                Fragment_NewUser_Request.this.et1.setError("Already taken");
+                            else if (message.equalsIgnoreCase("email already in use"))
+                                Fragment_NewUser_Request.this.et5.setError("Already taken");
+                            else
+                                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+
+                        }else{
                             AsyncTask.execute(new Runnable() {
                                 @Override
                                 public void run() {
                                     try {
+                                        AppDatabase.getInstance(getContext()).userDao().deleteALL();
+                                        AppDatabase.getInstance(getContext()).transactionDao().deleteALL();
+                                        AppDatabase.getInstance(getContext()).transaction_notificationDao().deleteALL();
+
                                         Long balance = receivedJSON.getLong("balance");
                                         User user = new User(et1, et2, et3, et4, et5 , balance, et6 , fingerprint.isChecked(), et7, FirebaseInstanceId.getInstance().getToken());
                                         AppDatabase.getInstance(getContext()).userDao().insert(user);
@@ -189,6 +202,7 @@ public class Fragment_NewUser_Request extends DialogFragment {
                         e.printStackTrace();
                         Log.e("JSONError", e.getMessage());
                     }
+                    super.onPostExecute(receivedJSON);
 
                 }
 
