@@ -2,6 +2,7 @@ package com.software_engineering.tap.AccountPage;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -40,18 +41,15 @@ public class DialogFragment_ViewMoreTransactions extends DialogFragment {
         rootView = inflater.inflate(R.layout.dialog_fragment_viewmoretransactions, container, false);
         recyclerView = rootView.findViewById(R.id.trv);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        final ViewMore_Adapter recyclerViewAdpater = new ViewMore_Adapter(getActivity(), new ArrayList<Transaction>());
-        recyclerView.setAdapter(recyclerViewAdpater);
-        ViewModel_ViewMore_Transaction viewModel = ViewModelProviders.of((MainActivity) getActivity()).get(ViewModel_ViewMore_Transaction.class);
 
-        viewModel.getTransactionNotifications().observe((MainActivity) getActivity(), new Observer<List<Transaction>>() {
+        AsyncTask.execute(new Runnable() {
             @Override
-            public void onChanged(@Nullable List<Transaction> transactionList) {
-                recyclerViewAdpater.addItems(transactionList);
+            public void run() {
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                ViewMore_Adapter recyclerViewAdpater = new ViewMore_Adapter(getActivity(), AppDatabase.getInstance(getContext()).transactionDao().getAll());
+                recyclerView.setAdapter(recyclerViewAdpater);
             }
         });
-
 
         return rootView;
     }

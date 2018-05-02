@@ -35,7 +35,7 @@ public class Transaction {
         this.transactionID = transactionID;
         this.toFromName = toFromName;
         this.status = status;
-        this.date = System.currentTimeMillis();
+        this.date = date;
         this.amount = amount;
         this.status = status;
     }

@@ -96,7 +96,8 @@ public class DialogFragment_NFC_Pay extends DialogFragment {
             object.put("Request", "Transaction")
                     .put("sender", MainActivity.getUser().userName)
                     .put("receiver", receiver)
-                    .put("amount", amount);
+                    .put("amount", amount)
+                    .put("transactionID", "nfc");
         } catch (JSONException e) {
             e.printStackTrace();
         }

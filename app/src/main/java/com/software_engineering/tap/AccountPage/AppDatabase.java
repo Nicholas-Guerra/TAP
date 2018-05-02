@@ -11,7 +11,7 @@ import com.software_engineering.tap.Main_Notifications_Settings.Transaction_Noti
  * Created by grant_000 on 4/4/2018.
  */
 
-@Database(entities = {User.class, Transaction.class, Transaction_Notification.class}, version = 10, exportSchema = false)
+@Database(entities = {User.class, Transaction.class, Transaction_Notification.class}, version = 15, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract TransactionDao transactionDao();
