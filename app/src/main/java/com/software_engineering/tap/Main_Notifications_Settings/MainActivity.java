@@ -186,10 +186,6 @@ public class MainActivity extends AppCompatActivity implements Listener, NfcAdap
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.navigation_account:
-                // User chose the "Notifications" item
-
-                return true;
 
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
