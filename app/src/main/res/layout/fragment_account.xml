@@ -128,7 +128,7 @@
                     android:layout_width="100dp"
                     android:layout_height="30dp"
                     android:id="@+id/fstTransName"
-                    android:text="Sue"
+                    android:text=""
                     android:textSize="18sp"
                     android:layout_weight="1"/>
 
@@ -136,16 +136,15 @@
                     android:layout_width="100dp"
                     android:layout_height="30dp"
                     android:id="@+id/fstTransAmount"
-                    android:text="+ 12.22"
+                    android:text=""
                     android:textSize="18sp"
-                    android:textColor="@color/colorDeposit"
                     android:layout_weight="1"/>
 
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="30dp"
                     android:id="@+id/fstTransStatus"
-                    android:text="Pending"
+                    android:text=""
                     android:textStyle="italic"
                     android:textSize="18sp"
                     android:layout_weight="1"/>
@@ -159,7 +158,7 @@
                     android:layout_width="100dp"
                     android:layout_height="30dp"
                     android:id="@+id/sndTransName"
-                    android:text="Bill"
+                    android:text=""
                     android:textSize="18sp"
                     android:layout_weight="1"/>
 
@@ -167,7 +166,7 @@
                     android:layout_width="100dp"
                     android:layout_height="30dp"
                     android:id="@+id/sndTransAmount"
-                    android:text="-  5.34"
+                    android:text=""
                     android:textColor="@color/colorDeduct"
                     android:textSize="18sp"
                     android:layout_weight="1"/>
@@ -176,7 +175,7 @@
                     android:layout_width="100dp"
                     android:layout_height="30dp"
                     android:id="@+id/sndTransStatus"
-                    android:text="Pending"
+                    android:text=""
                     android:textStyle="italic"
                     android:textSize="18sp"
                     android:layout_weight="1"/>
@@ -191,7 +190,7 @@
                     android:layout_width="100dp"
                     android:layout_height="30dp"
                     android:id="@+id/trdTransName"
-                    android:text="Bob"
+                    android:text=""
                     android:textSize="18sp"
                     android:layout_weight="1"/>
 
@@ -199,7 +198,7 @@
                     android:layout_width="100dp"
                     android:layout_height="30dp"
                     android:id="@+id/trdTransAmount"
-                    android:text="+ 50.18"
+                    android:text=""
                     android:textColor="@color/colorDeposit"
                     android:textSize="18sp"
                     android:layout_weight="1"/>
@@ -208,7 +207,7 @@
                     android:layout_width="100dp"
                     android:layout_height="30dp"
                     android:id="@+id/trdTransStatus"
-                    android:text="Verified"
+                    android:text=""
                     android:textSize="18sp"
                     android:layout_weight="1"/>
 
