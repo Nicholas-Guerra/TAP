@@ -62,7 +62,11 @@
 </li>
 </ul>
 </ul>
-</ul>]]}> </string>
+</ul>]]]> </string>
+
+
+
+
     <string name="Help"><![CDATA[<p dir="ltr"><span>Help</span></p>
 <p dir="ltr"><span>Transaction page</span><span>: The transaction page (also your home page) allows you to either &ldquo;Request&rdquo; or &ldquo;Pay&rdquo;. </span></p>
 <ol>
