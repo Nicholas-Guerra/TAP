@@ -9,12 +9,15 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"><View
+            android:layout_height="match_parent"
+            android:layout_margin="20dp">
+
+            <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/about_toolbar"
             android:background="@color/colorPrimary">
-        </View>
+            </View>
 
             <ImageView
                 android:id="@+id/about_close_button"
