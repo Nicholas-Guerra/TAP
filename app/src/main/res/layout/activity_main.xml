@@ -60,8 +60,19 @@
         android:layout_height="match_parent"
         android:layout_gravity="start">
 
+        <TextView
+            android:layout_above="@+id/drawer_recyclerView"
+            android:layout_marginTop="23dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Notifications:"
+            android:textColor="@color/colorTapOrange"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_gravity="center_horizontal"/>
+
         <android.support.v7.widget.RecyclerView
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="32dp"
             android:id="@+id/drawer_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
